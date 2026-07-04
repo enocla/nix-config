@@ -4,15 +4,9 @@ in {
   # Shared environment variables for all shells
   home.sessionVariables = {
     EDITOR = "nvim";
-    PAGER = "page";
+    PAGER = "bat";
     LLVM_PROFILE_FILE = "/dev/null";
     TERM = "xterm-256color";
-    MANPAGER = "page -t man";
-    # Mark nvim instances spawned by `page` so auto-session opts out (see nvim editor.lua).
-    # Single quotes only: home-manager wraps the value in double quotes, and `page`
-    # parses this with shell_words; an embedded double quote would break the pager.
-    NVIM_PAGE_ARGS = "--cmd 'lua vim.g.page_pager=true'";
-
     # gum theming (applies to all shells)
     # confirm
     GUM_CONFIRM_PROMPT_FOREGROUND = c.text;

@@ -34,7 +34,6 @@
       "xcbeautify"
       "yt-dlp"
       "elio"
-      "page"
 
       # Compilers & formatters
       "clang-format"
