@@ -123,6 +123,7 @@
     ice-bar
     obsidian
     shottr
+    blender
     # vesktop  # fails to build on macOS (codesign not available in sandbox)
 
     # Containerization
