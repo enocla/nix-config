@@ -29,7 +29,6 @@
       "node"
       "opam"
       "openjdk"
-      "rtk"
       "xcode-build-server"
       "xcbeautify"
       "yt-dlp"

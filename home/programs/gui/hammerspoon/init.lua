@@ -142,11 +142,3 @@ hs.window.animationDuration = 0.1
 
 wm:start()
 
--- hs.window.filter
--- 	.copy(wm.window_filter)
--- 	:subscribe(hs.window.filter.windowFocused, wm.actions.actions().center_window)
-
-PaperLine = hs.loadSpoon("PaperLine")
-PaperLine.icon_padding = 1
-
-PaperLine:start()
