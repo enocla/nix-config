@@ -15,6 +15,13 @@ in {
 
       eval $(opam env)
 
+      function __expand_dots
+        set -l levels (math (string length $argv[1]) - 1)
+        string repeat -n $levels "../"
+      end
+
+      abbr --add --regex '^\.\.{2,}$' -f __expand_dots dots
+
       # Color Palette from theme.nix
       set -l foreground ${strip c.text}
       set -l selection  ${strip c.surface1}
