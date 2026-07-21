@@ -1,7 +1,6 @@
 {lib}: let
   colorMix = (import ./color-mix.nix {inherit lib;}).mixColors;
 
-  # Edo color palette
   colors = {
     rosewater = "#f3c0e5";
     flamingo = "#fae6ef";

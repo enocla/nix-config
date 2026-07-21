@@ -60,6 +60,7 @@
     casks = [
       # Development
       "codex"
+      "chatgpt"
       "zed"
 
       # System utilities
