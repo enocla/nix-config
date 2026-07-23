@@ -54,6 +54,8 @@
       "kotlin"
       "gradle"
       "maven"
+
+      "agent-browser"
     ];
 
     # `brew install --cask`
@@ -80,6 +82,7 @@
       "prismlauncher"
       "Sanyam-G/switch/switch"
       "equibop"
+      "linear"
 
       # Design assets
       "sf-symbols"
