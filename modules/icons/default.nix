@@ -8,8 +8,12 @@
         icon = ./cf_warp.icns;
       }
       {
-        path = "/System/Volumes/Data/Applications/AltTab.app";
-        icon = ./alttab.icns;
+        path = "/Applications/Ableton Live 12 Suite.app";
+        icon = ./Ableton.icns;
+      }
+      {
+        path = "/System/Volumes/Data/Applications/Equibop.app";
+        icon = ./Discord.icns;
       }
     ];
   };

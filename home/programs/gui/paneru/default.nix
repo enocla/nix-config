@@ -117,6 +117,10 @@
         window_virtualmovenum_7 = "ctrl + shift - 7";
         window_virtualmovenum_8 = "ctrl + shift - 8";
         window_virtualmovenum_9 = "ctrl + shift - 9";
+
+        # --- service ---------------------------------------------------------
+        # Restarts the paneru background service (same as `paneru restart`).
+        restart = "ctrl + shift - r";
       };
     };
   };
