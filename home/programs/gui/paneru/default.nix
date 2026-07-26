@@ -10,10 +10,10 @@
     settings = {
       # Screen-edge padding (the outer frame around the whole tiling area).
       padding = {
-        top = 10;
-        bottom = 10;
-        left = 10;
-        right = 10;
+        top = 8;
+        bottom = 8;
+        left = 8;
+        right = 8;
       };
 
       # Gaps *between* windows. paneru has no global window-gap option; the gap
@@ -23,8 +23,8 @@
       # also get this 5px on top of the screen-edge `padding` above.
       windows.all = {
         title = ".*";
-        horizontal_padding = 5;
-        vertical_padding = 5;
+        horizontal_padding = 8;
+        vertical_padding = 8;
       };
 
       options = {
@@ -38,7 +38,11 @@
 
         # Old: hs.window.animationDuration = 0.1 (snappy). This is an animation
         # rate (higher = faster); tweak to taste.
-        animation_speed = 30.0;
+        animation_speed = 40.0;
+
+        reap_empty_workspaces = true;
+
+        virtual_workspace_animations = true;
       };
 
       # Replaces Swipe.spoon: a 3-finger swipe scrolls the window strip / moves
@@ -85,35 +89,34 @@
 
         # --- floating --------------------------------------------------------
         window_manage = "alt + cmd + ctrl - escape"; # toggle_floating
-        window_raise_floating = "alt + cmd + shift - f"; # focus_floating
 
         # --- numbered targets (ctrl+cmd+alt + 1..9) -------------------------
         # PaperWM's focus_window_N focused the Nth window in the space. paneru
         # has no such command, so these switch to virtual workspace N — the
         # closest numbered-target analogue.
-        # window_virtualnum_1 = "ctrl + cmd + alt - 1";
-        # window_virtualnum_2 = "ctrl + cmd + alt - 2";
-        # window_virtualnum_3 = "ctrl + cmd + alt - 3";
-        # window_virtualnum_4 = "ctrl + cmd + alt - 4";
-        # window_virtualnum_5 = "ctrl + cmd + alt - 5";
-        # window_virtualnum_6 = "ctrl + cmd + alt - 6";
-        # window_virtualnum_7 = "ctrl + cmd + alt - 7";
-        # window_virtualnum_8 = "ctrl + cmd + alt - 8";
-        # window_virtualnum_9 = "ctrl + cmd + alt - 9";
+        window_virtualnum_1 = "ctrl - 1";
+        window_virtualnum_2 = "ctrl - 2";
+        window_virtualnum_3 = "ctrl - 3";
+        window_virtualnum_4 = "ctrl - 4";
+        window_virtualnum_5 = "ctrl - 5";
+        window_virtualnum_6 = "ctrl - 6";
+        window_virtualnum_7 = "ctrl - 7";
+        window_virtualnum_8 = "ctrl - 8";
+        window_virtualnum_9 = "ctrl - 9";
 
         # --- send focused window to virtual workspace N (add shift) ----------
         # "send" = the window moves to workspace N but focus stays on the current
         # workspace. Swap these for window_virtualmovenum_N if you'd rather
         # follow the window to its new workspace.
-        # window_virtualsendnum_1 = "ctrl + cmd + alt + shift - 1";
-        # window_virtualsendnum_2 = "ctrl + cmd + alt + shift - 2";
-        # window_virtualsendnum_3 = "ctrl + cmd + alt + shift - 3";
-        # window_virtualsendnum_4 = "ctrl + cmd + alt + shift - 4";
-        # window_virtualsendnum_5 = "ctrl + cmd + alt + shift - 5";
-        # window_virtualsendnum_6 = "ctrl + cmd + alt + shift - 6";
-        # window_virtualsendnum_7 = "ctrl + cmd + alt + shift - 7";
-        # window_virtualsendnum_8 = "ctrl + cmd + alt + shift - 8";
-        # window_virtualsendnum_9 = "ctrl + cmd + alt + shift - 9";
+        window_virtualmovenum_1 = "ctrl + shift - 1";
+        window_virtualmovenum_2 = "ctrl + shift - 2";
+        window_virtualmovenum_3 = "ctrl + shift - 3";
+        window_virtualmovenum_4 = "ctrl + shift - 4";
+        window_virtualmovenum_5 = "ctrl + shift - 5";
+        window_virtualmovenum_6 = "ctrl + shift - 6";
+        window_virtualmovenum_7 = "ctrl + shift - 7";
+        window_virtualmovenum_8 = "ctrl + shift - 8";
+        window_virtualmovenum_9 = "ctrl + shift - 9";
       };
     };
   };
