@@ -1,6 +1,6 @@
 {...}: {
   imports = [
-    ./hammerspoon
+    ./paneru
     ./kitty
     ./ghostty
   ];

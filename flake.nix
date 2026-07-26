@@ -42,6 +42,11 @@
 
     darwin-custom-icons.url = "github:ryanccn/nix-darwin-custom-icons";
     rust-overlay.url = "github:oxalica/rust-overlay";
+
+    paneru = {
+      url = "github:karinushka/paneru";
+      inputs.nixpkgs.follows = "nixpkgs-darwin";
+    };
   };
 
   # The `outputs` function will return all the build results of the flake.

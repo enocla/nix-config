@@ -14,5 +14,11 @@
         doCheck = false;
       });
     })
+    # micropython's test suite currently fails on Darwin despite compiling successfully
+    (final: prev: {
+      micropython = prev.micropython.overrideAttrs {
+        doCheck = false;
+      };
+    })
   ];
 }

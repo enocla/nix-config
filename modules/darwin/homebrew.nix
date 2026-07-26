@@ -56,6 +56,7 @@
       "maven"
 
       "agent-browser"
+      "empellio/homebrew-tap/oxmgr"
     ];
 
     # `brew install --cask`
@@ -66,7 +67,6 @@
       "zed"
 
       # System utilities
-      "hammerspoon"
       "karabiner-elements"
       "linearmouse"
 
