@@ -60,11 +60,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1784913159,
-        "narHash": "sha256-JWq0BfjO4ktpH5USfQNQzdvHpIDT8fSKD5K7LvdMRFs=",
+        "lastModified": 1785158503,
+        "narHash": "sha256-vEhDKc9JYVGH5CO4nbfqIZmsWiDKLPFReYK6emsFK5U=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "079a3b5d1aa6a719920a51316253b7d6dd22738d",
+        "rev": "0c486d2b21bb1e4d0e5a11e374deb51587267387",
         "type": "github"
       },
       "original": {
@@ -112,11 +112,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1785082112,
-        "narHash": "sha256-WACw2IEVhdBl51mLhoYiWqSp4wiyV92Ld+3lfQ++9RE=",
-        "rev": "e318e6adc497b5e8a5ac433c6c6ed21ecdab9029",
+        "lastModified": 1785141334,
+        "narHash": "sha256-jIYqF10/p99GhQYHFnT7XgCRWavkL4Iie1DEyIIZSc0=",
+        "rev": "38a4887411571457d700c51c64a6e49ead2ed5ab",
         "type": "tarball",
-        "url": "https://releases.nixos.org/nixpkgs/nixpkgs-26.11pre1042068.e318e6adc497/nixexprs.tar.xz"
+        "url": "https://releases.nixos.org/nixpkgs/nixpkgs-26.11pre1042399.38a488741157/nixexprs.tar.xz"
       },
       "original": {
         "id": "nixpkgs",
@@ -125,11 +125,11 @@
     },
     "nixpkgs-darwin": {
       "locked": {
-        "lastModified": 1785082112,
-        "narHash": "sha256-Y7z/nrPajIJyVDd9z53ZPZGm0HU+kej16Pwt2cNYI0A=",
+        "lastModified": 1785141334,
+        "narHash": "sha256-kh35kIx7el4Jk8Ki3BH9/Pn1eZYSYLJ6LMALos0zOy0=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "e318e6adc497b5e8a5ac433c6c6ed21ecdab9029",
+        "rev": "38a4887411571457d700c51c64a6e49ead2ed5ab",
         "type": "github"
       },
       "original": {
@@ -180,11 +180,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1785110959,
-        "narHash": "sha256-vCn0hHUhHBMTnBsJspGXr101msvQw0UfU6Mo52Z/tf4=",
+        "lastModified": 1785166520,
+        "narHash": "sha256-k7EA8dKtkYjR6Tv+TLz1yFOA0QN1HzVC6f0aUkkU5CM=",
         "ref": "focusnum",
-        "rev": "0d020f92ae04e6ae30bd74e865541b0cfb122dbf",
-        "revCount": 774,
+        "rev": "e39cc991b80d3d9f4654a85ef46c870437d045fa",
+        "revCount": 775,
         "type": "git",
         "url": "file:///Users/tnixc/Developer/paneru"
       },
@@ -210,11 +210,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1785044261,
-        "narHash": "sha256-ehF/c4fLdgmNu7YXEClnmwhoBYddhYIVoSQpsZoorC4=",
+        "lastModified": 1785131767,
+        "narHash": "sha256-VNbQv2P0zgaNh96mT4LrnX7hdXgiC5nBH+uvyrrVX7U=",
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "rev": "fe2124391e739e7b3e8720cd8a73f06edd0aceba",
+        "rev": "c67ce00525464a710971351c183ce67acb6ca827",
         "type": "github"
       },
       "original": {

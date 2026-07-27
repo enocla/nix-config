@@ -49,6 +49,7 @@
       # focus. Old code used "natural" scrolling and wm.swipe_gain = 2.0.
       swipe = {
         sensitivity = 0.5;
+        discrete = true;
         gesture = {
           fingers_count = 3;
           direction = "Natural";
