@@ -43,8 +43,12 @@
     darwin-custom-icons.url = "github:ryanccn/nix-darwin-custom-icons";
     rust-overlay.url = "github:oxalica/rust-overlay";
 
+    # Local checkout, patched with `window_focusnum_<n>` (focus the Nth column,
+    # counted horizontally). Branch `focusnum` in ~/Developer/paneru, based on
+    # upstream v0.4.4. Only commits are visible to nix, so commit there before
+    # rebuilding. Swap back to "github:karinushka/paneru" to drop the patch.
     paneru = {
-      url = "github:karinushka/paneru";
+      url = "git+file:///Users/tnixc/Developer/paneru?ref=focusnum";
       inputs.nixpkgs.follows = "nixpkgs-darwin";
     };
   };

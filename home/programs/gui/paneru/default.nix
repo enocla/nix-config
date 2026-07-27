@@ -10,10 +10,10 @@
     settings = {
       # Screen-edge padding (the outer frame around the whole tiling area).
       padding = {
-        top = 8;
-        bottom = 8;
-        left = 8;
-        right = 8;
+        top = 6;
+        bottom = 6;
+        left = 6;
+        right = 6;
       };
 
       # Gaps *between* windows. paneru has no global window-gap option; the gap
@@ -23,8 +23,8 @@
       # also get this 5px on top of the screen-edge `padding` above.
       windows.all = {
         title = ".*";
-        horizontal_padding = 8;
-        vertical_padding = 8;
+        horizontal_padding = 6;
+        vertical_padding = 6;
       };
 
       options = {
@@ -90,10 +90,22 @@
         # --- floating --------------------------------------------------------
         window_manage = "alt + cmd + ctrl - escape"; # toggle_floating
 
-        # --- numbered targets (ctrl+cmd+alt + 1..9) -------------------------
-        # PaperWM's focus_window_N focused the Nth window in the space. paneru
-        # has no such command, so these switch to virtual workspace N — the
-        # closest numbered-target analogue.
+        # --- focus the Nth column (ctrl+alt+cmd + 1..9) ----------------------
+        # PaperWM's focus_window_N. Upstream paneru has no focus-by-index
+        # command, so `window_focusnum_N` comes from the local patch pinned as
+        # the `paneru` flake input (see flake.nix). Counted horizontally from the
+        # left of the strip; stacked columns focus their top window.
+        window_focusnum_1 = "alt + cmd + ctrl - 1";
+        window_focusnum_2 = "alt + cmd + ctrl - 2";
+        window_focusnum_3 = "alt + cmd + ctrl - 3";
+        window_focusnum_4 = "alt + cmd + ctrl - 4";
+        window_focusnum_5 = "alt + cmd + ctrl - 5";
+        window_focusnum_6 = "alt + cmd + ctrl - 6";
+        window_focusnum_7 = "alt + cmd + ctrl - 7";
+        window_focusnum_8 = "alt + cmd + ctrl - 8";
+        window_focusnum_9 = "alt + cmd + ctrl - 9";
+
+        # --- switch to virtual workspace N (ctrl + 1..9) ---------------------
         window_virtualnum_1 = "ctrl - 1";
         window_virtualnum_2 = "ctrl - 2";
         window_virtualnum_3 = "ctrl - 3";
