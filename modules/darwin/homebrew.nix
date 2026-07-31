@@ -69,6 +69,8 @@
       # System utilities
       "karabiner-elements"
       "linearmouse"
+      "transmission"
+      "discord"
 
       # Apps
       # "ghostty"
@@ -81,7 +83,6 @@
       "parsec"
       "prismlauncher"
       "Sanyam-G/switch/switch"
-      "equibop"
       "linear"
 
       # Design assets
