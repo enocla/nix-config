@@ -3,12 +3,23 @@
   configRepoName,
   theme,
   config,
+  lib,
   ...
 }
 : let
   config-dir = "${config.home.homeDirectory}/${configRepoName}/home/config";
   mkLink = config.lib.file.mkOutOfStoreSymlink;
 in {
+  # Home Manager generates configuration, but package installation is delegated
+  # to Homebrew or another external package manager.
+  home.packages = lib.mkForce [];
+
+  # Do not build Home Manager's Nix-provided man package or man-page cache.
+  programs.man = {
+    enable = false;
+    generateCaches = false;
+  };
+
   imports = [
     ./programs
     ./shell.nix
@@ -71,7 +82,5 @@ in {
     stateVersion = "25.11";
   };
 
-  # Let Home Manager install and manage itself.
   home.enableNixpkgsReleaseCheck = false;
-  programs.home-manager.enable = true;
 }

@@ -29,9 +29,6 @@
 
     home-manager = {
       url = "github:nix-community/home-manager";
-      # The `follows` keyword in inputs is used for inheritance.
-      # Here, `inputs.nixpkgs` of home-manager is kept consistent with the `inputs.nixpkgs` of the current flake,
-      # to avoid problems caused by different versions of nixpkgs dependencies.
       inputs.nixpkgs.follows = "nixpkgs-darwin";
     };
 
@@ -42,10 +39,6 @@
 
     darwin-custom-icons.url = "github:ryanccn/nix-darwin-custom-icons";
 
-    # Local checkout, patched with `window_focusnum_<n>` (focus the Nth column,
-    # counted horizontally). Branch `focusnum` in ~/Developer/paneru, based on
-    # upstream v0.4.4. Only commits are visible to nix, so commit there before
-    # rebuilding. Swap back to "github:karinushka/paneru" to drop the patch.
     paneru = {
       url = "git+file:///Users/tnixc/Developer/paneru?ref=focusnum";
       inputs.nixpkgs.follows = "nixpkgs-darwin";
@@ -61,6 +54,7 @@
     home-manager,
     darwin,
     darwin-custom-icons,
+    paneru,
     ...
   }: let
     hostConfig = import ./config/host.nix;
@@ -82,8 +76,6 @@
         ./modules/base
         ./modules/darwin
         ./modules/host-users.nix
-        ./modules/overlays.nix
-
         darwin-custom-icons.darwinModules.default
         ./modules/icons
 

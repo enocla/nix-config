@@ -12,7 +12,7 @@
       "show_go_models": false
     },
     "openai_compatible": {
-      
+
     }
   },
   "cli_default_open_behavior": "new_window",
@@ -97,9 +97,9 @@
     "dark": "Warm Charmed Icons"
   },
   "theme": {
-    "mode": "light",
+    "mode": "dark",
     "light": "Pierre Light",
-    "dark": "Pierre Dark"
+    "dark": "Pierre Dark Soft"
   },
   // The name of a base set of key bindings to use.
   // This setting can take four values, each named after another
@@ -259,6 +259,14 @@
     "default_width": 380,
   },
   "agent": {
+    "sandbox_permissions": {
+      "allow_all_hosts": true
+    },
+    "inline_assistant_model": {
+      "provider": "zed.dev",
+      "model": "gpt-5.6-luna",
+      "enable_thinking": false
+    },
     "favorite_models": [
       {
         "provider": "local",
@@ -271,9 +279,10 @@
       "default": "allow",
     },
     "default_model": {
-      "enable_thinking": false,
-      "provider": "opencode",
-      "model": "free/minimax-m2.5-free",
+      "effort": "medium",
+      "enable_thinking": true,
+      "provider": "zed.dev",
+      "model": "gpt-5.6-luna",
     },
     "model_parameters": [],
   },
@@ -509,6 +518,11 @@
   },
   // Different settings for specific languages.
   "languages": {
+    "C++": {
+      "indent_guides": {
+
+      }
+    },
     "C": {
       "show_edit_predictions": false,
     },
@@ -581,11 +595,11 @@
         // "arguments": ["--query-driver=/usr/bin/c++"]
       }
     },
-    "sourcekit-lsp": {
-      "binary": {
-        "path": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/sourcekit-lsp",
-      },
-    },
+    // "sourcekit-lsp": {
+    //   "binary": {
+    //     "path": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/sourcekit-lsp",
+    //   },
+    // },
   },
   "vim": {
     // "always": use system clipboard

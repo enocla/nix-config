@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{...}: {
   nix.settings = {
     experimental-features = [
       "nix-command"
@@ -15,5 +15,4 @@
     builders-use-substitutes = true;
   };
 
-  nix.package = pkgs.nix;
 }

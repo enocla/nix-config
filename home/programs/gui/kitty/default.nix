@@ -39,7 +39,7 @@ in {
 
     cursor_shape underline
 
-    shell /etc/profiles/per-user/${config.home.username}/bin/fish
+    shell /opt/malt/bin/fish
 
     macos_option_as_alt yes
     macos_colorspace displayp3

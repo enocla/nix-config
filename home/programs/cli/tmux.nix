@@ -48,7 +48,7 @@ in {
   home.packages = [tmux-dir tmux-picker];
   programs.tmux = {
     enable = true;
-    shell = "${pkgs.fish}/bin/fish";
+    shell = "fish";
     terminal = "tmux-256color";
     mouse = true;
     prefix = "C-Space";
@@ -56,9 +56,7 @@ in {
     escapeTime = 0;
     historyLimit = 10000;
     keyMode = "vi";
-    plugins = with pkgs.tmuxPlugins; [
-      better-mouse-mode
-    ];
+
     extraConfig = ''
       # Renumber windows so cmd+1-9 stays positional
       set -g renumber-windows on

@@ -1,21 +1,16 @@
-{
-  username,
-  pkgs,
-  ...
-}:
+{username, ...}:
 #############################################################
 #
 #  Host & Users configuration
 #
 #############################################################
 {
-  # Adds fish to /etc/shells so it can be used as a login shell.
-  programs.fish.enable = true;
+  environment.shells = ["/opt/homebrew/bin/fish"];
 
   users.users."${username}" = {
     home = "/Users/${username}";
     description = username;
-    shell = pkgs.fish;
+    shell = "/opt/homebrew/bin/fish";
   };
 
   nix.settings.trusted-users = [username];

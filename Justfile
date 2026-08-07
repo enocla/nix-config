@@ -1,16 +1,17 @@
 host := `hostname -s`
 
 deploy:
-    nh darwin switch . -H {{host}} --diff always
+    darwin-rebuild switch --flake .#{{host}}
 
 build:
-    nh darwin build . -H {{host}} --diff always
+    darwin-rebuild build --flake .#{{host}}
 
 update:
-    nh darwin build . -H {{host}} -u --diff always
+    nix flake update
+    darwin-rebuild build --flake .#{{host}}
 
 clean:
-    nh clean all --keep-since 7d --keep 3
+    nix-collect-garbage --delete-older-than 7d
 
 fmt:
     nix fmt .
