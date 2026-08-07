@@ -1,6 +1,6 @@
 {...}: {
   homebrew = {
-    enable = true;
+    enable = false;
 
     onActivation = {
       autoUpdate = true;
@@ -70,7 +70,7 @@
       "karabiner-elements"
       "linearmouse"
       "transmission"
-      "discord"
+      "thaw"
 
       # Apps
       # "ghostty"
@@ -93,6 +93,8 @@
       "font-maple-mono-normal-nf-cn"
       "font-sf-mono"
       "font-sf-pro"
+
+      "obsidian"
     ];
   };
 }

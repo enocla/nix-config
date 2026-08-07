@@ -65,6 +65,8 @@ in {
       bind -M insert \eh backward-word
       bind -M insert \el forward-word
       bind -M insert \e\x7f backward-kill-word
+
+      eval "$(/Users/tnixc/.local/bin/mise activate fish)"
     '';
   };
 }

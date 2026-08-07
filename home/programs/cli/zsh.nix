@@ -20,6 +20,8 @@
       # Key bindings
       bindkey '^[h' backward-word
       bindkey '^[l' forward-word
+
+      eval "$(/Users/tnixc/.local/bin/mise activate zsh)"
     '';
   };
 }

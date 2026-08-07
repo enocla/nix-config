@@ -33,7 +33,7 @@ in {
   home.sessionPath = [
     "/run/current-system/sw/bin"
     "/nix/var/nix/profiles/default/bin"
-    "/opt/homebrew/bin"
+    "/opt/malt/bin"
     "/usr/local/bin"
     "/etc/profiles/per-user/$USER/bin"
     "$HOME/.vite-plus/bin"
@@ -42,6 +42,7 @@ in {
     "$HOME/.cargo/bin"
     "$HOME/.local/bin"
     "$HOME/.craft/bin"
+    "$HOME/go/bin"
   ];
 
   # Shared shell aliases (works for all shells)
@@ -76,6 +77,8 @@ in {
 
     pcp = "pbcopy";
     ppy = "pbpaste";
+
+    rp = "realpath";
   };
 
   # Use home-manager's fzf and zoxide integration
