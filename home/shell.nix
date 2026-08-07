@@ -37,12 +37,10 @@ in {
     "/usr/local/bin"
     "/etc/profiles/per-user/$USER/bin"
     "$HOME/.vite-plus/bin"
-    "$HOME/.nix-profile/bin"
     "$HOME/.bun/bin"
     "$HOME/.cargo/bin"
     "$HOME/.local/bin"
     "$HOME/.craft/bin"
-    "$HOME/go/bin"
   ];
 
   # Shared shell aliases (works for all shells)

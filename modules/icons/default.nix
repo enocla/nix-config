@@ -11,10 +11,6 @@
         path = "/Applications/Ableton Live 12 Suite.app";
         icon = ./Ableton.icns;
       }
-      {
-        path = "/System/Volumes/Data/Applications/Equibop.app";
-        icon = ./Discord.icns;
-      }
     ];
   };
 }

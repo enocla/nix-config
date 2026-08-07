@@ -41,7 +41,6 @@
     };
 
     darwin-custom-icons.url = "github:ryanccn/nix-darwin-custom-icons";
-    rust-overlay.url = "github:oxalica/rust-overlay";
 
     # Local checkout, patched with `window_focusnum_<n>` (focus the Nth column,
     # counted horizontally). Branch `focusnum` in ~/Developer/paneru, based on
@@ -58,7 +57,7 @@
   # parameters in `outputs` are defined in `inputs` and can be referenced by their names.
   # The `@` syntax here is used to alias the attribute set of the inputs's parameter, making it convenient to use inside the function.
   outputs = inputs @ {
-    nixpkgs,
+    nixpkgs-darwin,
     home-manager,
     darwin,
     darwin-custom-icons,
@@ -100,6 +99,6 @@
     };
 
     # nix code formatter
-    formatter.${system} = nixpkgs.legacyPackages.${system}.alejandra;
+    formatter.${system} = nixpkgs-darwin.legacyPackages.${system}.alejandra;
   };
 }

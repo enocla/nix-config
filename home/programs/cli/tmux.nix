@@ -128,7 +128,6 @@ in {
       set -g pane-active-border-style "fg=${c.green}"
 
       # Statusbar
-      set -g status-position bottom
       set -g status-justify left
       set -g status-style "fg=${c.text} bg=${c.mantle}"
       set -g status-left ""
