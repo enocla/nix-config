@@ -54,6 +54,7 @@ in {
 
   programs.tmux = {
     enable = true;
+    package = null;
     shell = "fish";
     terminal = "tmux-256color";
     mouse = true;

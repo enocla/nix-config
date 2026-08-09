@@ -13,7 +13,11 @@ in {
   #    https://git-scm.com/docs/git-config#Documentation/git-config.txt---global
   programs.git = {
     enable = true;
-    lfs.enable = true;
+    package = null;
+    lfs = {
+      enable = true;
+      package = null;
+    };
 
     settings = {
       user.name = "Tnixc";

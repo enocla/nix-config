@@ -3,6 +3,7 @@
 in {
   programs.btop = {
     enable = true;
+    package = null;
     settings = {
       color_theme = "custom";
       theme_background = true;

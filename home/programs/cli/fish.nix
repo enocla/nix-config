@@ -13,8 +13,6 @@ in {
 
       fish_vi_key_bindings
 
-      eval $(opam env)
-
       function __expand_dots
         set -l levels (math (string length $argv[1]) - 1)
         string repeat -n $levels "../"

@@ -1,8 +1,4 @@
-{
-  theme,
-  config,
-  ...
-}: let
+{theme, ...}: let
   c = theme.colors;
 in {
   xdg.configFile."kitty/tab_bar.py".source = ./tab_bar.py;
@@ -131,6 +127,6 @@ in {
     map cmd+shift+n new_tab_with_cwd
 
     # Clipboard helper
-    map cmd+f launch --type=overlay --stdin-source=@screen_scrollback /bin/sh -c '${config.programs.fzf.package}/bin/fzf --no-sort --no-mouse --exact -i --tac | tr -d "\n" | kitty +kitten clipboard'
+    map cmd+f launch --type=overlay --stdin-source=@screen_scrollback /bin/sh -c 'fzf --no-sort --no-mouse --exact -i --tac | tr -d "\n" | kitty +kitten clipboard'
   '';
 }

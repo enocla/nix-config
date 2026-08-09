@@ -3,6 +3,7 @@
 in {
   programs.lazygit = {
     enable = true;
+    package = null;
     settings = {
       os = {
         edit = "nvim {{filename}}";

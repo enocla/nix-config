@@ -1,7 +1,7 @@
 host := `hostname -s`
 
 deploy:
-    darwin-rebuild switch --flake .#{{host}}
+    sudo darwin-rebuild switch --flake .#{{host}}
 
 build:
     darwin-rebuild build --flake .#{{host}}

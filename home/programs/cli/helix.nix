@@ -1,6 +1,7 @@
 {...}: {
   programs.helix = {
     enable = true;
+    package = null;
     settings = {
       theme = "autumn_night_transparent";
       editor = {

@@ -1,6 +1,7 @@
 {...}: {
   programs.gpg = {
     enable = true;
+    package = null;
     settings = {
       personal-digest-preferences = "SHA512";
       cert-digest-algo = "SHA512";
