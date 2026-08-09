@@ -27,6 +27,8 @@ in {
     GUM_FILTER_PROMPT_FOREGROUND = c.mauve;
     # spin
     GUM_SPIN_SPINNER_FOREGROUND = c.rosewater;
+
+    MALT_THEME = "everforest";
   };
 
   # Shared PATH additions (applies to all shells)
