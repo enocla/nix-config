@@ -4,12 +4,27 @@
   theme,
   config,
   lib,
+  pkgs,
   ...
 }
 : let
   config-dir = "${config.home.homeDirectory}/${configRepoName}/home/config";
   mkLink = config.lib.file.mkOutOfStoreSymlink;
+  externalPackage = name: {
+    binaries ? [name],
+    binaryDir ? "/opt/malt/bin",
+    links ? [],
+  }:
+    pkgs.runCommand "external-${name}-999.0.0" {
+      version = "999.0.0";
+      meta.mainProgram = name;
+    } ''
+      mkdir -p "$out/bin"
+      ${lib.concatMapStringsSep "\n" (binary: "ln -s ${binaryDir}/${binary} \"$out/bin/${binary}\"") binaries}
+      ${lib.concatMapStringsSep "\n" (link: "mkdir -p \"$(dirname \"$out/${link.path}\")\"\nln -s ${link.target} \"$out/${link.path}\"") links}
+    '';
 in {
+  _module.args.externalPackage = externalPackage;
   # Home Manager generates configuration, but package installation is delegated
   # to Homebrew or another external package manager.
   home.packages = lib.mkForce [];

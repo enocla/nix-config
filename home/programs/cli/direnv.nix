@@ -1,6 +1,7 @@
-{...}: {
+{externalPackage, ...}: {
   programs.direnv = {
     enable = true;
+    package = externalPackage "direnv" {};
     silent = true;
     enableZshIntegration = true;
     # enableFishIntegration = true;

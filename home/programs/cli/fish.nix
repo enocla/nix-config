@@ -1,9 +1,19 @@
-{theme, ...}: let
+{
+  externalPackage,
+  theme,
+  ...
+}: let
   c = theme.colors;
   strip = theme.rawHexValue;
 in {
   programs.fish = {
     enable = true;
+    package = externalPackage "fish" {
+      binaries = [
+        "fish"
+        "fish_indent"
+      ];
+    };
 
     interactiveShellInit = ''
       function off

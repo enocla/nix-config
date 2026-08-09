@@ -1,6 +1,15 @@
-{...}: {
+{externalPackage, ...}: {
   programs.zsh = {
     enable = true;
+    package = externalPackage "zsh" {
+      binaryDir = "/bin";
+      links = [
+        {
+          path = "share/zsh";
+          target = "/usr/share/zsh";
+        }
+      ];
+    };
     enableCompletion = true;
     autosuggestion.enable = true;
     historySubstringSearch.enable = true;

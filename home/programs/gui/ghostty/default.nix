@@ -21,7 +21,7 @@ in {
     adjust-cell-height = 72%
 
     # Shell
-    command = /etc/profiles/per-user/${config.home.username}/bin/fish
+    command = /opt/malt/bin/fish
     shell-integration = fish
 
     # Scrollback (kitty: scrollback_lines 10000; ghostty limit is bytes)

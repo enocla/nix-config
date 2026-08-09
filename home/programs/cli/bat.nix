@@ -1,9 +1,14 @@
-{theme, ...}: let
+{
+  externalPackage,
+  theme,
+  ...
+}: let
   c = theme.colors;
   ui = theme.ui;
 in {
   programs.bat = {
     enable = true;
+    package = externalPackage "bat" {};
     config = {
       theme = "custom";
     };

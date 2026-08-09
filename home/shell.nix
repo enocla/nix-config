@@ -1,4 +1,8 @@
-{theme, ...}: let
+{
+  externalPackage,
+  theme,
+  ...
+}: let
   c = theme.colors;
 in {
   # Shared environment variables for all shells
@@ -84,6 +88,12 @@ in {
   # Use home-manager's fzf and zoxide integration
   programs.fzf = {
     enable = true;
+    package = externalPackage "fzf" {
+      binaries = [
+        "fzf"
+        "fzf-tmux"
+      ];
+    };
     enableZshIntegration = true;
     enableFishIntegration = true;
     colors = {
@@ -105,6 +115,7 @@ in {
 
   programs.zoxide = {
     enable = true;
+    package = externalPackage "zoxide" {};
     enableZshIntegration = true;
     enableFishIntegration = true;
   };

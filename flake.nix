@@ -73,6 +73,22 @@
     darwinConfigurations."${hostname}" = darwin.lib.darwinSystem {
       inherit system specialArgs;
       modules = [
+        {
+          nixpkgs.overlays = [
+            (_final: prev: let
+              externalZshPlugin = name:
+                prev.runCommand "external-${name}-999.0.0" {} ''
+                  mkdir -p "$out/share"
+                  ln -s /opt/malt/share/${name} "$out/share/${name}"
+                '';
+            in {
+              # Home Manager sources these plugin trees by absolute store path.
+              zsh-autosuggestions = externalZshPlugin "zsh-autosuggestions";
+              zsh-history-substring-search = externalZshPlugin "zsh-history-substring-search";
+              zsh-syntax-highlighting = externalZshPlugin "zsh-syntax-highlighting";
+            })
+          ];
+        }
         ./modules/base
         ./modules/darwin
         ./modules/host-users.nix
