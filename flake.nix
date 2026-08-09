@@ -81,12 +81,13 @@
                   mkdir -p "$out/share"
                   ln -s /opt/malt/share/${name} "$out/share/${name}"
                 '';
-            in {
-              # Home Manager sources these plugin trees by absolute store path.
-              zsh-autosuggestions = externalZshPlugin "zsh-autosuggestions";
-              zsh-history-substring-search = externalZshPlugin "zsh-history-substring-search";
-              zsh-syntax-highlighting = externalZshPlugin "zsh-syntax-highlighting";
-            })
+            in
+              prev.lib.genAttrs [
+                "zsh-autosuggestions"
+                "zsh-history-substring-search"
+                "zsh-syntax-highlighting"
+              ]
+              externalZshPlugin)
           ];
         }
         ./modules/base

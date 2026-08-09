@@ -264,7 +264,7 @@
     },
     "inline_assistant_model": {
       "provider": "zed.dev",
-      "model": "gpt-5.6-luna",
+      "model": "gpt-5.6-sol",
       "enable_thinking": false
     },
     "favorite_models": [

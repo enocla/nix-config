@@ -5,40 +5,9 @@ return {
     {
         "neovim/nvim-lspconfig",
         lazy = false,
-    },
-
-    -- Mason - LSP installer
-    {
-        "mason-org/mason.nvim",
-        lazy = false,
-        build = ":MasonUpdate",
-        opts = {
-            ui = {
-                icons = {
-                    package_installed = "✓",
-                    package_pending = "➜",
-                    package_uninstalled = "✗",
-                },
-            },
-        },
-    },
-    {
-        "mason-org/mason-lspconfig.nvim",
-        lazy = false,
-        dependencies = { "mason-org/mason.nvim", "neovim/nvim-lspconfig" },
         config = function()
-            -- Load LSP configuration first (sets up vim.lsp.config overrides before mason-lspconfig enables servers)
             require("plugins.configs.lsp")
         end,
-    },
-    {
-        "WhoIsSethDaniel/mason-tool-installer.nvim",
-        dependencies = { "mason-org/mason.nvim" },
-        opts = {
-            ensure_installed = {},
-            auto_update = false,
-            run_on_start = false,
-        },
     },
     {
         "Darazaki/indent-o-matic",

@@ -50,31 +50,36 @@ local on_attach = function(client, bufnr)
     require("workspace-diagnostics").populate_workspace_diagnostics(client, bufnr)
 end
 
--- Configure servers with custom settings BEFORE mason-lspconfig auto-enables them
--- These configs are used when mason-lspconfig calls vim.lsp.enable() for installed servers
--- Set default config for all servers (wildcard pattern)
--- Any server without specific config above will inherit these settings
+-- Defaults apply to every explicitly enabled server below.
 vim.lsp.config("*", {
     capabilities = capabilities,
     on_attach = on_attach,
 })
 
--- Mason-lspconfig v2.x: automatically calls vim.lsp.enable() for all installed servers
--- For each server, it uses: nvim-lspconfig defaults + your vim.lsp.config() overrides
-require("mason-lspconfig").setup()
-
--- Non-Mason LSPs (installed via other package managers)
--- For servers not managed by Mason, define config AND manually enable them
-
--- Racket (installed via racket package manager)
-vim.lsp.config("racket_langserver", {
-    cmd = { "racket", "-l", "racket-langserver" },
-    capabilities = capabilities,
-    on_attach = on_attach,
+-- Keep this list synchronized with the language servers installed through mise
+-- or the system toolchain. Explicit enablement prevents stale tools from being
+-- activated merely because their binaries exist on PATH.
+vim.lsp.enable({
+    "astro",
+    "bashls",
+    "biome",
+    "clangd",
+    "cssls",
+    "denols",
+    "eslint",
+    "gopls",
+    "html",
+    "jsonls",
+    "lua_ls",
+    "pyright",
+    "ruff",
+    "rust_analyzer",
+    "svelte",
+    "tailwindcss",
+    "vtsls",
+    "vue_ls",
+    "yamlls",
 })
-vim.lsp.enable("racket_langserver") -- Manually enable since not managed by Mason
-
-vim.lsp.enable("nixd")
 
 vim.diagnostic.config({
     signs = {
