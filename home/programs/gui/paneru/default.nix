@@ -1,4 +1,4 @@
-{paneru, ...}: {
+{paneru, externalPackage, ...}: {
   imports = [paneru.homeModules.paneru];
 
   # paneru: sliding/tiling window manager for macOS.
@@ -6,6 +6,7 @@
   # in home/programs/gui/hammerspoon/init.lua (see git history).
   services.paneru = {
     enable = true;
+    package = externalPackage "paneru" {};
 
     settings = {
       # Screen-edge padding (the outer frame around the whole tiling area).
@@ -96,15 +97,15 @@
         # command, so `window_focusnum_N` comes from the local patch pinned as
         # the `paneru` flake input (see flake.nix). Counted horizontally from the
         # left of the strip; stacked columns focus their top window.
-        window_focusnum_1 = "alt + cmd + ctrl - 1";
-        window_focusnum_2 = "alt + cmd + ctrl - 2";
-        window_focusnum_3 = "alt + cmd + ctrl - 3";
-        window_focusnum_4 = "alt + cmd + ctrl - 4";
-        window_focusnum_5 = "alt + cmd + ctrl - 5";
-        window_focusnum_6 = "alt + cmd + ctrl - 6";
-        window_focusnum_7 = "alt + cmd + ctrl - 7";
-        window_focusnum_8 = "alt + cmd + ctrl - 8";
-        window_focusnum_9 = "alt + cmd + ctrl - 9";
+        # window_focusnum_1 = "alt + cmd + ctrl - 1";
+        # window_focusnum_2 = "alt + cmd + ctrl - 2";
+        # window_focusnum_3 = "alt + cmd + ctrl - 3";
+        # window_focusnum_4 = "alt + cmd + ctrl - 4";
+        # window_focusnum_5 = "alt + cmd + ctrl - 5";
+        # window_focusnum_6 = "alt + cmd + ctrl - 6";
+        # window_focusnum_7 = "alt + cmd + ctrl - 7";
+        # window_focusnum_8 = "alt + cmd + ctrl - 8";
+        # window_focusnum_9 = "alt + cmd + ctrl - 9";
 
         # --- switch to virtual workspace N (ctrl + 1..9) ---------------------
         window_virtualnum_1 = "ctrl - 1";
