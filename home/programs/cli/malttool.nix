@@ -39,7 +39,7 @@
           in_list {
             value = $0
             sub(/^[[:space:]]*"/, "", value)
-            sub(/",[[:space:]]*$/, "", value)
+            sub(/",?[[:space:]]*$/, "", value)
             if (value == package) {
               print list
             }
@@ -83,7 +83,7 @@
               in_list {
                 value = $0
                 sub(/^[[:space:]]*"/, "", value)
-                sub(/",[[:space:]]*$/, "", value)
+                sub(/",?[[:space:]]*$/, "", value)
                 if (value == package) {
                   changed = 1
                   next

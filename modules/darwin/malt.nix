@@ -62,7 +62,6 @@
     "tldr"
     "tmux"
     "tomlplusplus"
-    "topiary"
     "watch"
     "webp"
     "wget"
@@ -101,7 +100,6 @@
     "switch"
     "visual-studio-code"
     "zed"
-    # -- casks end --
   ];
 
   format = type: packages:
