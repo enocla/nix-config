@@ -101,6 +101,7 @@
     "switch"
     "visual-studio-code"
     "zed"
+    # -- casks end --
   ];
 
   format = type: packages:
