@@ -48,6 +48,7 @@ in {
     ".config/karabiner" = {source = mkLink "${config-dir}/karabiner";};
     ".config/Code/User/settings.json" = {source = mkLink "${config-dir}/Code/User/settings.json";};
     ".config/zed" = {source = mkLink "${config-dir}/zed";};
+    ".config/mise/config.toml" = {source = mkLink "${config.home.homeDirectory}/${configRepoName}/extra/mise/config.toml";};
     "${configRepoName}/home/config/nvim/lua/theme/colors.lua".text = ''
       return {
           rosewater = "${theme.colors.rosewater}",

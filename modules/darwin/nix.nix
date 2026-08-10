@@ -1,22 +1,12 @@
 {...}: {
-  nix = {
-    enable = false;
-    # Nix gc works slightly differently on darwin, so we need to adjust the
-    # interval such that it works properly here.
-    # gc = {
-    #   automatic = true;
-    #   interval = {
-    #     Hour = 3;
-    #     Minute = 15;
-    #   };
-    #   options = "--delete-older-than 7d";
-    # };
+  # Determinate Nix manages nix.conf and includes this file for local policy.
+  nix.enable = false;
 
-    # # We add more platforms here because of the limited number of darwin
-    # # maintainers that exist, thus meaning less working packages for darwin.
-    # settings.extra-platforms = [
-    #   "aarch64-darwin"
-    #   "x86_64-darwin"
-    # ];
-  };
+  environment.etc."nix/nix.custom.conf".text = ''
+    http-connections = 128
+    max-substitution-jobs = 128
+    builders-use-substitutes = true
+    extra-substituters = https://mirror.sjtu.edu.cn/nix-channels/store https://nix-community.cachix.org
+    extra-trusted-public-keys = nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=
+  '';
 }

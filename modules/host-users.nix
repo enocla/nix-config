@@ -12,6 +12,4 @@
     description = username;
     shell = "/opt/homebrew/bin/fish";
   };
-
-  nix.settings.trusted-users = [username];
 }

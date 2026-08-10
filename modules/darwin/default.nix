@@ -1,6 +1,7 @@
 {...}: {
   imports = [
     ./environment
+    ./malt.nix
     ./nix.nix
     ./preferences
     ./security

@@ -1,4 +1,8 @@
-{paneru, externalPackage, ...}: {
+{
+  paneru,
+  externalPackage,
+  ...
+}: {
   imports = [paneru.homeModules.paneru];
 
   # paneru: sliding/tiling window manager for macOS.
