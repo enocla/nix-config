@@ -1,14 +1,15 @@
 host := `hostname -s`
 
 deploy:
-    sudo darwin-rebuild switch --flake .#{{host}}
+    nix build .#darwinConfigurations.{{host}}.system
+    sudo ./result/activate
 
 build:
-    darwin-rebuild build --flake .#{{host}}
+    nix build .#darwinConfigurations.{{host}}.system
 
 update:
     nix flake update
-    darwin-rebuild build --flake .#{{host}}
+    nix build .#darwinConfigurations.{{host}}.system
 
 clean:
     nix-collect-garbage --delete-older-than 7d
