@@ -52,8 +52,14 @@
         ids = ["*"];
         settings = {
           global.overload_tap_timeout = 250;
-          main.capslock = "overload(hyper, tab)";
-          "hyper:C-M-A-S" = {};
+          main = {
+            capslock = "overload(hyper, tab)";
+            leftalt = "leftmeta";
+            leftmeta = "leftalt";
+            rightalt = "rightmeta";
+            rightmeta = "rightalt";
+          };
+          "hyper:C-M-A" = {};
         };
       };
     };

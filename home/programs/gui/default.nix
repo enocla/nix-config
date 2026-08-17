@@ -5,5 +5,8 @@
 }: {
   imports =
     [./kitty]
-    ++ lib.optionals (lib.hasSuffix "-linux" system) [./vicinae];
+    ++ lib.optionals (lib.hasSuffix "-linux" system) [
+      ./kde
+      ./vicinae
+    ];
 }

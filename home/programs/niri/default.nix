@@ -6,6 +6,7 @@
 }: let
   c = theme.colors;
   inherit (theme.ui) cornerRadius fontFamily;
+  wallpaper = ../../../extra/wallpaper/phos.webp;
   dmsPalette = {
     name = "nix-config";
     primary = c.mauve;
@@ -46,6 +47,18 @@ in {
       customThemeFile = "${config.xdg.configHome}/DankMaterialShell/theme.json";
       inherit cornerRadius fontFamily;
       monoFontFamily = fontFamily;
+      showClipboard = false;
+      showLauncherButton = false;
+      niriOverviewOverlayEnabled = false;
+      dankLauncherV2IncludeFilesInAll = false;
+      dankLauncherV2IncludeFoldersInAll = false;
+      builtInPluginSettings.dms_clipboard_search.enabled = false;
+    };
+    clipboardSettings.disabled = true;
+    session = {
+      wallpaperPath = "${wallpaper}";
+      wallpaperPathLight = "${wallpaper}";
+      wallpaperPathDark = "${wallpaper}";
     };
   };
 
@@ -53,6 +66,11 @@ in {
   systemd.user.services.dms.Service.Environment = [
     "PATH=${config.home.homeDirectory}/.local/state/nix/profiles/home-manager/home-path/bin:/etc/profiles/per-user/${config.home.username}/bin:/run/current-system/sw/bin"
   ];
+
+  # DMS rewrites its mutable session atomically, and the existing fontconfig target
+  # predates Home Manager ownership. Reassert both declarative files on activation.
+  xdg.stateFile."DankMaterialShell/session.json".force = true;
+  xdg.configFile."fontconfig/conf.d/10-hm-fonts.conf".force = true;
 
   xdg.configFile."DankMaterialShell/theme.json".text = builtins.toJSON {
     dark = dmsPalette;
@@ -125,18 +143,15 @@ in {
 
     binds {
         // macOS-style system bindings: Super is the Cmd equivalent on Linux.
-        Mod+Return { spawn "kitty"; }
+        Mod+Ctrl+Alt+Return hotkey-overlay-title="Kitty" { spawn "kitty"; }
         Mod+Q { close-window; }
 
-        // Vicinae is the primary application launcher; DMS Spotlight remains available.
+        // Vicinae is the application launcher and clipboard manager.
         Mod+Space hotkey-overlay-title="Application Launcher" {
             spawn "vicinae" "toggle";
         }
-        Mod+Shift+Space hotkey-overlay-title="DMS Spotlight" {
-            spawn "dms" "ipc" "call" "spotlight" "toggle";
-        }
-        Mod+V hotkey-overlay-title="Clipboard Manager" {
-            spawn "dms" "ipc" "call" "clipboard" "toggle";
+        Ctrl+E hotkey-overlay-title="Clipboard History" {
+            spawn "vicinae" "deeplink" "vicinae://launch/clipboard/history?toggle=true";
         }
         Mod+M hotkey-overlay-title="Task Manager" {
             spawn "dms" "ipc" "call" "processlist" "focusOrToggle";
