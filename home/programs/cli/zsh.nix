@@ -1,4 +1,8 @@
-{externalPackage, ...}: {
+{
+  config,
+  externalPackage,
+  ...
+}: {
   programs.zsh = {
     enable = true;
     package = externalPackage "zsh" {
@@ -23,7 +27,9 @@
       bindkey '^[h' backward-word
       bindkey '^[l' forward-word
 
-      eval "$(/Users/tnixc/.local/bin/mise activate zsh)"
+      if [ -x ${config.home.homeDirectory}/.local/bin/mise ]; then
+        eval "$(${config.home.homeDirectory}/.local/bin/mise activate zsh)"
+      fi
     '';
   };
 }

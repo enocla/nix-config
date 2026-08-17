@@ -1,7 +1,9 @@
-{...}: {
-  imports = [
-    ./paneru
-    ./kitty
-    ./ghostty
-  ];
+{
+  lib,
+  system,
+  ...
+}: {
+  imports =
+    [./kitty]
+    ++ lib.optionals (lib.hasSuffix "-linux" system) [./vicinae];
 }

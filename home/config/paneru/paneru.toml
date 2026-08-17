@@ -1,0 +1,65 @@
+# Window bindings in this file are mirrored in home/programs/niri/default.nix.
+
+[options]
+focus_follows_mouse = true
+mouse_follows_focus = false
+preset_column_widths = [0.333, 0.5, 0.667, 0.8]
+animation_speed = 40.0
+reap_empty_workspaces = true
+virtual_workspace_animations = true
+
+[padding]
+top = 6
+bottom = 6
+left = 6
+right = 6
+
+[swipe]
+sensitivity = 0.5
+continuous = false
+
+[swipe.gesture]
+fingers_count = 3
+direction = "Natural"
+vertical = true
+
+[windows.all]
+title = ".*"
+horizontal_padding = 6
+vertical_padding = 6
+
+[bindings]
+window_focus_west = ["alt + cmd + ctrl - h", "alt + cmd + ctrl - q"]
+window_focus_south = "alt + cmd + ctrl - j"
+window_focus_north = "alt + cmd + ctrl - k"
+window_focus_east = ["alt + cmd + ctrl - l", "alt + cmd + ctrl - e"]
+window_swap_west = "alt + cmd + ctrl - leftarrow"
+window_swap_east = "alt + cmd + ctrl - rightarrow"
+window_swap_north = ["alt + cmd + ctrl - uparrow", "alt + cmd + ctrl - a"]
+window_swap_south = ["alt + cmd + ctrl - downarrow", "alt + cmd + ctrl - d"]
+window_center = "alt - c"
+window_fullwidth = "alt - f"
+window_resize = "alt - r"
+window_grow = "alt + cmd + ctrl - equal"
+window_shrink = "alt + cmd + ctrl - minus"
+window_stack = "alt - leftbracket"
+window_unstack = "alt - rightbracket"
+window_manage = "alt + cmd + ctrl - escape"
+window_virtualnum_1 = "ctrl - 1"
+window_virtualnum_2 = "ctrl - 2"
+window_virtualnum_3 = "ctrl - 3"
+window_virtualnum_4 = "ctrl - 4"
+window_virtualnum_5 = "ctrl - 5"
+window_virtualnum_6 = "ctrl - 6"
+window_virtualnum_7 = "ctrl - 7"
+window_virtualnum_8 = "ctrl - 8"
+window_virtualnum_9 = "ctrl - 9"
+window_virtualmovenum_1 = "ctrl + shift - 1"
+window_virtualmovenum_2 = "ctrl + shift - 2"
+window_virtualmovenum_3 = "ctrl + shift - 3"
+window_virtualmovenum_4 = "ctrl + shift - 4"
+window_virtualmovenum_5 = "ctrl + shift - 5"
+window_virtualmovenum_6 = "ctrl + shift - 6"
+window_virtualmovenum_7 = "ctrl + shift - 7"
+window_virtualmovenum_8 = "ctrl + shift - 8"
+window_virtualmovenum_9 = "ctrl + shift - 9"

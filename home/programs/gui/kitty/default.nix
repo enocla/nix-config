@@ -1,11 +1,43 @@
-{theme, ...}: let
+{
+  lib,
+  pkgs,
+  theme,
+  ...
+}: let
   c = theme.colors;
+  isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
+  primaryModifier =
+    if isDarwin
+    then "cmd"
+    else "super";
+  shell =
+    if isDarwin
+    then "/opt/malt/bin/fish"
+    else "${pkgs.fish}/bin/fish";
 in {
   xdg.configFile."kitty/tab_bar.py".source = ./tab_bar.py;
   xdg.configFile."kitty/theme_colors.json".text = builtins.toJSON theme.colors;
 
+  # Keep a user-local application entry so launchers such as Vicinae can find Kitty
+  # even when the package itself comes from the system profile.
+  xdg.dataFile."applications/kitty.desktop" = lib.mkIf (!isDarwin) {
+    text = ''
+      [Desktop Entry]
+      Type=Application
+      Version=1.5
+      Name=Kitty
+      GenericName=Terminal Emulator
+      Comment=Fast, feature-rich, GPU based terminal
+      Exec=${pkgs.kitty}/bin/kitty
+      Icon=kitty
+      Terminal=false
+      Categories=System;TerminalEmulator;
+      StartupWMClass=kitty
+    '';
+  };
+
   xdg.configFile."kitty/kitty.conf".text = ''
-    font_family BerkeleyMono Nerd Font
+    font_family ${theme.ui.fontFamily}
     font_size 14
 
     url_style straight
@@ -35,10 +67,12 @@ in {
 
     cursor_shape underline
 
-    shell /opt/malt/bin/fish
+    shell ${shell}
 
-    macos_option_as_alt yes
-    macos_colorspace displayp3
+    ${lib.optionalString isDarwin ''
+      macos_option_as_alt yes
+      macos_colorspace displayp3
+    ''}
 
     paste_actions quote-urls-at-prompt,confirm-if-large
     copy_on_select yes
@@ -104,29 +138,29 @@ in {
     modify_font cell_height 172%
 
     # Tab management
-    map cmd+t new_tab_with_cwd
-    map cmd+w close_tab
-    map cmd+1 goto_tab 1
-    map cmd+2 goto_tab 2
-    map cmd+3 goto_tab 3
-    map cmd+4 goto_tab 4
-    map cmd+5 goto_tab 5
-    map cmd+6 goto_tab 6
-    map cmd+7 goto_tab 7
-    map cmd+8 goto_tab 8
-    map cmd+9 goto_tab 9
+    map ${primaryModifier}+t new_tab_with_cwd
+    map ${primaryModifier}+w close_tab
+    map ${primaryModifier}+1 goto_tab 1
+    map ${primaryModifier}+2 goto_tab 2
+    map ${primaryModifier}+3 goto_tab 3
+    map ${primaryModifier}+4 goto_tab 4
+    map ${primaryModifier}+5 goto_tab 5
+    map ${primaryModifier}+6 goto_tab 6
+    map ${primaryModifier}+7 goto_tab 7
+    map ${primaryModifier}+8 goto_tab 8
+    map ${primaryModifier}+9 goto_tab 9
     map ctrl+tab next_tab
     map ctrl+shift+tab previous_tab
 
     # Window management
-    map cmd+shift+w close_window
+    map ${primaryModifier}+shift+w close_window
 
     # Tab navigation
-    map cmd+up previous_tab
-    map cmd+down next_tab
-    map cmd+shift+n new_tab_with_cwd
+    map ${primaryModifier}+up previous_tab
+    map ${primaryModifier}+down next_tab
+    map ${primaryModifier}+shift+n new_tab_with_cwd
 
     # Clipboard helper
-    map cmd+f launch --type=overlay --stdin-source=@screen_scrollback /bin/sh -c 'fzf --no-sort --no-mouse --exact -i --tac | tr -d "\n" | kitty +kitten clipboard'
+    map ${primaryModifier}+f launch --type=overlay --stdin-source=@screen_scrollback /bin/sh -c 'fzf --no-sort --no-mouse --exact -i --tac | tr -d "\n" | kitty +kitten clipboard'
   '';
 }

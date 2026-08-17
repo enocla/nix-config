@@ -132,7 +132,7 @@
   //         },
   "buffer_line_height": "comfortable",
   // The name of a font to use for rendering text in the UI
-  "ui_font_family": "Lilex",
+  "ui_font_family": "BerkeleyMono Nerd Font",
   // The OpenType features to enable for text in the UI
   "ui_font_features": {
     // Disable ligatures:
@@ -511,7 +511,7 @@
     // "font_size": "15",
     // Set the terminal's font family. If this option is not included,
     // the terminal will default to matching the buffer's font family.
-    "font_family": "Maple Mono NF",
+    "font_family": "BerkeleyMono Nerd Font",
   },
   "indent_guides": {
     "enabled": true,

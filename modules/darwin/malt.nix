@@ -83,7 +83,6 @@
     "craft"
     "font-maple-mono-nf"
     "font-maple-mono-normal-nf-cn"
-    "ghostty"
     "google-chrome"
     "helium-browser"
     "iina"

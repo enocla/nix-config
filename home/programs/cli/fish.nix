@@ -1,4 +1,5 @@
 {
+  config,
   externalPackage,
   theme,
   ...
@@ -74,7 +75,9 @@ in {
       bind -M insert \el forward-word
       bind -M insert \e\x7f backward-kill-word
 
-      eval "$(/Users/tnixc/.local/bin/mise activate fish)"
+      if test -x ${config.home.homeDirectory}/.local/bin/mise
+        eval "$(${config.home.homeDirectory}/.local/bin/mise activate fish)"
+      end
     '';
   };
 }

@@ -1,4 +1,8 @@
-{...}: {
+{
+  lib,
+  pkgs,
+  ...
+}: {
   programs.gpg = {
     enable = true;
     package = null;
@@ -10,9 +14,11 @@
     };
   };
 
-  home.file.".gnupg/gpg-agent.conf".text = ''
-    pinentry-program /opt/homebrew/bin/pinentry-mac
-    default-cache-ttl 3600
-    max-cache-ttl 7200
-  '';
+  home.file.".gnupg/gpg-agent.conf" = lib.mkIf pkgs.stdenv.hostPlatform.isDarwin {
+    text = ''
+      pinentry-program /opt/homebrew/bin/pinentry-mac
+      default-cache-ttl 3600
+      max-cache-ttl 7200
+    '';
+  };
 }

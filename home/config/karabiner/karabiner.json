@@ -275,10 +275,11 @@
                         ]
                     },
                     {
-                        "description": "Change Caps Lock to Command + Option + Control (Hyper Key)",
+                        "description": "Tap Caps Lock for Tab; hold for Hyper",
                         "manipulators": [
                             {
                                 "from": { "key_code": "caps_lock" },
+                                "parameters": { "basic.to_if_alone_timeout_milliseconds": 250 },
                                 "to": [
                                     {
                                         "key_code": "left_command",
