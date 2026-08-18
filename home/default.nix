@@ -48,8 +48,8 @@ in {
     {
       ".hushlogin".text = "";
 
-      ".config/nvim" = {source = mkLink "${config-dir}/nvim";};
-      ".config/mise/config.toml" = {source = mkLink "${config.home.homeDirectory}/${configRepoName}/extra/mise/config.toml";};
+      ".config/nvim" = {source = mkLink "${config-dir}/nvim"; recursive = true;};
+      ".config/zed" = {source = mkLink "${config-dir}/zed";recursive = true;};
       "${configRepoName}/home/config/nvim/lua/theme/colors.lua".text = ''
         return {
             rosewater = "${theme.colors.rosewater}",
@@ -85,7 +85,7 @@ in {
       ".config/karabiner" = {source = mkLink "${config-dir}/karabiner";};
       ".config/paneru/paneru.toml" = {source = mkLink "${config-dir}/paneru/paneru.toml";};
       ".config/Code/User/settings.json" = {source = mkLink "${config-dir}/Code/User/settings.json";};
-      ".config/zed" = {source = mkLink "${config-dir}/zed";};
+      ".config/mise/config.toml" = {source = mkLink "${config.home.homeDirectory}/${configRepoName}/extra/mise/config.toml";};
     };
 
   home = {

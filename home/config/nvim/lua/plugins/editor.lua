@@ -124,21 +124,20 @@ return {
             }
         end,
     },
-
     -- Copilot
-    {
-        "zbirenbaum/copilot.lua",
-        cmd = "Copilot",
-        event = "InsertEnter",
-        opts = {
-            suggestion = { enabled = false },
-            panel = { enabled = false },
-            filetypes = {
-                markdown = true,
-                help = true,
-            },
-        },
-    },
+    -- {
+    --     "zbirenbaum/copilot.lua",
+    --     cmd = "Copilot",
+    --     event = "InsertEnter",
+    --     opts = {
+    --         suggestion = { enabled = false },
+    --         panel = { enabled = false },
+    --         filetypes = {
+    --             markdown = true,
+    --             help = true,
+    --         },
+    --     },
+    -- },
     {
         "folke/flash.nvim",
         event = "VeryLazy",

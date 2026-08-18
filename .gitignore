@@ -1,13 +1,11 @@
 .DS_Store
-result/
-result-/
-result-
-result
+result*
 .git-old
 nohup.out
 conversations/
 home/config/zed/prompts/*
 .crush/
+*.local
 
 
 home/config/zed/prompts

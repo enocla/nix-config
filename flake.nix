@@ -40,7 +40,7 @@
     ...
   }: let
     inherit (nixpkgs) lib;
-    configRepoName = "nix-config";
+    hosts = import ./config/host.nix;
     theme = import ./lib/theme.nix {inherit lib;};
     colorMix = import ./lib/color-mix.nix;
 
@@ -48,22 +48,11 @@
       inputs
       // host
       // {
-        inherit configRepoName theme colorMix;
+        inherit theme colorMix;
       };
 
-    diamond = {
-      hostname = "Diamond";
-      username = "tnixc";
-      system = "aarch64-darwin";
-      gpgKey = "6AB7F7CC83CEC7A6";
-    };
-
-    bort = {
-      hostname = "Bort";
-      username = "enocla";
-      system = "x86_64-linux";
-      gpgKey = "6AB7F7CC83CEC7A6";
-    };
+    diamond = hosts.Diamond;
+    bort = hosts.Bort;
   in {
     darwinConfigurations.Diamond = darwin.lib.darwinSystem {
       inherit (diamond) system;

@@ -153,5 +153,7 @@ in {
     zig
     zlib
     zoxide
+    zed-editor
+    kiro-cli
   ];
 }

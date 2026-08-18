@@ -87,6 +87,7 @@ in {
             tap
             natural-scroll
         }
+        focus-follows-mouse
     }
 
     environment {
