@@ -7,6 +7,7 @@
     [./kitty]
     ++ lib.optionals (lib.hasSuffix "-linux" system) [
       ./kde
+      ./nixcord.nix
       ./vicinae
     ];
 }

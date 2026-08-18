@@ -51,7 +51,8 @@ in {
   # Shared application and compositor UI settings
   ui = {
     cornerRadius = 12;
-    fontFamily = "BerkeleyMono Nerd Font";
+    fontFamily = "SF Pro Text";
+    monospaceFontFamily = "BerkeleyMono Nerd Font";
     findHighlight = colorMix colors.base colors.sky 0.5;
   };
 }

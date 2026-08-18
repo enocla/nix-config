@@ -7,7 +7,7 @@
 in {
   xdg.configFile."ghostty/config".text = ''
     # Font
-    font-family = BerkeleyMono Nerd Font
+    font-family = ${theme.ui.monospaceFontFamily}
     font-size = 14
 
     # disable_ligatures always

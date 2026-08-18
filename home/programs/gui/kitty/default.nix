@@ -18,6 +18,42 @@ in {
   xdg.configFile."kitty/tab_bar.py".source = ./tab_bar.py;
   xdg.configFile."kitty/theme_colors.json".text = builtins.toJSON theme.colors;
 
+  # keyd translates Cmd+C/V to Ctrl+C/V for regular applications. Terminals
+  # need Ctrl+Shift+C/V for clipboard operations, so override those bindings
+  # only while Kitty is the active application.
+  xdg.configFile."keyd/app.conf" = lib.mkIf (!isDarwin) {
+    text = ''
+      [kitty]
+      cmd.c = C-S-c
+      cmd.v = C-S-v
+      cmd.t = M-t
+      cmd.w = M-w
+      cmd.0 = M-0
+      cmd.1 = M-1
+      cmd.2 = M-2
+      cmd.3 = M-3
+      cmd.4 = M-4
+      cmd.5 = M-5
+      cmd.6 = M-6
+      cmd.7 = M-7
+      cmd.8 = M-8
+      cmd.9 = M-9
+    '';
+  };
+
+  systemd.user.services.keyd-application-mapper = lib.mkIf (!isDarwin) {
+    Unit = {
+      Description = "Keyd application-specific keyboard mappings";
+      After = ["graphical-session.target"];
+    };
+    Service = {
+      Environment = ["PATH=${lib.makeBinPath [pkgs.keyd]}"];
+      ExecStart = ["${pkgs.keyd}/bin/keyd-application-mapper"];
+      Restart = "on-failure";
+      RestartSec = 2;
+    };
+    Install.WantedBy = ["graphical-session.target"];
+  };
   # Keep a user-local application entry so launchers such as Vicinae can find Kitty
   # even when the package itself comes from the system profile.
   xdg.dataFile."applications/kitty.desktop" = lib.mkIf (!isDarwin) {
@@ -37,7 +73,7 @@ in {
   };
 
   xdg.configFile."kitty/kitty.conf".text = ''
-    font_family ${theme.ui.fontFamily}
+    font_family ${theme.ui.monospaceFontFamily}
     font_size 14
 
     url_style straight

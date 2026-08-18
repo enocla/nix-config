@@ -11,6 +11,7 @@
     };
 
     noctalia.url = "github:noctalia-dev/noctalia/cachix";
+    nixcord.url = "github:4evy/nixcord";
     matugen.url = "github:/InioX/Matugen";
 
     vicinae = {

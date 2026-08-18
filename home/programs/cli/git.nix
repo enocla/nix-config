@@ -66,6 +66,10 @@ in {
       diff.colorMoved = "default";
       init.defaultBranch = "main";
       push.autoSetupRemote = true;
+
+      # Reuse GitHub CLI's keyring-backed token for HTTPS Git operations.
+      # This avoids plaintext credentials and the ksshaskpass fallback.
+      credential.helper = "!gh auth git-credential";
     };
   };
 }

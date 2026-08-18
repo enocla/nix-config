@@ -1,4 +1,5 @@
 {
+  lib,
   matugen,
   pkgs,
   ...
@@ -30,6 +31,45 @@
       install -Dm755 prism "$out/bin/prism"
       runHook postInstall
     '';
+  };
+
+  pythonEnv = pkgs.python3.withPackages (pythonPackages:
+    with pythonPackages; [
+      fuse
+      jsonpickle
+      pyicloud
+      pyyaml
+    ]);
+
+  icloudLinux = pkgs.stdenvNoCC.mkDerivation {
+    pname = "icloud-linux";
+    version = "unstable-2026-08-18";
+    src = pkgs.fetchFromGitHub {
+      owner = "IsmaeelAkram";
+      repo = "icloud-linux";
+      rev = "acf8f7a8b704bb0e01259895e7100d2b76251662";
+      hash = "sha256-1X7vSpbJkTb0iSZQMpnNJILQaTth/cJRvwtF/mRbank=";
+    };
+    nativeBuildInputs = [pkgs.makeWrapper];
+    dontBuild = true;
+    installPhase = ''
+      runHook preInstall
+      install -d "$out/libexec/icloud-linux" "$out/bin"
+      cp -- *.py config.example.yaml icloudctl "$out/libexec/icloud-linux/"
+      chmod +x "$out/libexec/icloud-linux/icloudctl"
+
+      # Use immutable Nix dependencies while leaving credentials, cookies,
+      # cache, and the generated user service in the user's home directory.
+      substituteInPlace "$out/libexec/icloud-linux/icloudctl" \
+        --replace-fail 'ensure_venv() {' 'ensure_venv() { return 0; # dependencies are supplied by Nix' \
+        --replace-fail '"$REPO_DIR/.venv/bin/python"' '${pythonEnv}/bin/python' \
+        --replace-fail '/usr/bin/fusermount' '/run/wrappers/bin/fusermount'
+
+      makeWrapper "$out/libexec/icloud-linux/icloudctl" "$out/bin/icloudctl" \
+        --prefix PATH : "/run/wrappers/bin:${lib.makeBinPath [pkgs.systemd pythonEnv]}"
+      runHook postInstall
+    '';
+    meta.mainProgram = "icloudctl";
   };
 in {
   # accli and xcodegen require macOS APIs and cannot run on Bort.
@@ -65,6 +105,7 @@ in {
     eza
     eog
     fastfetch
+    flameshot
     fd
     ffmpeg
     font-awesome
@@ -182,5 +223,8 @@ in {
     zoxide
     zed-editor
     kiro-cli
+    icloudLinux
+    yazi
+    obsidian
   ];
 }

@@ -1,5 +1,6 @@
 {
   config,
+  configRepoName,
   dms,
   lib,
   matugen,
@@ -9,7 +10,9 @@
   ...
 }: let
   c = theme.colors;
-  inherit (theme.ui) cornerRadius fontFamily;
+  inherit (theme.ui) cornerRadius fontFamily monospaceFontFamily;
+  configDir = "${config.home.homeDirectory}/${configRepoName}/home/config";
+  mkLink = config.lib.file.mkOutOfStoreSymlink;
   wallpaper = ../../../extra/wallpaper/phos.webp;
   matugenPackage = matugen.packages.${pkgs.stdenv.hostPlatform.system}.default;
 in {
@@ -57,11 +60,11 @@ in {
     enable = true;
     platformTheme.name = "gtk3";
     qt5ctSettings.Fonts = {
-      fixed = "\"${fontFamily},13\"";
+      fixed = "\"${monospaceFontFamily},13\"";
       general = "\"${fontFamily},13\"";
     };
     qt6ctSettings.Fonts = {
-      fixed = "\"${fontFamily},13\"";
+      fixed = "\"${monospaceFontFamily},13\"";
       general = "\"${fontFamily},13\"";
     };
   };
@@ -80,57 +83,57 @@ in {
 
   programs.noctalia = {
     enable = true;
-    settings = {
-      bar.default = {
-        margin_edge = 0;
-        margin_ends = 0;
-        position = "left";
-        radius = 0;
-        scale = 1.15;
-        thickness = 36;
-      };
-      hooks.wallpaper_changed = ''
-        wal --cols16 -i "$NOCTALIA_WALLPAPER_PATH" & matugen image "$NOCTALIA_WALLPAPER_PATH" --opacity 0.85 --source-color-index 0
-      '';
-      location.auto_locate = true;
-      lockscreen_widgets = {
-        enabled = false;
-        schema_version = 2;
-        widget_order = ["lockscreen-login-box@eDP-1"];
-        grid = {
-          cell_size = 16;
-          major_interval = 4;
-          visible = true;
-        };
-        widget."lockscreen-login-box@eDP-1" = {
-          box_height = 70.0;
-          box_width = 400.0;
-          cx = 960.0;
-          cy = 961.0;
-          output = "eDP-1";
-          rotation = 0.0;
-          type = "login_box";
-          settings = {
-            background_color = "surface_variant";
-            background_opacity = 0.88;
-            background_radius = 12.0;
-            input_opacity = 1.0;
-            input_radius = 6.0;
-            show_login_button = true;
+    # This file intentionally lives outside the Nix store so Noctalia can edit it.
+    # Build-time validation cannot follow that host checkout from the sandbox.
+    validateConfig = false;
+    settings = mkLink "${configDir}/noctalia/config.toml";
+    customPalettes."nix-config" = {
+      dark = {
+        mPrimary = c.mauve;
+        mOnPrimary = c.crust;
+        mSecondary = c.teal;
+        mOnSecondary = c.crust;
+        mTertiary = c.pink;
+        mOnTertiary = c.crust;
+        mError = c.red;
+        mOnError = c.crust;
+        mSurface = c.base;
+        mOnSurface = c.text;
+        mSurfaceVariant = c.surface1;
+        mOnSurfaceVariant = c.subtext1;
+        mOutline = c.overlay1;
+        mShadow = c.crust;
+        mHover = c.pink;
+        mOnHover = c.crust;
+        terminal = {
+          normal = {
+            black = c.crust;
+            red = c.red;
+            green = c.green;
+            yellow = c.yellow;
+            blue = c.blue;
+            magenta = c.mauve;
+            cyan = c.sky;
+            white = c.text;
           };
+          bright = {
+            black = c.overlay0;
+            red = c.red;
+            green = c.green;
+            yellow = c.yellow;
+            blue = c.blue;
+            magenta = c.pink;
+            cyan = c.sapphire;
+            white = c.subtext1;
+          };
+          foreground = c.text;
+          background = c.base;
+          cursor = c.rosewater;
+          cursorText = c.crust;
+          selectionFg = c.text;
+          selectionBg = c.surface1;
         };
       };
-      nightlight.enabled = true;
-      shell.font_family = fontFamily;
-      theme = {
-        builtin = "Catppuccin";
-        community_palette = "Oxocarbon";
-        mode = "dark";
-        source = "wallpaper";
-        wallpaper_scheme = "m3-content";
-        templates.builtin_ids = ["niri"];
-      };
-      wallpaper.directory = "${config.home.homeDirectory}/Pictures";
     };
   };
 
@@ -343,8 +346,7 @@ in {
     input {
       keyboard {
         xkb {
-          layout "us,ru"
-          options "grp:caps_toggle"
+          layout "us"
         }
         repeat-delay 250
         repeat-rate 25
@@ -461,6 +463,7 @@ in {
 
       // Existing terminal and Paneru-style bindings.
       Mod+Ctrl+Alt+Return hotkey-overlay-title="Kitty" { spawn "kitty"; }
+      Mod+Ctrl+Alt+R hotkey-overlay-title="Screenshot" { spawn "flameshot" "gui"; }
       Mod+Q { close-window; }
       Mod+Ctrl+Alt+H { focus-column-left; }
       Mod+Ctrl+Alt+Q { focus-column-left; }
@@ -515,24 +518,24 @@ in {
       Mod+Ctrl+K { focus-monitor-up; }
       Mod+Ctrl+L { focus-monitor-right; }
 
-      Ctrl+1 { focus-workspace 1; }
-      Ctrl+2 { focus-workspace 2; }
-      Ctrl+3 { focus-workspace 3; }
-      Ctrl+4 { focus-workspace 4; }
-      Ctrl+5 { focus-workspace 5; }
-      Ctrl+6 { focus-workspace 6; }
-      Ctrl+7 { focus-workspace 7; }
-      Ctrl+8 { focus-workspace 8; }
-      Ctrl+9 { focus-workspace 9; }
-      Ctrl+Shift+1 { move-window-to-workspace 1; }
-      Ctrl+Shift+2 { move-window-to-workspace 2; }
-      Ctrl+Shift+3 { move-window-to-workspace 3; }
-      Ctrl+Shift+4 { move-window-to-workspace 4; }
-      Ctrl+Shift+5 { move-window-to-workspace 5; }
-      Ctrl+Shift+6 { move-window-to-workspace 6; }
-      Ctrl+Shift+7 { move-window-to-workspace 7; }
-      Ctrl+Shift+8 { move-window-to-workspace 8; }
-      Ctrl+Shift+9 { move-window-to-workspace 9; }
+      Mod+Ctrl+Alt+1 { focus-workspace 1; }
+      Mod+Ctrl+Alt+2 { focus-workspace 2; }
+      Mod+Ctrl+Alt+3 { focus-workspace 3; }
+      Mod+Ctrl+Alt+4 { focus-workspace 4; }
+      Mod+Ctrl+Alt+5 { focus-workspace 5; }
+      Mod+Ctrl+Alt+6 { focus-workspace 6; }
+      Mod+Ctrl+Alt+7 { focus-workspace 7; }
+      Mod+Ctrl+Alt+8 { focus-workspace 8; }
+      Mod+Ctrl+Alt+9 { focus-workspace 9; }
+      Mod+Ctrl+Alt+Shift+1 { move-window-to-workspace 1; }
+      Mod+Ctrl+Alt+Shift+2 { move-window-to-workspace 2; }
+      Mod+Ctrl+Alt+Shift+3 { move-window-to-workspace 3; }
+      Mod+Ctrl+Alt+Shift+4 { move-window-to-workspace 4; }
+      Mod+Ctrl+Alt+Shift+5 { move-window-to-workspace 5; }
+      Mod+Ctrl+Alt+Shift+6 { move-window-to-workspace 6; }
+      Mod+Ctrl+Alt+Shift+7 { move-window-to-workspace 7; }
+      Mod+Ctrl+Alt+Shift+8 { move-window-to-workspace 8; }
+      Mod+Ctrl+Alt+Shift+9 { move-window-to-workspace 9; }
 
       XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05+ -l 1.0"; }
       XF86AudioLowerVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05-"; }
