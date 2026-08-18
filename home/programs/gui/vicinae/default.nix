@@ -1,12 +1,25 @@
 {
+  config,
+  lib,
   theme,
   vicinae,
   ...
 }: let
   c = theme.colors;
   inherit (theme.ui) cornerRadius fontFamily;
+  xdgDataDirs = lib.concatStringsSep ":" [
+    "${config.home.homeDirectory}/.nix-profile/share"
+    "/nix/var/nix/profiles/default/share"
+    "/run/current-system/sw/share"
+  ];
 in {
   imports = [vicinae.homeManagerModules.default];
+
+  # The user service does not inherit NixOS's login-session environment. Include
+  # the system profile so Vicinae can discover desktop entries such as Obsidian.
+  systemd.user.services.vicinae.Service.Environment = [
+    "XDG_DATA_DIRS=${xdgDataDirs}"
+  ];
 
   programs.vicinae = {
     enable = true;

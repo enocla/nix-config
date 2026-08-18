@@ -72,15 +72,31 @@
     meta.mainProgram = "icloudctl";
   };
 
-  obsidianWrapped = pkgs.symlinkJoin {
-    name = "obsidian";
-    paths = [pkgs.obsidian];
-    nativeBuildInputs = [pkgs.makeWrapper];
-    postBuild = ''
-      wrapProgram "$out/bin/obsidian" \
-        --set ELECTRON_OZONE_PLATFORM_HINT auto
-    '';
-    meta = pkgs.obsidian.meta // {mainProgram = "obsidian";};
+  mkElectronWrapper = {
+    package,
+    binaries,
+  }:
+    pkgs.symlinkJoin {
+      name = "${lib.getName package}-wrapped";
+      paths = [package];
+      nativeBuildInputs = [pkgs.makeWrapper];
+      postBuild =
+        lib.concatMapStringsSep "\n" (binary: ''
+          wrapProgram "$out/bin/${binary}" \
+            --set ELECTRON_OZONE_PLATFORM_HINT auto
+        '')
+        binaries;
+      meta = package.meta // {mainProgram = builtins.head binaries;};
+    };
+
+  obsidianWrapped = mkElectronWrapper {
+    package = pkgs.obsidian;
+    binaries = ["obsidian"];
+  };
+
+  discordWrapped = mkElectronWrapper {
+    package = pkgs.discord;
+    binaries = ["Discord" "discord"];
   };
 in {
   # accli and xcodegen require macOS APIs and cannot run on Bort.
@@ -237,5 +253,6 @@ in {
     icloudLinux
     yazi
     obsidianWrapped
+    discordWrapped
   ];
 }

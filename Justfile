@@ -1,3 +1,5 @@
+default: deploy
+
 host := `hostname -s`
 nh := if os() == "macos" { "nh darwin" } else { "nh os" }
 elevation := if os() == "macos" { "/usr/bin/sudo" } else { "/run/current-system/sw/bin/run0" }
