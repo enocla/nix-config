@@ -7,8 +7,11 @@ home/config/zed/prompts/*
 .crush/
 *.local
 
+home/config/nvim/lua/theme/colors.lua
 
 home/config/zed/prompts
 home/config/zed/conversations
 home/config/zed/prompts/prompts-library-db.0.mdb
 extra/fonts/BerkeleyMonoNerdFont/
+
+

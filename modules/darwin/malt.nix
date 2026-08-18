@@ -99,6 +99,7 @@
     "switch"
     "visual-studio-code"
     "zed"
+    "bettercmdtab"
   ];
 
   format = type: packages:
