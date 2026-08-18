@@ -71,6 +71,17 @@
     '';
     meta.mainProgram = "icloudctl";
   };
+
+  obsidianWrapped = pkgs.symlinkJoin {
+    name = "obsidian";
+    paths = [pkgs.obsidian];
+    nativeBuildInputs = [pkgs.makeWrapper];
+    postBuild = ''
+      wrapProgram "$out/bin/obsidian" \
+        --set ELECTRON_OZONE_PLATFORM_HINT auto
+    '';
+    meta = pkgs.obsidian.meta // {mainProgram = "obsidian";};
+  };
 in {
   # accli and xcodegen require macOS APIs and cannot run on Bort.
   environment.systemPackages = with pkgs; [
@@ -225,6 +236,6 @@ in {
     kiro-cli
     icloudLinux
     yazi
-    obsidian
+    obsidianWrapped
   ];
 }

@@ -42,6 +42,8 @@
     '';
   };
 in {
+  environment.systemPackages = [pkgs.nh];
+
   fonts.packages = [
     berkeleyMonoNerdFont
     sfProText

@@ -1,22 +1,19 @@
 host := `hostname -s`
-nix := if os() == "macos" { "/nix/var/nix/profiles/default/bin/nix" } else { "/run/current-system/sw/bin/nix" }
-configuration := if os() == "macos" { "darwinConfigurations." + host + ".system" } else { "nixosConfigurations." + host + ".config.system.build.toplevel" }
-activation := if os() == "macos" { "./result/activate" } else { "./result/bin/switch-to-configuration switch" }
-elevation := if os() == "macos" { "sudo" } else { "run0" }
-
-deploy: build
-    {{ elevation }} {{ activation }}
+nh := if os() == "macos" { "nh darwin" } else { "nh os" }
+elevation := if os() == "macos" { "/usr/bin/sudo" } else { "/run/current-system/sw/bin/run0" }
 
 build:
-    {{ nix }} build ".#{{ configuration }}"
+    {{ nh }} build -H {{ host }} .
+
+deploy:
+    {{ nh }} switch --elevation-strategy {{ elevation }} -H {{ host }} .
 
 update:
-    {{ nix }} flake update
-    {{ nix }} build ".#{{ configuration }}"
+    {{ nh }} build --update -H {{ host }} .
 
 clean:
-    {{ nix }} store gc
+    nh clean all
 
 fmt:
-    {{ nix }} fmt .
+    nix fmt .
     stylua . --sort-requires --indent-type spaces --indent-width 4
