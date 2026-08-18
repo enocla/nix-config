@@ -42,14 +42,21 @@ in {
   imports = [
     ./programs
     ./shell.nix
+    ./theme-css-server.nix
   ];
 
   home.file =
     {
       ".hushlogin".text = "";
 
-      ".config/nvim" = {source = mkLink "${config-dir}/nvim"; recursive = true;};
-      ".config/zed" = {source = mkLink "${config-dir}/zed";recursive = true;};
+      ".config/nvim" = {
+        source = mkLink "${config-dir}/nvim";
+        recursive = true;
+      };
+      ".config/zed" = {
+        source = mkLink "${config-dir}/zed";
+        recursive = true;
+      };
       "${configRepoName}/home/config/nvim/lua/theme/colors.lua".text = ''
         return {
             rosewater = "${theme.colors.rosewater}",
