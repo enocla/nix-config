@@ -9,13 +9,35 @@
   port = 8765;
   cssUrl = "http://localhost:${toString port}/theme.css";
 
+  # Home Manager file targets are relative to the user's home directory.
+  obsidianSnippetPath =
+    if isDarwin
+    then "Library/Mobile Documents/iCloud~md~obsidian/Documents/Mnemosyne/.obsidian/snippets/colors.css"
+    else "placeholder/obsidian/.obsidian/snippets/colors.css";
+
+  hexToRgb = color: let
+    hex = lib.removePrefix "#" (lib.toLower color);
+    parseHex = value: (lib.fromTOML "value = 0x${value}").value;
+  in {
+    r = parseHex (lib.substring 0 2 hex);
+    g = parseHex (lib.substring 2 2 hex);
+    b = parseHex (lib.substring 4 2 hex);
+  };
+
   colorVariables = lib.concatMapStringsSep "\n" (
     name: "  --${name}: ${theme.colors.${name}};"
+  ) (lib.attrNames theme.colors);
+
+  rgbVariables = lib.concatMapStringsSep "\n" (
+    name: let
+      rgb = hexToRgb theme.colors.${name};
+    in "  --${name}-rgb: ${toString rgb.r}, ${toString rgb.g}, ${toString rgb.b};"
   ) (lib.attrNames theme.colors);
 
   themeCss = pkgs.writeText "theme.css" ''
     :root {
     ${colorVariables}
+    ${rgbVariables}
       --corner-radius: ${toString theme.ui.cornerRadius}px;
       --font-family: "${theme.ui.fontFamily}";
       --monospace-font-family: "${theme.ui.monospaceFontFamily}";
@@ -84,6 +106,10 @@
 in {
   # Consumers can import the literal URL above; it is also exposed as THEME_CSS_URL.
   home.sessionVariables.THEME_CSS_URL = cssUrl;
+
+  home.file.${obsidianSnippetPath} = lib.mkIf isDarwin {
+    source = themeCss;
+  };
 
   launchd.agents.theme-css-server = lib.mkIf isDarwin {
     enable = true;
