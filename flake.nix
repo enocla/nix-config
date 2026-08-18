@@ -10,6 +10,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    noctalia.url = "github:noctalia-dev/noctalia/cachix";
+    matugen.url = "github:/InioX/Matugen";
+
     vicinae = {
       url = "github:vicinaehq/vicinae/11f58c008d62fa10fe364a6010f5b5f8f8200a56";
       inputs.nixpkgs.follows = "nixpkgs";

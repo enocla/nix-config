@@ -8,7 +8,6 @@
 in {
   # `programs.git` will generate the config file: ~/.config/git/config
   # to make git use this config file, `~/.gitconfig` should not exist!
-  #
 
   #    https://git-scm.com/docs/git-config#Documentation/git-config.txt---global
   programs.git = {
@@ -20,7 +19,7 @@ in {
     };
 
     settings = {
-      user.name = "Tnixc";
+      user.name = "enocla";
       user.email = "tnixxc@gmail.com";
       user.signingkey = gpgKey;
 

@@ -11,10 +11,10 @@ in {
         editAtLineAndWait = "nvim +{{line}} {{filename}}";
         openDirInEditor = "nvim {{dir}}";
       };
-      git.pagers = [
+      git.diffRenderers = [
         {
           colorArg = "always";
-          pager = "delta --dark --paging=never";
+          command = "delta --dark --paging=never";
         }
       ];
       git.overrideGpg = true;

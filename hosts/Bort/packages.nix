@@ -1,4 +1,8 @@
-{pkgs, ...}: let
+{
+  matugen,
+  pkgs,
+  ...
+}: let
   dcd = pkgs.stdenvNoCC.mkDerivation {
     pname = "dcd";
     version = "1.1.0";
@@ -36,6 +40,8 @@ in {
     bash-language-server
     bat
     biome
+    bluetui
+    brightnessctl
     btop
     bun
     cargo
@@ -57,9 +63,11 @@ in {
     docker
     dua
     eza
+    eog
     fastfetch
     fd
     ffmpeg
+    font-awesome
     fish
     fzf
     gcc
@@ -69,6 +77,7 @@ in {
     git-lfs
     delta
     gnupg
+    gnome-themes-extra
     go
     go-tools
     gopls
@@ -80,12 +89,21 @@ in {
     hunk
     hyperfine
     jq
+    kdePackages.breeze
+    kdePackages.breeze-icons
+    kdePackages.dolphin
+    kdePackages.kcalc
+    kdePackages.kio
+    kdePackages.kio-extras
+    kdePackages.kio-fuse
+    kdePackages.qtsvg
     just
     jujutsu
     kcl
     kotlin
     lame
     lazygit
+    labwc
     libogg
     libsoundio
     libvmaf
@@ -100,6 +118,9 @@ in {
     maven
     meson
     mosh
+    mpv
+    matugen.packages.${pkgs.stdenv.hostPlatform.system}.default
+    nautilus
     neovim
     nickel
     ninja
@@ -113,12 +134,15 @@ in {
     prism
     protobuf
     pyright
+    pywal
+    playerctl
     ripgrep
     ruff
     rust-analyzer
     rustc
     rustfmt
     sd
+    sfwbar
     sdl2-compat
     sdl3
     starship
@@ -141,6 +165,9 @@ in {
     vscode-langservers-extracted
     vtsls
     vue-language-server
+    waybar
+    wl-clipboard
+    wiremix
     libwebp
     wget
     x264

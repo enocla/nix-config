@@ -1,4 +1,5 @@
 {
+  config,
   determinate,
   helium,
   pkgs,
@@ -45,7 +46,10 @@
   services = {
     accounts-daemon.enable = true;
     geoclue2.enable = true;
+    gvfs.enable = true;
     power-profiles-daemon.enable = true;
+    udisks2.enable = true;
+    upower.enable = true;
     keyd = {
       enable = true;
       keyboards.default = {
@@ -63,15 +67,28 @@
         };
       };
     };
-    xserver = {
-      enable = true;
-      xkb.layout = "us";
-    };
+    xserver.enable = false;
     displayManager = {
       defaultSession = "niri";
-      sddm.enable = true;
+      sddm.enable = false;
+      ly = let
+        xsession-wrapper =
+          pkgs.runCommand "xsession-wrapper-fixed" {
+            src = config.services.displayManager.sessionData.wrapper;
+          } ''
+            cp --preserve=mode $src $out
+            substituteInPlace $out --replace "X-NIXOS-SYSTEMD-AWARE" "X-NIXOS-SYSTEMD-AWARE|niri"
+          '';
+      in {
+        enable = true;
+        x11Support = false;
+        settings = {
+          setup_cmd = "${xsession-wrapper}";
+          session_log = ".ly-session.log";
+        };
+      };
     };
-    desktopManager.plasma6.enable = true;
+    desktopManager.plasma6.enable = false;
     printing.enable = true;
     openssh.enable = true;
     tailscale.enable = true;
@@ -114,6 +131,9 @@
       '';
     };
   };
+
+  xdg.menus.enable = true;
+  xdg.mime.enable = true;
 
   environment.sessionVariables.TERMINAL = "kitty";
 
