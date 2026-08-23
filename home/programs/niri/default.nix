@@ -349,7 +349,7 @@ in {
           layout "us"
         }
         repeat-delay 250
-        repeat-rate 25
+        repeat-rate 33
       }
       touchpad {
         tap
