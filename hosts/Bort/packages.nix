@@ -254,5 +254,8 @@ in {
     yazi
     obsidianWrapped
     discordWrapped
+    comma
+    samba
+    cifs-utils
   ];
 }
