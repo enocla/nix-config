@@ -19,3 +19,13 @@ clean:
 fmt:
     nix fmt .
     stylua . --sort-requires --indent-type spaces --indent-width 4
+
+
+# SOPS-managed files under secrets/ are plaintext after this command.
+sops := "nix shell nixpkgs#sops nixpkgs#gnupg --command sops"
+
+decrypt:
+    @find secrets -type f -print | while IFS= read -r file; do {{ sops }} --decrypt --in-place "$file"; done
+
+encrypt:
+    @find secrets -type f -print | while IFS= read -r file; do {{ sops }} --encrypt --in-place "$file"; done

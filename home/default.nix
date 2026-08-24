@@ -5,6 +5,7 @@
   config,
   lib,
   pkgs,
+  sops-nix,
   ...
 }: let
   config-dir = "${config.home.homeDirectory}/${configRepoName}/home/config";
@@ -40,6 +41,7 @@ in {
   };
 
   imports = [
+    sops-nix.homeManagerModules.sops
     ./programs
     ./shell.nix
     ./theme-css-server.nix

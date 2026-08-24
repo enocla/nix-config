@@ -1,0 +1,5 @@
+creation_rules:
+  - path_regex: secrets/ssh\.yaml$
+    key_groups:
+      - pgp:
+          - 6AB7F7CC83CEC7A6
