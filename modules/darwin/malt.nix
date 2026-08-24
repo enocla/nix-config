@@ -5,7 +5,6 @@
   ...
 }: let
   taps = [
-    "Sanyam-G/switch"
     "empellio/tap"
     "kcl-lang/tap"
     "keith/formulae"
@@ -96,7 +95,6 @@
     "parsec"
     "prismlauncher"
     "shottr"
-    "switch"
     "visual-studio-code"
     "zed"
     "bettercmdtab"

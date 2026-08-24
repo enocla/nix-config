@@ -64,9 +64,9 @@ window_virtualmovenum_7 = "ctrl + shift - 7"
 window_virtualmovenum_8 = "ctrl + shift - 8"
 window_virtualmovenum_9 = "ctrl + shift - 9"
 
-[decorations.active.border]
-enabled = true
-color = "#f3c0e5"
-width = 2.0
-radius = 12.0
-
+# [decorations.active.border]
+# enabled = true
+# color = "#f3c0e5"
+# width = 2.0
+# radius = 12.0
+#
