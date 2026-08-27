@@ -9,12 +9,6 @@
   port = 8765;
   cssUrl = "http://localhost:${toString port}/theme.css";
 
-  # Home Manager file targets are relative to the user's home directory.
-  obsidianSnippetPath =
-    if isDarwin
-    then "Library/Mobile Documents/iCloud~md~obsidian/Documents/Mnemosyne/.obsidian/snippets/colors.css"
-    else "placeholder/obsidian/.obsidian/snippets/colors.css";
-
   hexToRgb = color: let
     hex = lib.removePrefix "#" (lib.toLower color);
     parseHex = value: (lib.fromTOML "value = 0x${value}").value;
@@ -106,10 +100,6 @@
 in {
   # Consumers can import the literal URL above; it is also exposed as THEME_CSS_URL.
   home.sessionVariables.THEME_CSS_URL = cssUrl;
-
-  home.file.${obsidianSnippetPath} = lib.mkIf isDarwin {
-    source = themeCss;
-  };
 
   launchd.agents.theme-css-server = lib.mkIf isDarwin {
     enable = true;
