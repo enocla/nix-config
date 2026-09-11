@@ -4,6 +4,9 @@
   pkgs,
   ...
 }: let
+  isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
+  isLinux = pkgs.stdenv.hostPlatform.isLinux;
+
   dcd = pkgs.stdenvNoCC.mkDerivation {
     pname = "dcd";
     version = "1.1.0";
@@ -59,53 +62,94 @@
     package = pkgs.discord;
     binaries = ["Discord" "discord"];
   };
-in {
-  # accli and xcodegen require macOS APIs and cannot run on Bort.
-  environment.systemPackages = with pkgs; [
-    kitty
+
+  commonPackages = with pkgs; [
     aria2
+    btop
+    chafa
+    clang-tools
+    coreutils
+    delta
+    docker
+    dua
+    eza
+    ffmpeg
+    gcc
+    git
+    git-crypt
+    git-lfs
+    gnupg
+    gzip
+    lame
+    lazygit
+    lazyjj
+    libogg
+    libsoundio
+    libvmaf
+    libvorbis
+    libvpx
+    llvm
+    lua
+    lzo
+    mosh
+    nickel
+    nmap
+    opus
+    sdl2-compat
+    sdl3
+    svt-av1
+    tealdeer
+    tmux
+    tomlplusplus
+    unixtools.watch
+    wget
+    libwebp
+    x264
+    x265
+    yaml-cpp
+    yarn
+    zlib
+  ];
+
+  darwinPackages = with pkgs; [
+    blender
+    google-chrome
+    iina
+    maple-mono.NF
+    maple-mono.Normal-NF-CN
+    nowplaying-cli
+    orbstack
+    pinentry_mac
+    prismlauncher
+    shottr
+    switchaudio-osx
+    vscode
+  ];
+
+  linuxPackages = with pkgs; [
     astro-language-server
     bash-language-server
-    bat
     biome
     bluetui
     brightnessctl
-    btop
     bun
     cargo
     cargo-binstall
-    chafa
-    clang-tools
     claude-agent-acp
     claude-code
     clippy
     cmake
     codex-acp
     colima
-    coreutils
     cosign
     curl
     dcd
     deno
-    direnv
-    docker
-    dua
-    eza
     eog
     fastfetch
     flameshot
     fd
-    ffmpeg
-    font-awesome
-    fish
-    fzf
-    gcc
     gh
-    git
-    git-crypt
-    git-lfs
-    delta
-    gnupg
     gnome-themes-extra
     go
     go-tools
@@ -113,7 +157,6 @@ in {
     gotools
     gradle
     gum
-    gzip
     helix
     hunk
     hyperfine
@@ -127,37 +170,22 @@ in {
     kdePackages.kio-fuse
     kdePackages.qtsvg
     just
-    jujutsu
     kcl
     kotlin
-    lame
-    lazygit
     labwc
-    libogg
-    libsoundio
-    libvmaf
-    libvorbis
-    libvpx
     lima
     lisette
-    llvm
-    lua
     lua-language-server
-    lzo
     maven
     meson
-    mosh
     mpv
     matugen.packages.${pkgs.stdenv.hostPlatform.system}.default
     nautilus
     neovim
-    nickel
     ninja
-    nmap
     nodejs
     opam
     opencode
-    opus
     pkl
     pnpm
     prism
@@ -172,22 +200,14 @@ in {
     rustfmt
     sd
     sfwbar
-    sdl2-compat
-    sdl3
-    starship
     stylua
     svelte-language-server
-    svt-av1
     swiftformat
     tailwindcss-language-server
-    tealdeer
-    tmux
     tokei
-    tomlplusplus
     trash-cli
     tree-sitter
     typst
-    unixtools.watch
     usage
     usbutils
     uv
@@ -197,18 +217,10 @@ in {
     waybar
     wl-clipboard
     wiremix
-    libwebp
-    wget
-    x264
-    x265
     xwayland-satellite
-    yaml-cpp
     yaml-language-server
-    yarn
     yt-dlp
     zig
-    zlib
-    zoxide
     zed-editor
     kiro-cli
     yazi
@@ -218,4 +230,9 @@ in {
     samba
     cifs-utils
   ];
+in {
+  environment.systemPackages =
+    commonPackages
+    ++ lib.optionals isDarwin darwinPackages
+    ++ lib.optionals isLinux linuxPackages;
 }

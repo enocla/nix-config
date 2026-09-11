@@ -1,8 +1,8 @@
 {
   lib,
+  pkgs,
   theme,
   colorMix,
-  externalPackage,
   ...
 }: let
   c = theme.colors;
@@ -10,7 +10,7 @@
 in {
   programs.starship = {
     enable = true;
-    package = externalPackage "starship" {};
+    package = pkgs.starship;
 
     enableBashIntegration = true;
     enableZshIntegration = true;

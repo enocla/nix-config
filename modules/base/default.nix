@@ -42,6 +42,8 @@
     '';
   };
 in {
+  imports = [../packages.nix];
+
   environment.systemPackages = [pkgs.nh];
 
   fonts.packages = [

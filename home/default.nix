@@ -11,29 +11,8 @@
   config-dir = "${config.home.homeDirectory}/${configRepoName}/home/config";
   mkLink = config.lib.file.mkOutOfStoreSymlink;
   isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
-  externalPackage = name: {
-    binaries ? [name],
-    binaryDir ? "/opt/malt/bin",
-    links ? [],
-  }:
-    if isDarwin
-    then
-      pkgs.runCommand "external-${name}-999.0.0" {
-        version = "999.0.0";
-        meta.mainProgram = name;
-      } ''
-        mkdir -p "$out/bin"
-        ${lib.concatMapStringsSep "\n" (binary: "ln -s ${binaryDir}/${binary} \"$out/bin/${binary}\"") binaries}
-        ${lib.concatMapStringsSep "\n" (link: "mkdir -p \"$(dirname \"$out/${link.path}\")\"\nln -s ${link.target} \"$out/${link.path}\"") links}
-      ''
-    else if name == "jj"
-    then pkgs.jujutsu
-    else builtins.getAttr name pkgs;
 in {
-  _module.args.externalPackage = externalPackage;
-
-  # Diamond delegates package installation to Malt; Bort uses nixpkgs packages.
-  home.packages = lib.mkIf isDarwin (lib.mkForce []);
+  home.packages = [pkgs.kitty];
 
   programs.man = lib.mkIf isDarwin {
     enable = false;
@@ -92,7 +71,6 @@ in {
     }
     // lib.optionalAttrs isDarwin {
       ".config/karabiner" = {source = mkLink "${config-dir}/karabiner";};
-      ".config/paneru/paneru.toml" = {source = mkLink "${config-dir}/paneru/paneru.toml";};
       ".config/Code/User/settings.json" = {source = mkLink "${config-dir}/Code/User/settings.json";};
       ".config/mise/config.toml" = {source = mkLink "${config.home.homeDirectory}/${configRepoName}/extra/mise/config.toml";};
     };

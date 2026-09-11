@@ -1,6 +1,7 @@
 {
   theme,
   config,
+  pkgs,
   ...
 }: let
   c = theme.colors;
@@ -21,7 +22,7 @@ in {
     adjust-cell-height = 72%
 
     # Shell
-    command = /opt/malt/bin/fish
+    command = ${pkgs.fish}/bin/fish
     shell-integration = fish
 
     # Scrollback (kitty: scrollback_lines 10000; ghostty limit is bytes)

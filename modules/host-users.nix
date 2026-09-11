@@ -1,15 +1,19 @@
-{username, ...}:
+{
+  pkgs,
+  username,
+  ...
+}:
 #############################################################
 #
 #  Host & Users configuration
 #
 #############################################################
 {
-  environment.shells = ["/opt/homebrew/bin/fish"];
+  environment.shells = ["${pkgs.fish}/bin/fish"];
 
   users.users."${username}" = {
     home = "/Users/${username}";
     description = username;
-    shell = "/opt/homebrew/bin/fish";
+    shell = "${pkgs.fish}/bin/fish";
   };
 }

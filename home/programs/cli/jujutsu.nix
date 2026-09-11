@@ -1,11 +1,11 @@
 {
-  externalPackage,
   gpgKey,
+  pkgs,
   ...
 }: {
   programs.jujutsu = {
     enable = true;
-    package = externalPackage "jj" {};
+    package = pkgs.jujutsu;
     settings = {
       user = {
         name = "Tnixc";

@@ -1,5 +1,5 @@
 {
-  externalPackage,
+  pkgs,
   theme,
   ...
 }: let
@@ -8,7 +8,7 @@
 in {
   programs.bat = {
     enable = true;
-    package = externalPackage "bat" {};
+    package = pkgs.bat;
     config = {
       theme = "custom";
     };

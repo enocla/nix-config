@@ -1,5 +1,4 @@
 {
-  externalPackage,
   lib,
   pkgs,
   theme,
@@ -66,6 +65,10 @@ in {
       treea = "eza --icons --tree -a";
       rm = "trash";
       rp = "realpath";
+
+      # CS 246
+      "g++20h" = "g++-16 -std=c++20 -fmodules-ts -c -x c++-system-header";
+      "g++20" = "g++-16 -std=c++20 -fmodules-ts -Wall -g";
     }
     // lib.optionalAttrs isDarwin {
       f = "open .";
@@ -77,12 +80,7 @@ in {
 
   programs.fzf = {
     enable = true;
-    package = externalPackage "fzf" {
-      binaries = [
-        "fzf"
-        "fzf-tmux"
-      ];
-    };
+    package = pkgs.fzf;
     enableZshIntegration = true;
     enableFishIntegration = true;
     colors = {
@@ -104,7 +102,7 @@ in {
 
   programs.zoxide = {
     enable = true;
-    package = externalPackage "zoxide" {};
+    package = pkgs.zoxide;
     enableZshIntegration = true;
     enableFishIntegration = true;
   };

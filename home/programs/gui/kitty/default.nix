@@ -12,7 +12,7 @@
     else "super";
   shell =
     if isDarwin
-    then "/opt/malt/bin/fish"
+    then "${pkgs.fish}/bin/fish"
     else "${pkgs.fish}/bin/fish";
 in {
   xdg.configFile."kitty/tab_bar.py".source = ./tab_bar.py;

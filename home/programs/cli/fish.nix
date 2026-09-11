@@ -1,6 +1,6 @@
 {
   config,
-  externalPackage,
+  pkgs,
   theme,
   ...
 }: let
@@ -9,12 +9,7 @@
 in {
   programs.fish = {
     enable = true;
-    package = externalPackage "fish" {
-      binaries = [
-        "fish"
-        "fish_indent"
-      ];
-    };
+    package = pkgs.fish;
 
     interactiveShellInit = ''
       function off

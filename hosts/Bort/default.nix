@@ -12,7 +12,6 @@
     determinate.nixosModules.default
     helium.nixosModules.default
     ./hardware-configuration.nix
-    ./packages.nix
   ];
 
   boot = {
