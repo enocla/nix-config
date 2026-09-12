@@ -65,41 +65,41 @@
         inherit theme colorMix;
       };
 
-    diamond = hosts.Diamond;
-    bort = hosts.Bort;
+    mkHomeManager = host: {
+      useGlobalPkgs = true;
+      backupFileExtension = "backup";
+      useUserPackages = true;
+      extraSpecialArgs = mkSpecialArgs host;
+      users.${host.username} = import ./home;
+    };
+
+    mkDarwinConfiguration = host:
+      darwin.lib.darwinSystem {
+        inherit (host) system;
+        specialArgs = mkSpecialArgs host;
+        modules = [
+          ./hosts/${host.hostname}
+          home-manager.darwinModules.home-manager
+          {home-manager = mkHomeManager host;}
+        ];
+      };
+
+    mkNixosConfiguration = host:
+      nixpkgs.lib.nixosSystem {
+        inherit (host) system;
+        specialArgs = mkSpecialArgs host;
+        modules = [
+          ./hosts/${host.hostname}
+          home-manager.nixosModules.home-manager
+          {home-manager = mkHomeManager host;}
+        ];
+      };
   in {
-    darwinConfigurations.Diamond = darwin.lib.darwinSystem {
-      inherit (diamond) system;
-      specialArgs = mkSpecialArgs diamond;
-      modules = [
-        ./hosts/Diamond
-        home-manager.darwinModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.backupFileExtension = "backup";
-          home-manager.useUserPackages = true;
-          home-manager.extraSpecialArgs = mkSpecialArgs diamond;
-          home-manager.users.${diamond.username} = import ./home;
-        }
-      ];
-    };
+    darwinConfigurations.Diamond = mkDarwinConfiguration hosts.Diamond;
+    nixosConfigurations.Bort = mkNixosConfiguration hosts.Bort;
 
-    nixosConfigurations.Bort = nixpkgs.lib.nixosSystem {
-      inherit (bort) system;
-      specialArgs = mkSpecialArgs bort;
-      modules = [
-        ./hosts/Bort
-        home-manager.nixosModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.backupFileExtension = "backup";
-          home-manager.useUserPackages = true;
-          home-manager.extraSpecialArgs = mkSpecialArgs bort;
-          home-manager.users.${bort.username} = import ./home;
-        }
-      ];
-    };
-
-    formatter = lib.genAttrs [diamond.system bort.system] (system: nixpkgs.legacyPackages.${system}.alejandra);
+    formatter = lib.genAttrs (map (host: host.system) (builtins.attrValues hosts)) (
+      system: nixpkgs.legacyPackages.${system}.alejandra
+    );
   };
 }

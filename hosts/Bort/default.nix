@@ -43,8 +43,6 @@
     optimise.automatic = true;
   };
 
-  nixpkgs.config.allowUnfree = true;
-
   services = {
     accounts-daemon.enable = true;
     geoclue2.enable = true;
@@ -192,9 +190,7 @@
 
   users.users.${username} = {
     isNormalUser = true;
-    description = username;
     extraGroups = ["docker" "keyd" "networkmanager" "wheel"];
-    shell = pkgs.fish;
   };
 
   system.stateVersion = "26.05";

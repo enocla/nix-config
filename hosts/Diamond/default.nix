@@ -2,7 +2,6 @@
   darwin-custom-icons,
   paneru,
   pkgs,
-  username,
   ...
 }: {
   imports = [
@@ -12,8 +11,6 @@
     paneru.darwinModules.paneru
     ../../modules/icons
   ];
-
-  nixpkgs.config.allowUnfree = true;
 
   services.paneru = {
     enable = true;
@@ -29,7 +26,6 @@
           mouse_follows_focus = false,
           preset_column_widths = { 0.333, 0.5, 0.667, 0.8 },
           animation_speed = 40.0,
-          auto_center = true,
           reap_empty_workspaces = true,
           virtual_workspace_animations = true,
         },
@@ -124,13 +120,5 @@
       paneru.bind("alt + cmd + ctrl - a", "window swap north")
       paneru.bind("alt + cmd + ctrl - d", "window swap south")
     '';
-  };
-
-  environment.shells = ["${pkgs.fish}/bin/fish"];
-
-  users.users.${username} = {
-    home = "/Users/${username}";
-    description = username;
-    shell = "${pkgs.fish}/bin/fish";
   };
 }

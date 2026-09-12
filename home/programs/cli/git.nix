@@ -1,6 +1,8 @@
 {
-  theme,
+  gitUserEmail,
+  gitUserName,
   gpgKey,
+  theme,
   ...
 }: let
   c = theme.colors;
@@ -19,8 +21,8 @@ in {
     };
 
     settings = {
-      user.name = "enocla";
-      user.email = "tnixxc@gmail.com";
+      user.name = gitUserName;
+      user.email = gitUserEmail;
       user.signingkey = gpgKey;
 
       commit.gpgsign = true;

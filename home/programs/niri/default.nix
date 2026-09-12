@@ -85,7 +85,7 @@ in {
     enable = true;
     # This file intentionally lives outside the Nix store so Noctalia can edit it.
     # Build-time validation cannot follow that host checkout from the sandbox.
-    validateConfig = false;
+    checkConfig = false;
     settings = mkLink "${configDir}/noctalia/config.toml";
     customPalettes."nix-config" = {
       dark = {

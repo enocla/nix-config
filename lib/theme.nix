@@ -2,7 +2,6 @@
   colorMix = (import ./color-mix.nix {inherit lib;}).mixColors;
 
   colors = {
-
     # === MUI 3 wallpaper generated
     rosewater = "#ffdad6";
     flamingo = "#ffc4bb";
