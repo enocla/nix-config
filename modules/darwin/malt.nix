@@ -27,7 +27,7 @@
     "nordvpn"
     "parsec"
     "bettercmdtab"
-    "fastpotify"
+    "crmne/tap/fastpotify"
   ];
 
   format = type: packages:
