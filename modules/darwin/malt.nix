@@ -27,7 +27,7 @@
     "nordvpn"
     "parsec"
     "bettercmdtab"
-    "crmne/tap/fastpotify"
+    "fastpotify"
   ];
 
   format = type: packages:
@@ -46,7 +46,7 @@ in {
     if ! /usr/bin/sudo -H -u ${username} /usr/bin/cmp -s ${brewfile} "$maltBrewfile"; then
       echo "Malt Brewfile changed; installing packages..."
       /usr/bin/sudo -H -u ${username} /bin/mkdir -p "$maltStateDir"
-      /usr/bin/sudo -H -u ${username} /usr/local/bin/malt bundle install ${brewfile}
+      /usr/bin/sudo -H -u ${username} /opt/homebrew/bin/brew bundle install ${brewfile}
 
       maltBrewfileTmp="$(/usr/bin/sudo -H -u ${username} /usr/bin/mktemp "$maltStateDir/.Brewfile.XXXXXX")"
       /usr/bin/sudo -H -u ${username} /bin/cp ${brewfile} "$maltBrewfileTmp"
@@ -58,8 +58,5 @@ in {
     if ! /usr/bin/sudo -H -u ${username} /usr/local/bin/malt bundle cleanup ${brewfile} --yes; then
       echo "Malt cleanup kept packages required by installed packages; continuing with orphan cleanup."
     fi
-
-    echo "Cleaning up unused Malt dependencies..."
-    /usr/bin/sudo -H -u ${username} /usr/local/bin/malt purge --unused-deps --yes
   '';
 }

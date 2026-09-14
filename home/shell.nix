@@ -44,6 +44,8 @@ in {
     ]
     ++ lib.optionals isDarwin [
       "/opt/malt/bin"
+      "/opt/malt/bin"
+      "/opt/homebrew/bin"
       "/usr/local/bin"
     ];
 
