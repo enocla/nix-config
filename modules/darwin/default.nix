@@ -1,7 +1,7 @@
 {...}: {
   imports = [
     ./environment
-    ./malt.nix
+    ./homebrew.nix
     ./nix.nix
     ./preferences
     ./security
