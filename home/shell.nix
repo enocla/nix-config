@@ -65,8 +65,8 @@ in {
       rp = "realpath";
 
       # CS 246
-      "g++20h" = "g++-16 -std=c++20 -fmodules-ts -c -x c++-system-header";
-      "g++20" = "g++-16 -std=c++20 -fmodules-ts -Wall -g";
+      "g++20h" = "g++ -std=c++20 -fmodules-ts -c -x c++-system-header";
+      "g++20" = "g++ -std=c++20 -fmodules-ts -Wall -g";
     }
     // lib.optionalAttrs isDarwin {
       f = "open .";
