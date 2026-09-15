@@ -2,11 +2,10 @@
   homebrew = {
     enable = true;
 
-    # taps = [ ];
-
     brews = [
       "elio"
       "sichengchen/tap/apple-calendar-cli"
+      "keith/formulae/reminders-cli"
     ];
 
     casks = [
@@ -20,6 +19,7 @@
       "nordvpn"
       "parsec"
       "bettercmdtab"
+      "abue-ammar/tinycast/tinycast"
     ];
 
     onActivation = {
