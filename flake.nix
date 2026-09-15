@@ -12,7 +12,11 @@
 
     noctalia.url = "github:noctalia-dev/noctalia/cachix";
     nixcord.url = "github:4evy/nixcord";
-    matugen.url = "github:/InioX/Matugen";
+
+    tether = {
+      url = "github:zackb/tether";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     vicinae = {
       url = "github:vicinaehq/vicinae/11f58c008d62fa10fe364a6010f5b5f8f8200a56";

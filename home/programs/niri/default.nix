@@ -3,7 +3,6 @@
   configRepoName,
   dms,
   lib,
-  matugen,
   noctalia,
   pkgs,
   theme,
@@ -14,7 +13,6 @@
   configDir = "${config.home.homeDirectory}/${configRepoName}/home/config";
   mkLink = config.lib.file.mkOutOfStoreSymlink;
   wallpaper = ../../../extra/wallpaper/phos.webp;
-  matugenPackage = matugen.packages.${pkgs.stdenv.hostPlatform.system}.default;
 in {
   # Keep DMS available as an input/module, but use Noctalia for this Linux host.
   imports = [
@@ -27,7 +25,7 @@ in {
     systemd.enable = false;
   };
 
-  home.packages = [matugenPackage pkgs.pywal];
+  home.packages = [pkgs.matugen pkgs.pywal];
 
   home.sessionVariables.QS_ICON_THEME = "breeze-dark";
 

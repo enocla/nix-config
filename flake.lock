@@ -316,25 +316,6 @@
         "type": "github"
       }
     },
-    "matugen": {
-      "inputs": {
-        "nixpkgs": "nixpkgs_3",
-        "systems": "systems"
-      },
-      "locked": {
-        "lastModified": 1789407349,
-        "narHash": "sha256-yPtuq9Gf+vZFwlCY+FU3BTajoBOZhLgzCapf4GpOojY=",
-        "owner": "InioX",
-        "repo": "Matugen",
-        "rev": "519e4a4bffdc78adbdc65f7882ce999d99a074c7",
-        "type": "github"
-      },
-      "original": {
-        "owner": "InioX",
-        "repo": "Matugen",
-        "type": "github"
-      }
-    },
     "nix": {
       "inputs": {
         "flake-parts": "flake-parts",
@@ -404,7 +385,7 @@
       "inputs": {
         "home-manager": "home-manager_2",
         "nix-darwin": "nix-darwin",
-        "nixpkgs": "nixpkgs_4",
+        "nixpkgs": "nixpkgs_3",
         "nixpkgs-nixcord": "nixpkgs-nixcord",
         "treefmt-nix": "treefmt-nix"
       },
@@ -531,22 +512,6 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1771369470,
-        "narHash": "sha256-0NBlEBKkN3lufyvFegY4TYv5mCNHbi5OmBDrzihbBMQ=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "0182a361324364ae3f436a63005877674cf45efb",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "nixos-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_4": {
-      "locked": {
         "lastModified": 1788921488,
         "narHash": "sha256-8+xWRxEkD6l217cIUdRxfeUGS9lQX0hVtUuNVsBaDzk=",
         "owner": "NixOS",
@@ -561,7 +526,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_5": {
+    "nixpkgs_4": {
       "locked": {
         "lastModified": 1789370336,
         "narHash": "sha256-6RSEDHIWQtesQKWSu5qRai8L2h4KgCgMEfJHstW99G4=",
@@ -577,7 +542,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_6": {
+    "nixpkgs_5": {
       "locked": {
         "lastModified": 1789149629,
         "narHash": "sha256-eQUZVehWLDBbpBR2rq6DnuRee1ULT6Y675RhsYDSjYI=",
@@ -590,7 +555,7 @@
         "url": "https://channels.nixos.org/nixos-unstable/nixexprs.tar.zst"
       }
     },
-    "nixpkgs_7": {
+    "nixpkgs_6": {
       "locked": {
         "lastModified": 1778869304,
         "narHash": "sha256-30sZNZoA1cqF5JNO9fVX+wgiQYjB7HJqqJ4ztCDeBZE=",
@@ -608,7 +573,7 @@
     },
     "noctalia": {
       "inputs": {
-        "nixpkgs": "nixpkgs_6"
+        "nixpkgs": "nixpkgs_5"
       },
       "locked": {
         "lastModified": 1789436433,
@@ -658,12 +623,12 @@
         "dms": "dms",
         "helium": "helium",
         "home-manager": "home-manager",
-        "matugen": "matugen",
         "nixcord": "nixcord",
-        "nixpkgs": "nixpkgs_5",
+        "nixpkgs": "nixpkgs_4",
         "noctalia": "noctalia",
         "paneru": "paneru",
         "sops-nix": "sops-nix",
+        "tether": "tether",
         "vicinae": "vicinae"
       }
     },
@@ -689,7 +654,7 @@
     },
     "soulver-cpp": {
       "inputs": {
-        "nixpkgs": "nixpkgs_7",
+        "nixpkgs": "nixpkgs_6",
         "nixpkgs-libxml2": "nixpkgs-libxml2"
       },
       "locked": {
@@ -708,21 +673,6 @@
     },
     "systems": {
       "locked": {
-        "lastModified": 1689347949,
-        "narHash": "sha256-12tWmuL2zgBgZkdoB6qXZsgJEH9LR3oUgpaQq2RbI80=",
-        "owner": "nix-systems",
-        "repo": "default-linux",
-        "rev": "31732fcf5e8fea42e59c2488ad31a0e651500f68",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-systems",
-        "repo": "default-linux",
-        "type": "github"
-      }
-    },
-    "systems_2": {
-      "locked": {
         "lastModified": 1681028828,
         "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
         "owner": "nix-systems",
@@ -733,6 +683,26 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "tether": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1789449888,
+        "narHash": "sha256-dU0oARGYbLNPfIZzPsLScwVWDn39Lb5UkmMxifWEaVw=",
+        "owner": "zackb",
+        "repo": "tether",
+        "rev": "4972522f623a40905b3737217c27adea068be834",
+        "type": "github"
+      },
+      "original": {
+        "owner": "zackb",
+        "repo": "tether",
         "type": "github"
       }
     },
@@ -763,7 +733,7 @@
           "nixpkgs"
         ],
         "soulver-cpp": "soulver-cpp",
-        "systems": "systems_2"
+        "systems": "systems"
       },
       "locked": {
         "lastModified": 1786960119,

@@ -1,6 +1,5 @@
 {
   lib,
-  matugen,
   pkgs,
   ...
 }: let
@@ -64,6 +63,7 @@
   };
 
   commonPackages = with pkgs; [
+    vscode
     aria2
     btop
     chafa
@@ -179,7 +179,7 @@
     maven
     meson
     mpv
-    matugen.packages.${pkgs.stdenv.hostPlatform.system}.default
+    pkgs.matugen
     nautilus
     neovim
     ninja

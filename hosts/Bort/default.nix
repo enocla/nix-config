@@ -4,6 +4,7 @@
   helium,
   lib,
   pkgs,
+  tether,
   username,
   ...
 }: {
@@ -11,6 +12,7 @@
     ../../modules/base
     determinate.nixosModules.default
     helium.nixosModules.default
+    tether.nixosModules.default
     ./hardware-configuration.nix
   ];
 
@@ -30,7 +32,19 @@
 
   hardware.bluetooth.enable = true;
 
-  time.timeZone = "Asia/Hong_Kong";
+  programs.tether = {
+    enable = true;
+    wifi = {
+      enable = true;
+      openFirewall = true;
+    };
+    bluetooth = {
+      enable = true;
+      adapters = ["hci0"];
+    };
+  };
+
+  time.timeZone = "America/Toronto";
   i18n.defaultLocale = "en_HK.UTF-8";
 
   nix = {
