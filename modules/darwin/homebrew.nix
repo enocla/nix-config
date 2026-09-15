@@ -2,10 +2,11 @@
   homebrew = {
     enable = true;
 
-    taps = [];
+    # taps = [ ];
 
     brews = [
       "elio"
+      "sichengchen/tap/apple-calendar-cli"
     ];
 
     casks = [

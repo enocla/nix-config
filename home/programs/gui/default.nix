@@ -4,10 +4,12 @@
   ...
 }: {
   imports =
-    [./kitty]
+    [
+      ./kitty
+      ./nixcord.nix
+    ]
     ++ lib.optionals (lib.hasSuffix "-linux" system) [
       ./kde
-      ./nixcord.nix
       ./vicinae
     ];
 }
