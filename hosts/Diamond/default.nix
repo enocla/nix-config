@@ -1,6 +1,5 @@
 {darwin-custom-icons, ...}: {
   imports = [
-    ../../modules/base
     ../../modules/darwin
 
     ../../modules/icons
