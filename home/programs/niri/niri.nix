@@ -83,6 +83,22 @@ in {
     }
     prefer-no-csd
 
+    // Niri built-in switcher (with live previews), Super+Tab only.
+    // Defining binds here disables the Alt+Tab defaults.
+    // Mod = Super (Windows key), i.e. the Linux equivalent of Cmd.
+    recent-windows {
+      highlight {
+        active-color "${c.mauve}"
+        urgent-color "${c.red}"
+        padding 24
+        corner-radius ${toString cornerRadius}
+      }
+      binds {
+        Mod+Tab { next-window; }
+        Mod+Shift+Tab { previous-window; }
+      }
+    }
+
     screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 
     layer-rule {
