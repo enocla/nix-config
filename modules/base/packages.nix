@@ -35,6 +35,54 @@
     '';
   };
 
+  icloudLinuxPython = pkgs.python3.withPackages (pythonPackages:
+    with pythonPackages; [
+      fuse
+      jsonpickle
+      pyicloud
+      pyyaml
+      rich
+    ]);
+
+  icloudLinux = pkgs.stdenvNoCC.mkDerivation {
+    pname = "icloud-linux";
+    version = "unstable-d2fa0ba";
+    src = pkgs.fetchFromGitHub {
+      owner = "IsmaeelAkram";
+      repo = "icloud-linux";
+      rev = "d2fa0bab7409c793861cf4c3ecb0a4e592464959";
+      hash = "sha256-8RnUPYW74Vyl1ixoVIIio44flQbhpxTayQVo8vl1oW4=";
+    };
+    nativeBuildInputs = [pkgs.makeWrapper];
+
+    installPhase = ''
+            runHook preInstall
+            install -d "$out/share/icloud-linux" "$out/bin"
+            cp -R . "$out/share/icloud-linux/"
+
+            # The upstream launcher bootstraps a mutable virtualenv. Nix provides
+            # the complete runtime instead, while retaining the upstream CLI flow.
+            substituteInPlace "$out/share/icloud-linux/icloudctl" \
+              --replace-fail 'ensure_venv() {' 'ensure_venv() { :; return 0; } # disabled by Nix
+            ensure_venv_legacy() {' \
+              --replace-fail '$REPO_DIR/.venv/bin/python' '${icloudLinuxPython}/bin/python' \
+              --replace-fail '/usr/bin/fusermount' '/run/wrappers/bin/fusermount' \
+              --replace-fail 'cookie_dir: "$CONFIG_DIR/cookies"' 'cookie_dir: "$CONFIG_DIR/cookies"
+      sync_paths:
+        - /Obsidian'
+            substituteInPlace "$out/share/icloud-linux/config.example.yaml" \
+              --replace-fail 'cookie_dir: "~/.config/icloud-linux/cookies"' 'cookie_dir: "~/.config/icloud-linux/cookies"
+      sync_paths:
+        - /Obsidian'
+
+            # Keep a stable wrapper in PATH while allowing the upstream script to
+            # resolve its companion Python files from its immutable source tree.
+            makeWrapper "$out/share/icloud-linux/icloudctl" "$out/bin/icloudctl"
+
+            runHook postInstall
+    '';
+  };
+
   mkElectronWrapper = {
     package,
     binaries,
@@ -127,6 +175,8 @@
   ];
 
   linuxPackages = with pkgs; [
+    fuse
+    icloudLinux
     astro-language-server
     bash-language-server
     biome
