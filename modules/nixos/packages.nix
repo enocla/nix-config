@@ -1,8 +1,4 @@
-{
-  lib,
-  pkgs,
-  ...
-}: let
+{pkgs, ...}: let
   dcd = pkgs.stdenvNoCC.mkDerivation {
     pname = "dcd";
     version = "1.1.0";
@@ -78,33 +74,6 @@
 
             runHook postInstall
     '';
-  };
-
-  mkElectronWrapper = {
-    package,
-    binaries,
-  }:
-    pkgs.symlinkJoin {
-      name = "${lib.getName package}-wrapped";
-      paths = [package];
-      nativeBuildInputs = [pkgs.makeWrapper];
-      postBuild =
-        lib.concatMapStringsSep "\n" (binary: ''
-          wrapProgram "$out/bin/${binary}" \
-            --set ELECTRON_OZONE_PLATFORM_HINT auto
-        '')
-        binaries;
-      meta = package.meta // {mainProgram = builtins.head binaries;};
-    };
-
-  obsidianWrapped = mkElectronWrapper {
-    package = pkgs.obsidian;
-    binaries = ["obsidian"];
-  };
-
-  discordWrapped = mkElectronWrapper {
-    package = pkgs.discord;
-    binaries = ["Discord" "discord"];
   };
 in {
   environment.systemPackages = with pkgs; [
@@ -205,8 +174,9 @@ in {
     zed-editor
     kiro-cli
     yazi
-    obsidianWrapped
-    discordWrapped
+    discord
+    google-chrome
+    obsidian
     comma
     samba
     cifs-utils
