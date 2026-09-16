@@ -461,7 +461,7 @@ in {
 
       // Existing terminal and Paneru-style bindings.
       Mod+Ctrl+Alt+Return hotkey-overlay-title="Kitty" { spawn "kitty"; }
-      Mod+Ctrl+Alt+R hotkey-overlay-title="Screenshot" { spawn "flameshot" "gui"; }
+      Mod+Ctrl+Alt+R hotkey-overlay-title="Screenshot" { spawn-sh "noctalia msg screenshot-region"; }
       Mod+Q { close-window; }
       Mod+Ctrl+Alt+H { focus-column-left; }
       Mod+Ctrl+Alt+Q { focus-column-left; }

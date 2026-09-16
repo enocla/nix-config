@@ -49,6 +49,11 @@
       url = "github:enocla/paneru/9fff52c238b7a1f6f6a7149ff554f462c8e8b33f";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    opencode-v2 = {
+      url = "github:anomalyco/opencode/v2";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs @ {

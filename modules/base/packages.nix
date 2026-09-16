@@ -1,6 +1,7 @@
 {
   lib,
   pkgs,
+  opencode-v2,
   ...
 }: let
   isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
@@ -110,54 +111,56 @@
     binaries = ["Discord" "discord"];
   };
 
-  commonPackages = with pkgs; [
-    vscode
-    aria2
-    btop
-    chafa
-    clang-tools
-    coreutils
-    delta
-    docker
-    dua
-    eza
-    ffmpeg
-    gcc
-    git
-    git-crypt
-    git-lfs
-    gnupg
-    gzip
-    lame
-    lazygit
-    lazyjj
-    libogg
-    libsoundio
-    libvmaf
-    libvorbis
-    libvpx
-    llvm
-    lua
-    lzo
-    mosh
-    nickel
-    nmap
-    opus
-    sdl2-compat
-    sdl3
-    svt-av1
-    tealdeer
-    tmux
-    tomlplusplus
-    unixtools.watch
-    wget
-    libwebp
-    x264
-    x265
-    yaml-cpp
-    yarn
-    zlib
-  ];
+  commonPackages = with pkgs;
+    [
+      vscode
+      aria2
+      btop
+      chafa
+      clang-tools
+      coreutils
+      delta
+      docker
+      dua
+      eza
+      ffmpeg
+      gcc
+      git
+      git-crypt
+      git-lfs
+      gnupg
+      gzip
+      lame
+      lazygit
+      lazyjj
+      libogg
+      libsoundio
+      libvmaf
+      libvorbis
+      libvpx
+      llvm
+      lua
+      lzo
+      mosh
+      nickel
+      nmap
+      opus
+      sdl2-compat
+      sdl3
+      svt-av1
+      tealdeer
+      tmux
+      tomlplusplus
+      unixtools.watch
+      wget
+      libwebp
+      x264
+      x265
+      yaml-cpp
+      yarn
+      zlib
+    ]
+    ++ [opencode-v2.packages.${pkgs.stdenv.hostPlatform.system}.default];
 
   darwinPackages = with pkgs; [
     blender
@@ -197,7 +200,6 @@
     deno
     eog
     fastfetch
-    flameshot
     fd
     gh
     gnome-themes-extra
@@ -235,7 +237,6 @@
     ninja
     nodejs
     opam
-    opencode
     pkl
     pnpm
     prism
