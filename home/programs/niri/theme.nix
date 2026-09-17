@@ -9,14 +9,17 @@
 in {
   home.packages = [pkgs.pywal];
 
-  home.sessionVariables.QS_ICON_THEME = "breeze-dark";
+  home.sessionVariables.QS_ICON_THEME = "Papirus-Dark";
 
   home.file = {
     ".icons/default".source = "${pkgs.bibata-cursors}/share/icons/Bibata-Modern-Classic";
     "Pictures/phos.webp".source = wallpaper;
   };
 
-  dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+  dconf.settings."org/gnome/desktop/interface" = {
+    color-scheme = "prefer-dark";
+    icon-theme = "Papirus-Dark";
+  };
 
   gtk = {
     enable = true;
@@ -24,6 +27,10 @@ in {
     theme = {
       name = "adw-gtk3-dark";
       package = pkgs.adw-gtk3;
+    };
+    iconTheme = {
+      name = "Papirus-Dark";
+      package = pkgs.papirus-icon-theme;
     };
     cursorTheme = {
       name = "Bibata-Modern-Classic";

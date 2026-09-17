@@ -74,7 +74,11 @@ in {
 
   xdg.configFile."kitty/kitty.conf".text = ''
     font_family ${theme.ui.monospaceFontFamily}
-    font_size 14
+    font_size ${
+      if isDarwin
+      then "14"
+      else "12"
+    }
 
     url_style straight
     allow_remote_control yes
