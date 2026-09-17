@@ -6,7 +6,8 @@
   ...
 }: let
   c = theme.colors;
-  mixedColor = (colorMix {inherit lib;}).mixColors c.base c.green 0.8;
+  branchColor = (colorMix {inherit lib;}).mixColors c.base c.green 0.8;
+  hostColor = (colorMix {inherit lib;}).mixColors c.base c.red 0.8;
 in {
   programs.starship = {
     enable = true;
@@ -17,7 +18,7 @@ in {
     enableNushellIntegration = true;
 
     settings = {
-      format = "$shell$directory$git_branch$git_status$character";
+      format = "$hostname$shell$directory$git_branch$git_status$character";
 
       directory = {
         style = "blue";
@@ -29,7 +30,7 @@ in {
 
       git_branch = {
         symbol = "󰘬";
-        format = "[ [$symbol](bold green bg:${mixedColor}) $branch ](bg:${mixedColor} green)";
+        format = "[ [$symbol](bold green bg:${branchColor}) $branch ](bg:${branchColor} green)";
       };
 
       git_status = {
@@ -67,8 +68,7 @@ in {
 
       hostname = {
         ssh_only = false;
-        format = "[$hostname]($style)";
-        style = "bold cyan";
+        format = "[ $hostname ](bg:${hostColor} red)";
       };
     };
   };

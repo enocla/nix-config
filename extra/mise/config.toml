@@ -28,7 +28,6 @@ neovim = "latest"
 ninja = "latest"
 node = "latest"
 opam = "latest"
-opencode = "latest"
 pkl = "latest"
 pnpm = "latest"
 protobuf = "latest"
@@ -55,8 +54,6 @@ zig = "latest"
 "npm:@joargp/accli" = "latest"
 hunk = "latest"
 rust = "latest"
-
-# Neovim language servers, kept in sync with its explicit vim.lsp.enable list.
 "aqua:astral-sh/ruff" = "0.16.2"
 "aqua:rust-lang/rust-analyzer" = "2026-08-03"
 "github:LuaLS/lua-language-server" = "3.19.0"
@@ -69,6 +66,7 @@ rust = "latest"
 "npm:svelte-language-server" = "0.18.3"
 "npm:vscode-langservers-extracted" = "4.10.0"
 "npm:yaml-language-server" = "1.24.0"
+"npm:@opencode/cli" = { version = "latest", npm_args = "--ignore-scripts=false" }
 
 [settings.npm]
 shell_out = true
