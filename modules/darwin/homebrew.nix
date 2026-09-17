@@ -6,11 +6,12 @@
       "elio"
       "sichengchen/tap/apple-calendar-cli"
       "keith/formulae/reminders-cli"
+      "r"
     ];
 
     casks = [
+      "rstudio"
       "codex"
-      "craft"
       "helium-browser"
       "linearmouse"
       "microsoft-teams"
