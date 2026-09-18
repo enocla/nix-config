@@ -185,6 +185,7 @@ in {
       comma
       samba
       cifs-utils
+      herdr
     ]
     ++ [opencode-v2.packages.${pkgs.stdenv.hostPlatform.system}.default];
 }
