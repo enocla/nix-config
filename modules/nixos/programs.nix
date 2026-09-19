@@ -1,8 +1,10 @@
 {pkgs, ...}: {
   programs = {
+    steam.enable = true;
+
     fish.enable = true;
     helium = {
-      enable = true;
+      enable = false;
       flags = ["--ozone-platform-hint=auto"];
     };
     niri.enable = true;
