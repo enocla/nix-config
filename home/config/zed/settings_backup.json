@@ -228,7 +228,6 @@
   },
   "project_panel": {
     // Default width of the project panel.
-    "folder_indicator": "icon",
     "bold_folder_labels": false,
     "auto_fold_dirs": false,
     "default_width": 240,
@@ -237,6 +236,7 @@
     // Whether to show file icons in the project panel.
     "file_icons": true,
     // Whether to show folder icons or chevrons for directories in the project panel.
+    "folder_icons": true,
     // Whether to show the git status in the project panel.
     "git_status": true,
     // Amount of indentation for nested items.
@@ -588,7 +588,13 @@
     //             "command": "clippy"
     //         }
     //     }
-    // },
+    // }
+    "clangd": {
+      "binary": {
+        "path": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clangd",
+        // "arguments": ["--query-driver=/usr/bin/c++"]
+      }
+    },
     // "sourcekit-lsp": {
     //   "binary": {
     //     "path": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/sourcekit-lsp",
