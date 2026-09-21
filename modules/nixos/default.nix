@@ -4,7 +4,6 @@
     ./services
     ./boot.nix
     ./environment.nix
-    ./extras.nix
     ./fonts.nix
     ./hardware.nix
     ./networking.nix

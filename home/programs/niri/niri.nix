@@ -1,10 +1,19 @@
 {
   config,
+  host,
+  pkgs,
   theme,
   ...
 }: let
   c = theme.colors;
   inherit (theme.ui) cornerRadius;
+  noctaliaSession = pkgs.writeShellApplication {
+    name = "noctalia-session";
+    runtimeInputs = [config.programs.noctalia.package pkgs.matugen pkgs.pywal pkgs.coreutils];
+    text = ''
+      exec noctalia --daemon
+    '';
+  };
 in {
   xdg.configFile."niri/config-nix.kdl".text = ''
     window-rule {
@@ -75,8 +84,8 @@ in {
       }
     }
 
-    spawn-at-startup "noctalia" "--daemon"
-    spawn-sh-at-startup "for i in 1 2 3 4 5; do sleep 1; noctalia msg wallpaper-set ${config.home.homeDirectory}/Pictures/phos.webp && exit 0; done"
+    spawn-at-startup "${noctaliaSession}/bin/noctalia-session"
+    spawn-sh-at-startup "for i in 1 2 3 4 5; do sleep 1; noctalia msg wallpaper-set ${host.homeDirectory}/Pictures/phos.webp && exit 0; done"
 
     hotkey-overlay {
       skip-at-startup
@@ -119,21 +128,13 @@ in {
         blur true
       }
     }
-    window-rule {
-      match app-id="^zen$" title="^Picture-in-Picture$"
-      open-floating true
-    }
-
     debug {
       honor-xdg-activation-with-invalid-serial
     }
 
     binds {
       Mod+Shift+Slash { show-hotkey-overlay; }
-      Mod+Shift+G hotkey-overlay-title=null { spawn "godot-mono"; }
       Mod+Shift+O hotkey-overlay-title=null { spawn "obsidian"; }
-      Mod+Shift+F hotkey-overlay-title=null { spawn-sh "zen"; }
-      Mod+Shift+T hotkey-overlay-title=null { spawn-sh "Telegram"; }
       Mod+Shift+C hotkey-overlay-title=null { spawn "kitty"; }
       Mod+Shift+D hotkey-overlay-title=null { spawn-sh "labwc -s sfwbar"; }
       Mod+E hotkey-overlay-title=null { spawn "nautilus"; }

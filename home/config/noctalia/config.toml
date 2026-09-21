@@ -54,7 +54,8 @@ custom_palette = "nix-config"
 wallpaper_scheme = "m3-content"
 
 [theme.templates]
-builtin_ids = ["niri"]
+enable_builtin_templates = false
+builtin_ids = []
 
 [wallpaper]
 directory = "~/Pictures"

@@ -1,14 +1,10 @@
 {
   lib,
   pkgs,
-  username,
+  host,
   ...
 }: let
   isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
-  homeDirectory =
-    if isDarwin
-    then "/Users/${username}"
-    else "/home/${username}";
   shell =
     if isDarwin
     then "${pkgs.fish}/bin/fish"
@@ -16,9 +12,9 @@
 in {
   environment.shells = [shell];
 
-  users.users.${username} = {
-    home = lib.mkDefault homeDirectory;
-    description = username;
+  users.users.${host.username} = {
+    home = lib.mkDefault host.homeDirectory;
+    description = host.username;
     inherit shell;
   };
 }

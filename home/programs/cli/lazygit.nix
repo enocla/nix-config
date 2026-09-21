@@ -1,9 +1,13 @@
-{theme, ...}: let
+{
+  pkgs,
+  theme,
+  ...
+}: let
   c = theme.colors;
 in {
   programs.lazygit = {
     enable = true;
-    package = null;
+    package = pkgs.lazygit;
     settings = {
       os = {
         edit = "nvim {{filename}}";

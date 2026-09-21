@@ -1,91 +1,12 @@
 {
   pkgs,
-  opencode-v2,
+  inputs,
   ...
 }: let
-  dcd = pkgs.stdenvNoCC.mkDerivation {
-    pname = "dcd";
-    version = "1.1.0";
-    src = pkgs.fetchzip {
-      url = "https://github.com/boyter/dcd/releases/download/v1.1.0/dcd-1.0.0-x86_64-unknown-linux.zip";
-      hash = "sha256-f64Ji2m7o/HLe35L83DnlSzeY/g2Ez8ZBIzHmkO0v9I=";
-    };
-    installPhase = ''
-      runHook preInstall
-      install -Dm755 dcd "$out/bin/dcd"
-      runHook postInstall
-    '';
-  };
-
-  prism = pkgs.stdenvNoCC.mkDerivation {
-    pname = "prism";
-    version = "1.4.1";
-    src = pkgs.fetchzip {
-      url = "https://github.com/DaltonSW/prism/releases/download/v1.4.1/prism_Linux_x86_64.tar.gz";
-      hash = "sha256-wM+vNtSP+6h3+Q7OwExYTkQGgYCkkCrO19a/lrieYKc=";
-      stripRoot = false;
-    };
-    installPhase = ''
-      runHook preInstall
-      install -Dm755 prism "$out/bin/prism"
-      runHook postInstall
-    '';
-  };
-
-  icloudLinuxPython = pkgs.python3.withPackages (pythonPackages:
-    with pythonPackages; [
-      fuse
-      jsonpickle
-      pyicloud
-      pyyaml
-      rich
-    ]);
-
-  icloudLinux = pkgs.stdenvNoCC.mkDerivation {
-    pname = "icloud-linux";
-    version = "unstable-d2fa0ba";
-    src = pkgs.fetchFromGitHub {
-      owner = "IsmaeelAkram";
-      repo = "icloud-linux";
-      rev = "d2fa0bab7409c793861cf4c3ecb0a4e592464959";
-      hash = "sha256-8RnUPYW74Vyl1ixoVIIio44flQbhpxTayQVo8vl1oW4=";
-    };
-    nativeBuildInputs = [pkgs.makeWrapper];
-
-    installPhase = ''
-            runHook preInstall
-            install -d "$out/share/icloud-linux" "$out/bin"
-            cp -R . "$out/share/icloud-linux/"
-
-            # The upstream launcher bootstraps a mutable virtualenv. Nix provides
-            # the complete runtime instead, while retaining the upstream CLI flow.
-            substituteInPlace "$out/share/icloud-linux/icloudctl" \
-              --replace-fail 'ensure_venv() {' 'ensure_venv() { :; return 0; } # disabled by Nix
-            ensure_venv_legacy() {' \
-              --replace-fail '$REPO_DIR/.venv/bin/python' '${icloudLinuxPython}/bin/python' \
-              --replace-fail '/usr/bin/fusermount' '/run/wrappers/bin/fusermount' \
-              --replace-fail 'cookie_dir: "$CONFIG_DIR/cookies"' 'cookie_dir: "$CONFIG_DIR/cookies"
-      sync_paths:
-        - /Obsidian'
-            substituteInPlace "$out/share/icloud-linux/config.example.yaml" \
-              --replace-fail 'cookie_dir: "~/.config/icloud-linux/cookies"' 'cookie_dir: "~/.config/icloud-linux/cookies"
-      sync_paths:
-        - /Obsidian'
-
-            # Keep a stable wrapper in PATH while allowing the upstream script to
-            # resolve its companion Python files from its immutable source tree.
-            makeWrapper "$out/share/icloud-linux/icloudctl" "$out/bin/icloudctl"
-
-            runHook postInstall
-    '';
-  };
+  customPkgs = import ../../pkgs {inherit pkgs;};
 in {
   environment.systemPackages = with pkgs;
     [
-      zip
-      unzip
-      fuse
-      icloudLinux
       astro-language-server
       bash-language-server
       biome
@@ -94,31 +15,38 @@ in {
       bun
       cargo
       cargo-binstall
+      cifs-utils
       claude-agent-acp
       claude-code
       clippy
       cmake
       codex-acp
       colima
+      comma
       cosign
       curl
-      dcd
+      customPkgs.dcd
       deno
       eog
       fastfetch
       fd
+      fuse
       gh
       gnome-themes-extra
       go
       go-tools
+      google-chrome
       gopls
       gotools
       gradle
       gum
-      helix
+      herdr
       hunk
       hyperfine
+      customPkgs.icloud-linux
       jq
+      just
+      kcl
       kdePackages.breeze
       kdePackages.breeze-icons
       kdePackages.dolphin
@@ -127,8 +55,7 @@ in {
       kdePackages.kio-extras
       kdePackages.kio-fuse
       kdePackages.qtsvg
-      just
-      kcl
+      kiro-cli
       kotlin
       labwc
       lima
@@ -137,24 +64,24 @@ in {
       maven
       meson
       mpv
-      pkgs.matugen
       nautilus
       neovim
       ninja
       nodejs
+      obsidian
       opam
       pkl
+      playerctl
       pnpm
-      prism
+      customPkgs.prism
       protobuf
       pyright
-      pywal
-      playerctl
       ripgrep
       ruff
       rust-analyzer
       rustc
       rustfmt
+      samba
       sd
       sfwbar
       stylua
@@ -162,32 +89,24 @@ in {
       swiftformat
       tailwindcss-language-server
       tokei
-      trash-cli
       tree-sitter
       typst
+      unzip
       usage
       usbutils
       uv
       vscode-langservers-extracted
       vtsls
       vue-language-server
-      waybar
-      wl-clipboard
       wiremix
+      wl-clipboard
       xwayland-satellite
       yaml-language-server
-      yt-dlp
-      zig
-      zed-editor
-      kiro-cli
       yazi
-      discord
-      google-chrome
-      obsidian
-      comma
-      samba
-      cifs-utils
-      herdr
+      yt-dlp
+      zed-editor
+      zig
+      zip
     ]
-    ++ [opencode-v2.packages.${pkgs.stdenv.hostPlatform.system}.default];
+    ++ [inputs.opencode-v2.packages.${pkgs.stdenv.hostPlatform.system}.default];
 }

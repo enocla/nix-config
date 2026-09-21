@@ -1,8 +1,6 @@
 {pkgs, ...}: {
   environment.systemPackages = with pkgs; [
-    vscode
     aria2
-    btop
     chafa
     clang-tools
     coreutils
@@ -12,23 +10,21 @@
     eza
     ffmpeg
     gcc
-    git
     git-crypt
-    git-lfs
-    gnupg
     gzip
     lame
-    lazygit
     lazyjj
     libogg
     libsoundio
     libvmaf
     libvorbis
     libvpx
+    libwebp
     llvm
     lua
     lzo
     mosh
+    nh
     nickel
     nmap
     opus
@@ -36,11 +32,10 @@
     sdl3
     svt-av1
     tealdeer
-    tmux
     tomlplusplus
     unixtools.watch
+    vscode
     wget
-    libwebp
     x264
     x265
     yaml-cpp

@@ -1,10 +1,17 @@
 {
+  host,
+  inputs,
+  ...
+}: {
   imports = [
     ./hardware-configuration.nix
     ../../modules/nixos
+    inputs.codex-desktop-linux.nixosModules.default
   ];
 
-  networking.hostName = "Bort";
+  networking.hostName = host.hostname;
 
-  system.stateVersion = "26.05";
+  programs.codexDesktopLinux.enable = true;
+
+  system.stateVersion = host.systemStateVersion;
 }

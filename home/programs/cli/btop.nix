@@ -1,9 +1,13 @@
-{theme, ...}: let
+{
+  pkgs,
+  theme,
+  ...
+}: let
   c = theme.colors;
 in {
   programs.btop = {
     enable = true;
-    package = null;
+    package = pkgs.btop;
     settings = {
       color_theme = "custom";
       theme_background = true;

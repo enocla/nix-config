@@ -1,10 +1,16 @@
-{darwin-custom-icons, ...}: {
+{
+  host,
+  inputs,
+  ...
+}: {
   imports = [
     ../../modules/darwin
 
-    ../../modules/icons
-    darwin-custom-icons.darwinModules.default
+    ../../modules/darwin/icons
+    inputs.darwin-custom-icons.darwinModules.default
 
     ./paneru.nix
   ];
+
+  networking.hostName = host.hostname;
 }

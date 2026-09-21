@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   programs.zsh = {
     enable = true;
     package = pkgs.zsh;
@@ -19,9 +15,6 @@
       bindkey '^[h' backward-word
       bindkey '^[l' forward-word
 
-      if [ -x ${config.home.homeDirectory}/.local/bin/mise ]; then
-        eval "$(${config.home.homeDirectory}/.local/bin/mise activate zsh)"
-      fi
     '';
   };
 }

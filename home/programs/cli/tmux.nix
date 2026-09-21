@@ -1,9 +1,18 @@
-{theme, ...}: let
+{
+  pkgs,
+  theme,
+  ...
+}: let
   c = theme.colors;
   # Script to auto-attach to a directory-based session
   list-cmd = "tmux list-sessions -F '#{session_name}\t#{pane_current_command}\t#{pane_current_path}'";
   tmux-picker = ''
-    ${list-cmd} \
+    sessions="$(${list-cmd} 2>/dev/null || true)"
+    if [ -z "$sessions" ]; then
+      exit 0
+    fi
+
+    printf '%s\n' "$sessions" \
       | awk -F'\t' '{printf "%-20s  %-12s  %s\n", $1, $2, $3}' \
       | fzf --reverse --no-border \
         --prompt=' ' \
@@ -23,7 +32,7 @@
     dir="''${1:-$(pwd)}"
     dir="$(cd "$dir" && pwd)"
     name="$(basename "$dir" | tr '.' '-')"
-    if [ -n "$TMUX" ]; then
+    if [ -n "''${TMUX:-}" ]; then
       old="$(tmux display-message -p '#{session_name}')"
       if ! tmux has-session -t "=$name" 2>/dev/null; then
         tmux new-session -ds "$name" -c "$dir"
@@ -40,21 +49,25 @@
       fi
     fi
   '';
+  tmux-picker-script = pkgs.writeShellApplication {
+    name = "tmux-session-picker";
+    runtimeInputs = [pkgs.tmux pkgs.gawk pkgs.fzf pkgs.findutils pkgs.coreutils];
+    text = tmux-picker;
+  };
+  tmux-dir-script = pkgs.writeShellApplication {
+    name = "t";
+    runtimeInputs = [pkgs.tmux pkgs.coreutils];
+    text = tmux-dir;
+  };
 in {
   home.file = {
-    ".local/bin/tmux-session-picker" = {
-      executable = true;
-      text = "#!/bin/sh\n${tmux-picker}";
-    };
-    ".local/bin/t" = {
-      executable = true;
-      text = "#!/bin/sh\n${tmux-dir}";
-    };
+    ".local/bin/tmux-session-picker".source = "${tmux-picker-script}/bin/tmux-session-picker";
+    ".local/bin/t".source = "${tmux-dir-script}/bin/t";
   };
 
   programs.tmux = {
     enable = true;
-    package = null;
+    package = pkgs.tmux;
     shell = "fish";
     terminal = "tmux-256color";
     mouse = true;

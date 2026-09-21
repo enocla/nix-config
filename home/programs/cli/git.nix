@@ -1,7 +1,6 @@
 {
-  gitUserEmail,
-  gitUserName,
-  gpgKey,
+  host,
+  pkgs,
   theme,
   ...
 }: let
@@ -14,16 +13,16 @@ in {
   #    https://git-scm.com/docs/git-config#Documentation/git-config.txt---global
   programs.git = {
     enable = true;
-    package = null;
+    package = pkgs.git;
     lfs = {
       enable = true;
-      package = null;
+      package = pkgs.git-lfs;
     };
 
     settings = {
-      user.name = gitUserName;
-      user.email = gitUserEmail;
-      user.signingkey = gpgKey;
+      user.name = host.gitUserName;
+      user.email = host.gitUserEmail;
+      user.signingkey = host.gpgKey;
 
       commit.gpgsign = true;
       core.pager = "delta --dark";

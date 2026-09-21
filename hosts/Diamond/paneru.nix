@@ -1,14 +1,14 @@
 {
-  paneru,
+  inputs,
   pkgs,
   ...
 }: {
-  imports = [paneru.darwinModules.paneru];
+  imports = [inputs.paneru.darwinModules.paneru];
 
   services.paneru = {
     enable = true;
     # Crane's cargoWithProfile helper maps this to `cargo build --release`.
-    package = paneru.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs (_: {
+    package = inputs.paneru.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs (_: {
       CARGO_PROFILE = "release";
     });
     luaConfig.enable = true;

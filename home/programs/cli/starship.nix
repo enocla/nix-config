@@ -1,13 +1,12 @@
 {
-  lib,
   pkgs,
   theme,
-  colorMix,
   ...
 }: let
   c = theme.colors;
-  branchColor = (colorMix {inherit lib;}).mixColors c.base c.green 0.8;
-  hostColor = (colorMix {inherit lib;}).mixColors c.base c.red 0.8;
+  d = theme.diff;
+  branchColor = d.plus;
+  hostColor = d.minus;
 in {
   programs.starship = {
     enable = true;

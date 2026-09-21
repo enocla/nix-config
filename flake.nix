@@ -2,26 +2,16 @@
   description = "Nix configurations for Diamond and Bort";
 
   inputs = {
+    # Shared package set
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+
+    # System, home, and secrets management
+    darwin = {
+      url = "github:lnl7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
-
-    dms = {
-      url = "github:AvengeMedia/DankMaterialShell/stable";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    noctalia.url = "github:noctalia-dev/noctalia/cachix";
-    nixcord.url = "github:4evy/nixcord";
-
-    tether = {
-      url = "github:zackb/tether";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    vicinae = {
-      url = "github:vicinaehq/vicinae/11f58c008d62fa10fe364a6010f5b5f8f8200a56";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -33,22 +23,33 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    darwin = {
-      url = "github:lnl7/nix-darwin";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
+    # macOS desktop
     darwin-custom-icons.url = "github:ryanccn/nix-darwin-custom-icons";
-
-    helium = {
-      url = "github:oxcl/nix-flake-helium-browser";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
 
     paneru = {
       url = "github:enocla/paneru/9fff52c238b7a1f6f6a7149ff554f462c8e8b33f";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Linux desktop and device integration
+    # Preserve upstream package sets for binary/cache compatibility; do not
+    # add follows here without checking the affected package builds.
+    noctalia.url = "github:noctalia-dev/noctalia/cachix";
+
+    tether = {
+      url = "github:zackb/tether";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    vicinae = {
+      url = "github:vicinaehq/vicinae/11f58c008d62fa10fe364a6010f5b5f8f8200a56";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # Applications
+    # These inputs intentionally retain their upstream package-set pins.
+    codex-desktop-linux.url = "github:ilysenko/codex-desktop-linux";
+    nixcord.url = "github:4evy/nixcord";
 
     opencode-v2 = {
       url = "github:anomalyco/opencode/v2";
@@ -57,6 +58,7 @@
   };
 
   outputs = inputs @ {
+    self,
     nixpkgs,
     home-manager,
     darwin,
@@ -64,15 +66,9 @@
   }: let
     inherit (nixpkgs) lib;
     hosts = import ./config/host.nix;
+    systems = lib.unique (map (host: host.system) (builtins.attrValues hosts));
     theme = import ./lib/theme.nix {inherit lib;};
-    colorMix = import ./lib/color-mix.nix;
-
-    mkSpecialArgs = host:
-      inputs
-      // host
-      // {
-        inherit theme colorMix;
-      };
+    mkSpecialArgs = host: {inherit inputs host theme;};
 
     mkHomeManager = host: {
       useGlobalPkgs = true;
@@ -107,7 +103,31 @@
     darwinConfigurations.Diamond = mkDarwinConfiguration hosts.Diamond;
     nixosConfigurations.Bort = mkNixosConfiguration hosts.Bort;
 
-    formatter = lib.genAttrs (map (host: host.system) (builtins.attrValues hosts)) (
+    packages = lib.genAttrs systems (system: let
+      pkgs = import nixpkgs {
+        inherit system;
+        config.allowUnfreePredicate = package:
+          builtins.elem (lib.getName package) ["berkeley-mono-nerd-font" "sf-pro-text"];
+      };
+    in
+      lib.filterAttrs (_: package: lib.meta.availableOn pkgs.stdenv.hostPlatform package)
+      (import ./pkgs {inherit pkgs;}));
+
+    checks = lib.genAttrs systems (system:
+      import ./checks {
+        pkgs = nixpkgs.legacyPackages.${system};
+        nixosUsername = hosts.Bort.username;
+        nixosConfig =
+          if system == hosts.Bort.system
+          then self.nixosConfigurations.Bort.config
+          else null;
+        darwinConfig =
+          if system == hosts.Diamond.system
+          then self.darwinConfigurations.Diamond.config
+          else null;
+      });
+
+    formatter = lib.genAttrs systems (
       system: nixpkgs.legacyPackages.${system}.alejandra
     );
   };

@@ -1,6 +1,6 @@
 {
   lib,
-  system,
+  host,
   ...
 }: {
   imports =
@@ -8,5 +8,5 @@
       ./cli
       ./gui
     ]
-    ++ lib.optionals (lib.hasSuffix "-linux" system) [./niri];
+    ++ lib.optionals (lib.hasSuffix "-linux" host.system) [./niri];
 }

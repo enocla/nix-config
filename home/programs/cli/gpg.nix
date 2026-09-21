@@ -5,7 +5,7 @@
 }: {
   programs.gpg = {
     enable = true;
-    package = null;
+    package = pkgs.gnupg;
     settings = {
       personal-digest-preferences = "SHA512";
       cert-digest-algo = "SHA512";

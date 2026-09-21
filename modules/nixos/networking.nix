@@ -1,4 +1,6 @@
-{
+{inputs, ...}: {
+  imports = [inputs.tether.nixosModules.default];
+
   networking = {
     networkmanager.enable = true;
     firewall.enable = true;

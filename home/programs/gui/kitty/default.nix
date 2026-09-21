@@ -15,6 +15,9 @@
     then "${pkgs.fish}/bin/fish"
     else "${pkgs.fish}/bin/fish";
 in {
+  # Kitty owns its package and therefore its package-provided desktop entry.
+  home.packages = [pkgs.kitty];
+
   xdg.configFile."kitty/tab_bar.py".source = ./tab_bar.py;
   xdg.configFile."kitty/theme_colors.json".text = builtins.toJSON theme.colors;
 
@@ -54,24 +57,6 @@ in {
     };
     Install.WantedBy = ["graphical-session.target"];
   };
-  # Keep a user-local application entry so launchers such as Vicinae can find Kitty
-  # even when the package itself comes from the system profile.
-  xdg.dataFile."applications/kitty.desktop" = lib.mkIf (!isDarwin) {
-    text = ''
-      [Desktop Entry]
-      Type=Application
-      Version=1.5
-      Name=Kitty
-      GenericName=Terminal Emulator
-      Comment=Fast, feature-rich, GPU based terminal
-      Exec=${pkgs.kitty}/bin/kitty
-      Icon=kitty
-      Terminal=false
-      Categories=System;TerminalEmulator;
-      StartupWMClass=kitty
-    '';
-  };
-
   xdg.configFile."kitty/kitty.conf".text = ''
     font_family ${theme.ui.monospaceFontFamily}
     font_size ${

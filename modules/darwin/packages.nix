@@ -11,6 +11,5 @@
     prismlauncher
     shottr
     switchaudio-osx
-    vscode
   ];
 }

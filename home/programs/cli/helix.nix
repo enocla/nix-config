@@ -1,7 +1,7 @@
-{...}: {
+{pkgs, ...}: {
   programs.helix = {
     enable = true;
-    package = null;
+    package = pkgs.helix;
     settings = {
       theme = "autumn_night_transparent";
       editor = {

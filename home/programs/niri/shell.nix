@@ -1,26 +1,16 @@
 {
   config,
-  configRepoName,
-  dms,
+  host,
+  inputs,
   lib,
-  noctalia,
   theme,
   ...
 }: let
   c = theme.colors;
-  configDir = "${config.home.homeDirectory}/${configRepoName}/home/config";
+  configDir = "${host.checkoutPath}/home/config";
   mkLink = config.lib.file.mkOutOfStoreSymlink;
 in {
-  # Keep DMS available as an input/module, but use Noctalia for this Linux host.
-  imports = [
-    dms.homeModules.dank-material-shell
-    noctalia.homeModules.default
-  ];
-
-  programs.dank-material-shell = {
-    enable = lib.mkForce false;
-    systemd.enable = false;
-  };
+  imports = [inputs.noctalia.homeModules.default];
 
   services.polkit-gnome.enable = true;
   systemd.user.services.polkit-gnome = {

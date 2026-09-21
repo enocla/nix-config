@@ -45,6 +45,18 @@ in {
       "/usr/local/bin"
     ];
 
+  # Home Manager owns mise on Darwin and supplies shell integration from the
+  # managed package. Project tools remain declared in extra/mise/config.toml.
+  programs.mise = lib.mkIf isDarwin {
+    enable = true;
+    package = pkgs.mise;
+    enableFishIntegration = true;
+    enableZshIntegration = true;
+  };
+
+  # The shared `rm` alias is backed by this package on both platforms.
+  home.packages = [pkgs.trash-cli];
+
   home.shellAliases =
     {
       a = "nvim";
