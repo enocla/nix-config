@@ -21,42 +21,6 @@ in {
   xdg.configFile."kitty/tab_bar.py".source = ./tab_bar.py;
   xdg.configFile."kitty/theme_colors.json".text = builtins.toJSON theme.colors;
 
-  # keyd translates Cmd+C/V to Ctrl+C/V for regular applications. Terminals
-  # need Ctrl+Shift+C/V for clipboard operations, so override those bindings
-  # only while Kitty is the active application.
-  xdg.configFile."keyd/app.conf" = lib.mkIf (!isDarwin) {
-    text = ''
-      [kitty]
-      cmd.c = C-S-c
-      cmd.v = C-S-v
-      cmd.t = M-t
-      cmd.w = M-w
-      cmd.0 = M-0
-      cmd.1 = M-1
-      cmd.2 = M-2
-      cmd.3 = M-3
-      cmd.4 = M-4
-      cmd.5 = M-5
-      cmd.6 = M-6
-      cmd.7 = M-7
-      cmd.8 = M-8
-      cmd.9 = M-9
-    '';
-  };
-
-  systemd.user.services.keyd-application-mapper = lib.mkIf (!isDarwin) {
-    Unit = {
-      Description = "Keyd application-specific keyboard mappings";
-      After = ["graphical-session.target"];
-    };
-    Service = {
-      Environment = ["PATH=${lib.makeBinPath [pkgs.keyd]}"];
-      ExecStart = ["${pkgs.keyd}/bin/keyd-application-mapper"];
-      Restart = "on-failure";
-      RestartSec = 2;
-    };
-    Install.WantedBy = ["graphical-session.target"];
-  };
   xdg.configFile."kitty/kitty.conf".text = ''
     font_family ${theme.ui.monospaceFontFamily}
     font_size ${
@@ -178,12 +142,42 @@ in {
     map ctrl+shift+tab previous_tab
 
     # Window management
+    map ${primaryModifier}+n new_os_window
+    map ${primaryModifier}+enter new_window
     map ${primaryModifier}+shift+w close_window
+    map ${primaryModifier}+q quit
 
     # Tab navigation
     map ${primaryModifier}+up previous_tab
     map ${primaryModifier}+down next_tab
     map ${primaryModifier}+shift+n new_tab_with_cwd
+    map ${primaryModifier}+shift+[ previous_tab
+    map ${primaryModifier}+shift+] next_tab
+    map ${primaryModifier}+alt+left previous_tab
+    map ${primaryModifier}+alt+right next_tab
+
+    # The macOS defaults also need explicit Super bindings on Linux.
+    map ${primaryModifier}+c copy_to_clipboard
+    map ${primaryModifier}+v paste_from_clipboard
+    map ${primaryModifier}+equal change_font_size all +2.0
+    map ${primaryModifier}+shift+equal change_font_size all +2.0
+    map ${primaryModifier}+minus change_font_size all -2.0
+    map ${primaryModifier}+shift+minus change_font_size all -2.0
+    map ${primaryModifier}+0 change_font_size all 0
+    map ${primaryModifier}+k clear_terminal to_cursor active
+    map ${primaryModifier}+alt+k clear_terminal scrollback active
+    map ${primaryModifier}+l clear_terminal last_command active
+    map ${primaryModifier}+ctrl+l clear_terminal to_cursor_scroll active
+    map ${primaryModifier}+r start_resizing_window
+    map ${primaryModifier}+alt+r clear_terminal reset active
+    map ${primaryModifier}+comma edit_config_file
+    map ${primaryModifier}+ctrl+comma load_config_file
+    map ${primaryModifier}+alt+comma debug_config
+    map ${primaryModifier}+shift+i set_tab_title
+    map ${primaryModifier}+home scroll_home
+    map ${primaryModifier}+end scroll_end
+    map ${primaryModifier}+page_up scroll_page_up
+    map ${primaryModifier}+page_down scroll_page_down
 
     # Clipboard helper
     map ${primaryModifier}+f launch --type=overlay --stdin-source=@screen_scrollback /bin/sh -c 'fzf --no-sort --no-mouse --exact -i --tac | tr -d "\n" | kitty +kitten clipboard'

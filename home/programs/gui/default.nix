@@ -11,6 +11,7 @@
       ./nixcord.nix
     ]
     ++ lib.optionals (lib.hasSuffix "-linux" host.system) [
+      ./keybindings.nix
       ./kde
       ./vicinae
     ];

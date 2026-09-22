@@ -52,7 +52,7 @@
     nixcord.url = "github:4evy/nixcord";
 
     opencode-v2 = {
-      url = "github:anomalyco/opencode/v2";
+      url = "github:anomalyco/opencode/79d657b8feb857132a27dea7fe04c93b7aafb87e";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

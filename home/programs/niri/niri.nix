@@ -43,7 +43,6 @@ in {
         accel-profile "flat"
       }
       warp-mouse-to-focus
-      focus-follows-mouse max-scroll-amount="95%"
     }
 
     environment {
@@ -93,7 +92,7 @@ in {
     }
     prefer-no-csd
 
-    // Niri built-in switcher (with live previews), Super+Tab only.
+    // Niri built-in switcher, including windows of the current application.
     // Defining binds here disables the Alt+Tab defaults.
     // Mod = Super (Windows key), i.e. the Linux equivalent of Cmd.
     recent-windows {
@@ -106,6 +105,8 @@ in {
       binds {
         Mod+Tab { next-window; }
         Mod+Shift+Tab { previous-window; }
+        Mod+grave { next-window filter="app-id"; }
+        Mod+Shift+grave { previous-window filter="app-id"; }
       }
     }
 
@@ -134,98 +135,123 @@ in {
     }
 
     binds {
-      Mod+Shift+Slash { show-hotkey-overlay; }
-      Mod+Shift+O hotkey-overlay-title=null { spawn "obsidian"; }
-      Mod+Shift+C hotkey-overlay-title=null { spawn "kitty"; }
-      Mod+Shift+D hotkey-overlay-title=null { spawn-sh "labwc -s sfwbar"; }
-      Mod+E hotkey-overlay-title=null { spawn "nautilus"; }
+      // Keep compositor helpers on Hyper so Cmd shortcuts reach applications.
+      Mod+Ctrl+Alt+Slash { show-hotkey-overlay; }
+      Mod+Ctrl+Alt+Shift+O hotkey-overlay-title=null { spawn "obsidian"; }
+      Mod+Ctrl+Alt+Shift+C hotkey-overlay-title=null { spawn "kitty"; }
+      Mod+Ctrl+Alt+Shift+D hotkey-overlay-title=null { spawn-sh "labwc -s sfwbar"; }
+      Mod+Ctrl+Alt+N hotkey-overlay-title="Files" { spawn "nautilus"; }
 
       // Noctalia replaces DMS as the panel, launcher, and settings shell.
-      Mod+A { spawn-sh "noctalia msg panel-toggle wallpaper"; }
-      Mod+P { spawn-sh "noctalia msg panel-toggle launcher"; }
-      Mod+S { spawn-sh "noctalia msg settings-toggle"; }
+      Mod+Ctrl+Alt+B { spawn "noctalia" "msg" "panel-toggle" "wallpaper"; }
+      Mod+Ctrl+Alt+P { spawn "noctalia" "msg" "panel-toggle" "launcher"; }
+      Mod+Ctrl+Alt+Comma { spawn "noctalia" "msg" "settings-toggle"; }
 
       // Keep the existing Vicinae integration available alongside Noctalia.
       Mod+Space hotkey-overlay-title="Application Launcher" { spawn "vicinae" "toggle"; }
-      Ctrl+E hotkey-overlay-title="Clipboard History" {
+      Mod+Ctrl+Alt+V hotkey-overlay-title="Clipboard History" {
         spawn "vicinae" "deeplink" "vicinae://launch/clipboard/history?toggle=true";
       }
+
+      // macOS system shortcuts. keyd preserves these Cmd combinations.
+      Mod+Ctrl+Q repeat=false hotkey-overlay-title="Lock Screen" { spawn "noctalia" "msg" "session" "lock"; }
+      Mod+Ctrl+Space repeat=false hotkey-overlay-title="Emoji and Symbols" { spawn "noctalia" "msg" "panel-toggle" "launcher" "/emo"; }
+      Mod+Ctrl+F repeat=false { fullscreen-window; }
+      Mod+Shift+Q repeat=false hotkey-overlay-title="Log Out (Confirm)" { quit; }
+      Mod+Alt+Escape repeat=false hotkey-overlay-title="Process Manager" { spawn "kitty" "-e" "btop"; }
+      Mod+Alt+D repeat=false hotkey-overlay-title="Toggle Dock" { spawn "noctalia" "msg" "dock-toggle"; }
+      Mod+Shift+3 repeat=false hotkey-overlay-title="Screenshot Screen" { screenshot-screen show-pointer=false; }
+      Mod+Shift+4 repeat=false hotkey-overlay-title="Screenshot Selection" { screenshot show-pointer=false; }
+      // Niri's screenshot chooser replaces the macOS screenshot toolbar.
+      Mod+Shift+5 repeat=false hotkey-overlay-title="Screenshot Chooser" { screenshot show-pointer=false; }
+      // keyd uses function-key sentinels so these cannot collide with
+      // Ctrl+Shift+number, which moves windows between workspaces.
+      Mod+Shift+F3 repeat=false hotkey-overlay-title="Copy Screenshot Screen" { screenshot-screen write-to-disk=false show-pointer=false; }
+      Mod+Shift+F4 repeat=false hotkey-overlay-title="Screenshot Selection (Ctrl+C to Copy)" { screenshot show-pointer=false; }
 
       // Existing terminal and Paneru-style bindings.
       Mod+Ctrl+Alt+Return hotkey-overlay-title="Kitty" { spawn "kitty"; }
       Mod+Ctrl+Alt+R hotkey-overlay-title="Screenshot" { spawn-sh "noctalia msg screenshot-region"; }
-      Mod+Q { close-window; }
       Mod+Ctrl+Alt+H { focus-column-left; }
       Mod+Ctrl+Alt+Q { focus-column-left; }
       Mod+Ctrl+Alt+J { focus-window-down; }
       Mod+Ctrl+Alt+K { focus-window-up; }
+      Mod+Ctrl+Alt+S { focus-window-down; }
+      Mod+Ctrl+Alt+W { focus-window-up; }
       Mod+Ctrl+Alt+L { focus-column-right; }
       Mod+Ctrl+Alt+E { focus-column-right; }
       Mod+Ctrl+Alt+Left { move-column-left; }
       Mod+Ctrl+Alt+Right { move-column-right; }
       Mod+Ctrl+Alt+Up { move-window-up; }
       Mod+Ctrl+Alt+Down { move-window-down; }
-      Mod+Ctrl+Alt+A { move-column-to-monitor-up; }
-      Mod+Ctrl+Alt+D { move-column-to-monitor-down; }
+      Mod+Ctrl+Alt+A { move-window-up; }
+      Mod+Ctrl+Alt+D { move-window-down; }
+      Mod+Ctrl+Alt+Shift+Up { move-column-to-monitor-up; }
+      Mod+Ctrl+Alt+Shift+Down { move-column-to-monitor-down; }
+      // Match the explicit Option shortcuts in Diamond's Paneru config.
       Alt+C { center-column; }
       Alt+F { maximize-column; }
       Alt+R { switch-preset-column-width; }
-      Mod+Ctrl+Alt+Equal { set-column-width "+10%"; }
-      Mod+Ctrl+Alt+Minus { set-column-width "-10%"; }
       Alt+BracketLeft { consume-or-expel-window-left; }
       Alt+BracketRight { consume-or-expel-window-right; }
+      Mod+Ctrl+Alt+C { center-column; }
+      Mod+Ctrl+Alt+F { maximize-column; }
+      Mod+Ctrl+Alt+Shift+R { switch-preset-column-width; }
+      Mod+Ctrl+Alt+Equal { set-column-width "+10%"; }
+      Mod+Ctrl+Alt+Minus { set-column-width "-10%"; }
+      Mod+Ctrl+Alt+BracketLeft { consume-or-expel-window-left; }
+      Mod+Ctrl+Alt+BracketRight { consume-or-expel-window-right; }
       Mod+Ctrl+Alt+Escape { toggle-window-floating; }
 
-      // Reference Niri navigation and workspace bindings.
-      Mod+O repeat=false { toggle-overview; }
-      Mod+C repeat=false { close-window; }
-      Mod+Left { focus-column-left; }
-      Mod+Down { focus-window-down; }
-      Mod+Up { focus-window-up; }
-      Mod+Right { focus-column-right; }
-      Mod+H { focus-column-left; }
-      Mod+J { focus-window-down; }
-      Mod+K { focus-window-up; }
-      Mod+L { focus-column-right; }
-      Mod+Shift+Left { move-column-left; }
-      Mod+Shift+Down { move-window-down; }
-      Mod+Shift+Up { move-window-up; }
-      Mod+Shift+Right { move-column-right; }
-      Mod+Shift+H { move-column-left; }
-      Mod+Shift+J { move-window-down; }
-      Mod+Shift+K { move-window-up; }
-      Mod+Shift+L { move-column-right; }
-      Mod+Home { focus-column-first; }
-      Mod+End { focus-column-last; }
-      Mod+Ctrl+Home { move-column-to-first; }
-      Mod+Ctrl+End { move-column-to-last; }
-      Mod+Ctrl+Left { focus-monitor-left; }
-      Mod+Ctrl+Down { focus-monitor-down; }
-      Mod+Ctrl+Up { focus-monitor-up; }
-      Mod+Ctrl+Right { focus-monitor-right; }
-      Mod+Ctrl+H { focus-monitor-left; }
-      Mod+Ctrl+J { focus-monitor-down; }
-      Mod+Ctrl+K { focus-monitor-up; }
-      Mod+Ctrl+L { focus-monitor-right; }
+      Mod+Ctrl+Alt+Home { focus-column-first; }
+      Mod+Ctrl+Alt+End { focus-column-last; }
+      Mod+Ctrl+Alt+Shift+Home { move-column-to-first; }
+      Mod+Ctrl+Alt+Shift+End { move-column-to-last; }
+      Mod+Ctrl+Alt+Shift+H { focus-monitor-left; }
+      Mod+Ctrl+Alt+Shift+J { focus-monitor-down; }
+      Mod+Ctrl+Alt+Shift+K { focus-monitor-up; }
+      Mod+Ctrl+Alt+Shift+L { focus-monitor-right; }
 
-      Mod+Ctrl+Alt+1 { focus-workspace 1; }
-      Mod+Ctrl+Alt+2 { focus-workspace 2; }
-      Mod+Ctrl+Alt+3 { focus-workspace 3; }
-      Mod+Ctrl+Alt+4 { focus-workspace 4; }
-      Mod+Ctrl+Alt+5 { focus-workspace 5; }
-      Mod+Ctrl+Alt+6 { focus-workspace 6; }
-      Mod+Ctrl+Alt+7 { focus-workspace 7; }
-      Mod+Ctrl+Alt+8 { focus-workspace 8; }
-      Mod+Ctrl+Alt+9 { focus-workspace 9; }
-      Mod+Ctrl+Alt+Shift+1 { move-window-to-workspace 1; }
-      Mod+Ctrl+Alt+Shift+2 { move-window-to-workspace 2; }
-      Mod+Ctrl+Alt+Shift+3 { move-window-to-workspace 3; }
-      Mod+Ctrl+Alt+Shift+4 { move-window-to-workspace 4; }
-      Mod+Ctrl+Alt+Shift+5 { move-window-to-workspace 5; }
-      Mod+Ctrl+Alt+Shift+6 { move-window-to-workspace 6; }
-      Mod+Ctrl+Alt+Shift+7 { move-window-to-workspace 7; }
-      Mod+Ctrl+Alt+Shift+8 { move-window-to-workspace 8; }
-      Mod+Ctrl+Alt+Shift+9 { move-window-to-workspace 9; }
+      // Physical Ctrl+arrows are distinct from the Ctrl+arrows generated for
+      // Option+arrows in text fields. Niri arranges spaces vertically.
+      Ctrl+Mod+Left { focus-workspace-up; }
+      Ctrl+Mod+Right { focus-workspace-down; }
+      Ctrl+Mod+Shift+Left { move-window-to-workspace-up; }
+      Ctrl+Mod+Shift+Right { move-window-to-workspace-down; }
+      Ctrl+Mod+Up repeat=false hotkey-overlay-title="Mission Control" { toggle-overview; }
+
+      // Physical Ctrl+1..9 arrives from keyd as Ctrl+Mod+1..9.
+      // Cmd+1..9 remains available to applications for selecting tabs.
+      Ctrl+Mod+1 { focus-workspace 1; }
+      Ctrl+Mod+2 { focus-workspace 2; }
+      Ctrl+Mod+3 { focus-workspace 3; }
+      Ctrl+Mod+4 { focus-workspace 4; }
+      Ctrl+Mod+5 { focus-workspace 5; }
+      Ctrl+Mod+6 { focus-workspace 6; }
+      Ctrl+Mod+7 { focus-workspace 7; }
+      Ctrl+Mod+8 { focus-workspace 8; }
+      Ctrl+Mod+9 { focus-workspace 9; }
+
+      Ctrl+Mod+Shift+1 { move-window-to-workspace 1; }
+      Ctrl+Mod+Shift+2 { move-window-to-workspace 2; }
+      Ctrl+Mod+Shift+3 { move-window-to-workspace 3; }
+      Ctrl+Mod+Shift+4 { move-window-to-workspace 4; }
+      Ctrl+Mod+Shift+5 { move-window-to-workspace 5; }
+      Ctrl+Mod+Shift+6 { move-window-to-workspace 6; }
+      Ctrl+Mod+Shift+7 { move-window-to-workspace 7; }
+      Ctrl+Mod+Shift+8 { move-window-to-workspace 8; }
+      Ctrl+Mod+Shift+9 { move-window-to-workspace 9; }
+
+      // Hyper+1..9 focus the matching column on the current workspace.
+      Mod+Ctrl+Alt+1 { focus-column 1; }
+      Mod+Ctrl+Alt+2 { focus-column 2; }
+      Mod+Ctrl+Alt+3 { focus-column 3; }
+      Mod+Ctrl+Alt+4 { focus-column 4; }
+      Mod+Ctrl+Alt+5 { focus-column 5; }
+      Mod+Ctrl+Alt+6 { focus-column 6; }
+      Mod+Ctrl+Alt+7 { focus-column 7; }
+      Mod+Ctrl+Alt+8 { focus-column 8; }
+      Mod+Ctrl+Alt+9 { focus-column 9; }
 
       XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05+ -l 1.0"; }
       XF86AudioLowerVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05-"; }

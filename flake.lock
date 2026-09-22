@@ -584,8 +584,8 @@
       },
       "original": {
         "owner": "anomalyco",
-        "ref": "v2",
         "repo": "opencode",
+        "rev": "79d657b8feb857132a27dea7fe04c93b7aafb87e",
         "type": "github"
       }
     },
