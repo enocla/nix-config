@@ -20,7 +20,9 @@
       "nordvpn"
       "parsec"
       "bettercmdtab"
+      "zed"
       "abue-ammar/tinycast/tinycast"
+      "Sanyam-G/switch/switch"
     ];
 
     onActivation = {

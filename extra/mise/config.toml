@@ -67,6 +67,7 @@ rust = "latest"
 "npm:vscode-langservers-extracted" = "4.10.0"
 "npm:yaml-language-server" = "1.24.0"
 "npm:@opencode/cli" = { version = "latest", npm_args = "--ignore-scripts=false" }
+herdr = "latest"
 
 [settings.npm]
 shell_out = true

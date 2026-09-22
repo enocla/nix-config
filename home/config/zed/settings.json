@@ -90,6 +90,17 @@
           ]
         }
       ]
+    },
+    {
+      "host": "Bort",
+      "args": [],
+      "projects": [
+        {
+          "paths": [
+            "/home/enocla/Coursework/CS246"
+          ]
+        }
+      ]
     }
   ],
   "active_pane_modifiers": {
