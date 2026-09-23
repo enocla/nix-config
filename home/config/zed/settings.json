@@ -577,12 +577,6 @@
     "HTML": {
       "tab_size": 2,
     },
-    "Swift": {
-      "enable_language_server": true,
-      "language_servers": ["sourcekit-lsp"],
-      "formatter": "language_server",
-      "format_on_save": "on",
-    },
   },
   // Zed's Prettier integration settings.
   // If Prettier is enabled, Zed will use this its Prettier instance for any applicable file, if
@@ -595,22 +589,7 @@
     "singleQuote": true,
   },
   // LSP Specific settings.
-  "lsp": {
-    // Specify the LSP name as a key here.
-    // "rust-analyzer": {
-    //     //These initialization options are merged into Zed's defaults
-    //     "initialization_options": {
-    //         "checkOnSave": {
-    //             "command": "clippy"
-    //         }
-    //     }
-    // },
-    // "sourcekit-lsp": {
-    //   "binary": {
-    //     "path": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/sourcekit-lsp",
-    //   },
-    // },
-  },
+  "lsp": { },
   "vim": {
     // "always": use system clipboard
     // "never": don't use system clipboard
