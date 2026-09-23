@@ -23,6 +23,7 @@
       "zed"
       "Sanyam-G/switch/switch"
       "reminders-menubar"
+      "vicinae"
     ];
 
     onActivation = {
