@@ -66,6 +66,8 @@ in {
     cmd+alt.comma = M-A-comma
     cmd+control.l = M-C-l
     cmd+control.comma = M-C-comma
+    # Kitty's native link-opening gesture is Ctrl+Shift+click.
+    cmd.leftmouse = C-S-leftmouse
     # Shell editing uses the terminal's existing line/word editing commands.
     cmd.backspace = C-u
     cmd.delete = C-k

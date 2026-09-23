@@ -1,5 +1,6 @@
 {lib, ...}: let
   digits = map toString (lib.range 0 9);
+  mouseButtons = ["leftmouse" "middlemouse" "rightmouse" "mouseback" "mouseforward" "mouse1" "mouse2"];
   commandKeys =
     lib.stringToCharacters "abcdefgijklnopqrstuvwxyz"
     ++ digits
@@ -10,13 +11,22 @@
   hyperKeys =
     lib.stringToCharacters "abcdefghijklmnopqrstuvwxyz"
     ++ digits
+    ++ mouseButtons
     ++ ["comma" "semicolon" "slash" "backslash" "leftbrace" "rightbrace" "equal" "minus" "enter" "esc" "space" "tab" "grave" "dot" "left" "right" "up" "down" "home" "end" "pageup" "pagedown" "backspace" "delete"];
   withModifiers = modifiers: keys: lib.genAttrs keys (key: "${modifiers}-${key}");
 in {
   services.keyd = {
     enable = true;
     keyboards.default = {
-      ids = ["*"];
+      # The wildcard only matches keyboards. Keep the relative mouse devices
+      # in this same config so clicks can see the keyboard's Cmd/Ctrl layers.
+      # Do not wildcard pointers: keyd does not preserve touchpad gestures.
+      # keyd 2.6 forwards conventional wheel ticks, not high-resolution scroll.
+      ids = [
+        "*"
+        "m:3434:d031" # Keychron Link
+        "m:19f5:3255" # NuPhy Air60 V2 mouse interface
+      ];
       settings = {
         global.overload_tap_timeout = 250;
         main = {
@@ -42,6 +52,8 @@ in {
           delete = "C-delete";
         };
         control = {
+          # macOS Control-click is a secondary click, not tab/link selection.
+          leftmouse = "rightmouse";
           # Give physical Ctrl+number its own compositor shortcut. Cmd+number
           # emits Ctrl+number directly, without re-entering this layer, so it
           # reaches application tabs. Holding Shift still moves windows.
@@ -61,10 +73,11 @@ in {
           up = "C-M-up";
         };
         "cmd:M" =
-          withModifiers "C" commandKeys
+          withModifiers "C" (commandKeys ++ mouseButtons)
           // {
             # Cmd+H/M are reserved: Niri has no native hide/minimize action.
             # Cmd+Q uses the application's normal quit shortcut, not a kill.
+            # Mouse bindings are real button events, so clicks can be held.
             left = "home";
             right = "end";
             up = "C-home";
@@ -94,7 +107,9 @@ in {
         };
         "cmd+control" =
           withModifiers "C-M" digits
+          // withModifiers "C" mouseButtons
           // {
+            leftmouse = "C-rightmouse";
             f = "M-C-f";
             q = "M-C-q";
             space = "M-C-space";
