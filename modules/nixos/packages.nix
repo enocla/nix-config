@@ -20,7 +20,6 @@ in {
       claude-code
       clippy
       cmake
-      codex-acp
       colima
       comma
       cosign
@@ -107,6 +106,11 @@ in {
       zed-editor
       zig
       zip
+      t3code
+      pkg-config
+      fontconfig
+      dejavu_fonts
+      python3
     ]
     ++ [inputs.opencode-v2.packages.${pkgs.stdenv.hostPlatform.system}.default];
 }
