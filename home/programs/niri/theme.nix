@@ -7,6 +7,9 @@
 }: let
   c = theme.colors;
   inherit (theme.ui) fontFamily monospaceFontFamily;
+  customPkgs = import ../../../pkgs {inherit pkgs;};
+  cursor = customPkgs."macos-tahoe-cursor";
+  cursorName = "MacOS-Tahoe-Cursor";
   wallpaper = ../../../extra/wallpaper/phos.webp;
   gtkFallbackCss = ''
     @define-color accent_color ${c.mauve};
@@ -38,7 +41,7 @@ in {
   home.sessionVariables.QS_ICON_THEME = "Papirus-Dark";
 
   home.file = {
-    ".icons/default".source = "${pkgs.bibata-cursors}/share/icons/Bibata-Modern-Classic";
+    ".icons/default".source = "${cursor}/share/icons/${cursorName}";
     "Pictures/phos.webp".source = wallpaper;
   };
 
@@ -65,8 +68,8 @@ in {
       package = pkgs.papirus-icon-theme;
     };
     cursorTheme = {
-      name = "Bibata-Modern-Classic";
-      package = pkgs.bibata-cursors;
+      name = cursorName;
+      package = cursor;
       size = 24;
     };
     font = {

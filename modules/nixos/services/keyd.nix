@@ -37,7 +37,27 @@ in {
           leftmeta = "layer(alt)";
           rightalt = "layer(cmd)";
           rightmeta = "layer(alt)";
+
           "leftshift+rightshift" = "capslock";
+
+          # fn arrives as bare F7-F12; shift+fn arrives as bare media keys.
+          # (The firmware eats Shift for consumer-page outputs.) Swap them
+          # so plain fn gives media and shift+fn gives F-keys. F1-F6 are
+          # untouched: shift+fn+1..5 arrives as Shift+F1..F5, and keyd
+          # cannot strip a physically held Shift.
+          f7 = "previoussong";
+          f8 = "playpause";
+          f9 = "nextsong";
+          f10 = "mute";
+          f11 = "volumedown";
+          f12 = "volumeup";
+
+          previoussong = "f7";
+          playpause = "f8";
+          nextsong = "f9";
+          mute = "f10";
+          volumedown = "f11";
+          volumeup = "f12";
         };
         shift = {
           esc = "S-`";
