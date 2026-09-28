@@ -86,7 +86,10 @@ in {
   imports = [inputs.vicinae.homeManagerModules.default];
 
   programs.vicinae = {
-    enable = if isLinux then true else false;
+    enable =
+      if isLinux
+      then true
+      else false;
     package = inputs.vicinae.packages.${host.system}.default;
 
     systemd = {

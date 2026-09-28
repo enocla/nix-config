@@ -1,5 +1,6 @@
 {
   config,
+  host,
   pkgs,
   ...
 }: {
@@ -7,6 +8,13 @@
     xserver.enable = false;
     displayManager = {
       defaultSession = "niri";
+      # Boot straight into the desktop. The root filesystem is unencrypted, so
+      # this intentionally gives up the login prompt as a physical-access
+      # barrier: anyone who can power on the machine gets this session.
+      autoLogin = {
+        enable = true;
+        user = host.username;
+      };
       sddm.enable = false;
       ly = let
         xsession-wrapper =
