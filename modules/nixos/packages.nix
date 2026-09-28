@@ -4,6 +4,19 @@
   ...
 }: let
   customPkgs = import ../../pkgs {inherit pkgs;};
+
+  # Upstream nix/opencode.nix still generates shell completions by shelling out
+  # to `opencode completion`, but the CLI dropped that subcommand when it moved
+  # off yargs onto its own Effect-based command framework. The bare word now
+  # falls through to the default handler, which runs `process.chdir("completion")`
+  # and dies with ENOENT, failing installPhase. There is no completion generator
+  # left to call, so drop the stale step instead of papering over it.
+  # Drop this overrideAttrs once upstream's flake packaging is fixed.
+  opencode = inputs.opencode-v2.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs (
+    _old: {
+      postInstall = "";
+    }
+  );
 in {
   environment.systemPackages = with pkgs;
     [
@@ -112,5 +125,5 @@ in {
       dejavu_fonts
       python3
     ]
-    ++ [inputs.opencode-v2.packages.${pkgs.stdenv.hostPlatform.system}.default];
+    ++ [opencode];
 }

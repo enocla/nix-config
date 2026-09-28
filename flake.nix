@@ -52,8 +52,15 @@
     nixcord.url = "github:4evy/nixcord";
 
     opencode-v2 = {
-      url = "github:anomalyco/opencode/79d657b8feb857132a27dea7fe04c93b7aafb87e";
-      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:anomalyco/opencode/be2446e1887140fa8a4f790c556b406848061e73";
+      # Do NOT use `follows = "nixpkgs"` here. opencode's nix/hashes.json pins
+      # the opencode-node_modules fixed-output hash, and that hash is only valid
+      # for the bun version in the nixpkgs pin upstream tested with (bun 1.3.13).
+      # Following our own nixpkgs pulls in bun 1.4.x, which resolves the
+      # workspace differently and makes every opencode build fail with
+      # "hash mismatch in fixed-output derivation 'opencode-node_modules-...'".
+      # Bump this rev together with the opencode pin, never on its own.
+      inputs.nixpkgs.url = "github:NixOS/nixpkgs/9dd5558b06dbdacbf635a3dd36dce1b1a7ee3a89";
     };
   };
 
