@@ -75,6 +75,7 @@ in {
       treea = "eza --icons --tree -a";
       rm = "trash";
       rp = "realpath";
+      icat = "kitten icat --align left";
 
       # CS 246
       "g++20h" = "g++ -std=c++20 -fmodules-ts -c -x c++-system-header";
@@ -83,7 +84,6 @@ in {
     // lib.optionalAttrs isDarwin {
       f = "open .";
       bs = "brew services";
-      icat = "kitten icat --align left";
       pcp = "pbcopy";
       ppy = "pbpaste";
     };
