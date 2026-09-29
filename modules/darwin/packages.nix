@@ -6,7 +6,6 @@
     maple-mono.NF
     maple-mono.Normal-NF-CN
     nowplaying-cli
-    orbstack
     pinentry_mac
     prismlauncher
     shottr

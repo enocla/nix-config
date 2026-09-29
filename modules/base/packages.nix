@@ -25,7 +25,6 @@
     lzo
     mosh
     nh
-    nickel
     nmap
     opus
     sdl2-compat
