@@ -22,8 +22,7 @@
       "bettercmdtab"
       "zed"
       "Sanyam-G/switch/switch"
-      "reminders-menubar"
-      "vicinae"
+      "raycast"
     ];
 
     onActivation = {
