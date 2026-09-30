@@ -9,7 +9,7 @@
       then {
         # Nixcord's current Equicord dependency hash does not match its locked source.
         pnpmDeps = oldAttrs.pnpmDeps.overrideAttrs (_: {
-          outputHash = "sha256-pU/oxNJ9epA75Pth/b7mO67NavS8wy2BI/wuKKgnCpM=";
+          outputHash = "sha256-VQQtlUCCuOVoQxBcYG7BWQXY21R8X46+kI1RIcX8RY8=";
         });
       }
       else {}
