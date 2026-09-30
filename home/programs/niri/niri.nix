@@ -194,6 +194,11 @@ in {
       Alt+R { switch-preset-column-width; }
       Alt+BracketLeft { consume-or-expel-window-left; }
       Alt+BracketRight { consume-or-expel-window-right; }
+      // Option + wheel walks columns. Niri consumes the tick before the
+      // focused window sees it, and the direction is already naturalized for
+      // the mouse (no natural-scroll), so up is left and down is right.
+      Alt+WheelScrollUp { focus-column-left; }
+      Alt+WheelScrollDown { focus-column-right; }
       Mod+Ctrl+Alt+C { center-column; }
       Mod+Ctrl+Alt+F { maximize-column; }
       Mod+Ctrl+Alt+Shift+R { switch-preset-column-width; }

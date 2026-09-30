@@ -35,7 +35,7 @@
       };
     };
     launcher_window = {
-      opacity = 0.95;
+      opacity = 0.85;
       material = "blur";
       rounding = cornerRadius;
       layer_shell = {
