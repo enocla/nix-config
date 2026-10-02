@@ -17,6 +17,7 @@
       postInstall = "";
     }
   );
+  elio = inputs.elio.packages.${pkgs.stdenv.hostPlatform.system}.default;
 in {
   environment.systemPackages = with pkgs;
     [
@@ -125,5 +126,5 @@ in {
       dejavu_fonts
       python3
     ]
-    ++ [opencode];
+    ++ [elio opencode];
 }

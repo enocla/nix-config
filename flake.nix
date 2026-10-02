@@ -48,6 +48,7 @@
 
     # Applications
     # These inputs intentionally retain their upstream package-set pins.
+    elio.url = "github:elio-fm/elio/main";
     codex-desktop-linux.url = "github:ilysenko/codex-desktop-linux";
     nixcord.url = "github:4evy/nixcord";
 

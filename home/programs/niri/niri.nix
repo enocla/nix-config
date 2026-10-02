@@ -141,6 +141,7 @@ in {
       Mod+Ctrl+Alt+Shift+C hotkey-overlay-title=null { spawn "kitty"; }
       Mod+Ctrl+Alt+Shift+D hotkey-overlay-title=null { spawn-sh "labwc -s sfwbar"; }
       Mod+Ctrl+Alt+N hotkey-overlay-title="Files" { spawn "nautilus"; }
+      Mod+Ctrl+Alt+Backslash hotkey-overlay-title="Markraft" { spawn "${host.homeDirectory}/Developer/markraft/target/release/markraft-app" "--toggle"; }
 
       // Noctalia replaces DMS as the panel, launcher, and settings shell.
       Mod+Ctrl+Alt+B { spawn "noctalia" "msg" "panel-toggle" "wallpaper"; }
@@ -149,7 +150,7 @@ in {
 
       // Keep the existing Vicinae integration available alongside Noctalia.
       Mod+Space hotkey-overlay-title="Application Launcher" { spawn "vicinae" "toggle"; }
-      Mod+Ctrl+Alt+V hotkey-overlay-title="Clipboard History" {
+      Ctrl+E hotkey-overlay-title="Clipboard History" {
         spawn "vicinae" "deeplink" "vicinae://launch/clipboard/history?toggle=true";
       }
 
