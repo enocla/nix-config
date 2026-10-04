@@ -125,6 +125,7 @@ in {
       fontconfig
       dejavu_fonts
       python3
+      unrar
     ]
     ++ [elio opencode];
 }
