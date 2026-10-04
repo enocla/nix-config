@@ -97,10 +97,20 @@
       "projects": [
         {
           "paths": [
+            "/home/enocla"
+          ]
+        },
+        {
+          "paths": [
             "/home/enocla/Coursework/CS246"
           ]
         }
       ]
+    },
+    {
+      "host": "Bort",
+      "args": [],
+      "projects": []
     }
   ],
   "active_pane_modifiers": {

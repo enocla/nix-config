@@ -78,10 +78,10 @@
         },
 
         padding = {
-          top = 6,
-          bottom = 6,
-          left = 6,
-          right = 6,
+          top = 4,
+          bottom = 4,
+          left = 4,
+          right = 4,
         },
 
         swipe = {
@@ -98,8 +98,8 @@
         windows = {
           all = {
             title = ".*",
-            horizontal_padding = 6,
-            vertical_padding = 6,
+            horizontal_padding = 4,
+            vertical_padding = 4,
           },
         },
       }
