@@ -23,6 +23,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    vscode-server.url = "github:nix-community/nixos-vscode-server";
+
     # macOS desktop
     darwin-custom-icons.url = "github:ryanccn/nix-darwin-custom-icons";
 
