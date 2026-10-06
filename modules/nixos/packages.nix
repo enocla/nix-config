@@ -128,6 +128,7 @@ in {
       unrar
       mangohud
       clang
+      ghidra
     ]
     ++ [elio opencode];
 }
