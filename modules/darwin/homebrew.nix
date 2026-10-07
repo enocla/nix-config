@@ -23,6 +23,7 @@
       "zed"
       "Sanyam-G/switch/switch"
       "raycast"
+      "obsidian"
     ];
 
     onActivation = {
