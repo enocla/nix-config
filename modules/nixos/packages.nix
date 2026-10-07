@@ -129,6 +129,7 @@ in {
       mangohud
       clang
       ghidra
+      gdb
     ]
     ++ [elio opencode];
 }
