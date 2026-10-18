@@ -130,6 +130,7 @@ in {
       clang
       ghidra
       gdb
+      valgrind
     ]
     ++ [elio opencode];
 }

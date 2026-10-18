@@ -7,6 +7,7 @@
       "sichengchen/tap/apple-calendar-cli"
       "keith/formulae/reminders-cli"
       "r"
+      "pandoc"
     ];
 
     casks = [
@@ -24,6 +25,7 @@
       "Sanyam-G/switch/switch"
       "raycast"
       "obsidian"
+      "spotify"
     ];
 
     onActivation = {
