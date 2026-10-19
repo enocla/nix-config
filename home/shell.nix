@@ -9,7 +9,7 @@
 in {
   home.sessionVariables = {
     EDITOR = "nvim";
-    PAGER = "bat";
+    # PAGER = "bat";
     LLVM_PROFILE_FILE = "/dev/null";
     TERM = "xterm-256color";
     GUM_CONFIRM_PROMPT_FOREGROUND = c.text;

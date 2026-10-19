@@ -45,7 +45,9 @@
 
     vicinae = {
       url = "github:vicinaehq/vicinae/v0.29.0";
-      inputs.nixpkgs.follows = "nixpkgs";
+      # Keep upstream's toolchain pin: newer nixpkgs builds numen with GCC 16,
+      # while this Vicinae release links with GCC 15 (missing GLIBCXX_3.4.36).
+      inputs.nixpkgs.url = "github:NixOS/nixpkgs/83199d0d373dd3ac2b9a1996b1d0263f76ab7a4c";
     };
 
     # Applications
