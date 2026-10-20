@@ -29,7 +29,7 @@
     darwin-custom-icons.url = "github:ryanccn/nix-darwin-custom-icons";
 
     paneru = {
-      url = "github:enocla/paneru/ea20b39817a11253b87764b46b968934e9adf2c3";
+      url = "github:enocla/paneru/8e171e5a69d3cc60bb293afad8c9bff6be22903c";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

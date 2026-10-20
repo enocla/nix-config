@@ -730,17 +730,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1790782582,
-        "narHash": "sha256-vJHNbfgm5w9TOEYQIoIlNewYlZ3x27DyBw9seUXWtTg=",
+        "lastModified": 1792479181,
+        "narHash": "sha256-A6PHSsOM+EB7GtH12BTY4g/5IgtxuW2inmn/07B0R5E=",
         "owner": "enocla",
         "repo": "paneru",
-        "rev": "ea20b39817a11253b87764b46b968934e9adf2c3",
+        "rev": "8e171e5a69d3cc60bb293afad8c9bff6be22903c",
         "type": "github"
       },
       "original": {
         "owner": "enocla",
         "repo": "paneru",
-        "rev": "ea20b39817a11253b87764b46b968934e9adf2c3",
+        "rev": "8e171e5a69d3cc60bb293afad8c9bff6be22903c",
         "type": "github"
       }
     },
