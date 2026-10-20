@@ -57,5 +57,14 @@ wallpaper_scheme = "m3-content"
 enable_builtin_templates = false
 builtin_ids = []
 
+[backdrop]
+# linux-wallpaperengine already draws a background layer. Noctalia's backdrop
+# would map a second, blurred wallpaper above it and cover the video.
+# NOTE: ~/.local/state/noctalia/settings.toml overrides this file; keep the
+# backdrop disabled in Noctalia's settings UI as well.
+enabled = false
+
 [wallpaper]
+# linux-wallpaperengine draws the background; Noctalia only supplies colors.
+enabled = false
 directory = "~/Pictures"

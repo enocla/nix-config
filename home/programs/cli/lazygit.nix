@@ -39,7 +39,7 @@ in {
           defaultFgColor = [c.text];
           searchingActiveBorderColor = [c.rosewater];
         };
-        authorColors = {
+        theme.authorColors = {
           "Tnixc" = c.teal;
         };
         unspecifiedAuthorColors = [

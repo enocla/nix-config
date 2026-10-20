@@ -7,5 +7,6 @@ in {
     customPkgs."berkeley-mono-nerd-font"
     customPkgs."sf-pro-text"
     pkgs.nerd-fonts.symbols-only
+    pkgs.nerd-fonts.departure-mono
   ];
 }

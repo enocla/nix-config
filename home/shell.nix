@@ -6,6 +6,46 @@
 }: let
   c = theme.colors;
   isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
+
+  # `k`: search `ps aux` with fzf and kill the selected process(es).
+  killProcess = pkgs.writeShellApplication {
+    name = "k";
+    runtimeInputs =
+      [pkgs.fzf pkgs.gawk pkgs.coreutils]
+      ++ lib.optionals (!isDarwin) [pkgs.procps];
+    text = ''
+      selection="$(ps aux | fzf --multi --reverse \
+        --expect=ctrl-x \
+        --header='ENTER: kill (SIGTERM)    CTRL-X: force kill (SIGKILL)' \
+        --prompt='process > ' \
+        --preview='ps -p {2} -o pid=,ppid=,user=,stat=,%cpu=,%mem=,etime=,command= 2>/dev/null || echo "Process no longer running"' \
+        --preview-window='down,35%,border-bold,wrap')" || exit 0
+
+      key="$(printf '%s\n' "$selection" | head -n 1)"
+      matches="$(printf '%s\n' "$selection" | tail -n +2)"
+
+      [ -n "$matches" ] || exit 0
+
+      signal=TERM
+      [ "$key" = ctrl-x ] && signal=KILL
+
+      pids="$(printf '%s\n' "$matches" | awk '$2 ~ /^[0-9]+$/ {print $2}')"
+      [ -n "$pids" ] || exit 0
+
+      failed=0
+      while IFS= read -r pid; do
+        [ -n "$pid" ] || continue
+        if kill "-$signal" "$pid" 2>/dev/null; then
+          printf 'Sent SIG%s to PID %s\n' "$signal" "$pid"
+        else
+          printf 'Failed to kill PID %s (permission denied or already gone)\n' "$pid" >&2
+          failed=1
+        fi
+      done <<< "$pids"
+
+      exit "$failed"
+    '';
+  };
 in {
   home.sessionVariables = {
     EDITOR = "nvim";
@@ -55,7 +95,7 @@ in {
   };
 
   # The shared `rm` alias is backed by this package on both platforms.
-  home.packages = [pkgs.trash-cli];
+  home.packages = [pkgs.trash-cli killProcess];
 
   home.shellAliases =
     {

@@ -14,6 +14,31 @@
       exec noctalia --daemon
     '';
   };
+  niriWallpaperEngine = pkgs.writeShellApplication {
+    name = "niri-wallpaperengine";
+    runtimeInputs = [pkgs.linux-wallpaperengine pkgs.niri pkgs.jq pkgs.coreutils];
+    text = ''
+      names=()
+      for _ in 1 2 3 4 5; do
+        outputs="$(niri msg --json outputs 2>/dev/null || true)"
+        mapfile -t names < <(jq -r 'to_entries[] | select(.value.current_mode != null) | .key' <<<"$outputs" 2>/dev/null)
+        [ "''${#names[@]}" -gt 0 ] && break
+        sleep 1
+      done
+
+      if [ "''${#names[@]}" -eq 0 ]; then
+        echo "niri-wallpaperengine: no connected outputs" >&2
+        exit 1
+      fi
+
+      args=()
+      for name in "''${names[@]}"; do
+        args+=(--scaling fill --screen-root "$name" --bg "${theme.ui.wallpaperEngineId}")
+      done
+
+      exec linux-wallpaperengine --layer background --silent --fps 20 "''${args[@]}"
+    '';
+  };
 in {
   xdg.configFile."niri/config-nix.kdl".text = ''
     window-rule {
@@ -85,7 +110,8 @@ in {
     }
 
     spawn-at-startup "${noctaliaSession}/bin/noctalia-session"
-    spawn-sh-at-startup "for i in 1 2 3 4 5; do sleep 1; noctalia msg wallpaper-set ${host.homeDirectory}/Pictures/phos.webp && exit 0; done"
+    // Noctalia only extracts colors; linux-wallpaperengine draws the background.
+    spawn-at-startup "${niriWallpaperEngine}/bin/niri-wallpaperengine"
 
     hotkey-overlay {
       skip-at-startup
@@ -114,6 +140,12 @@ in {
 
     layer-rule {
       match namespace="^noctalia-backdrop"
+      place-within-backdrop true
+    }
+    layer-rule {
+      // linux-wallpaperengine uses the background layer on niri so the
+      // wallpaper stays behind the workspace backdrop in the overview.
+      match namespace="^linux-wallpaperengine$"
       place-within-backdrop true
     }
     layer-rule {

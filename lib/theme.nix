@@ -139,5 +139,7 @@ in {
     fontFamily = "SF Pro Text";
     monospaceFontFamily = "BerkeleyMono Nerd Font";
     findHighlight = colorMix colors.base colors.sky 0.5;
+
+    wallpaperEngineId = "3000562427";
   };
 }
