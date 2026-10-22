@@ -3,7 +3,7 @@ let
     configRepoName = "nix-config";
     gpgKey = "6AB7F7CC83CEC7A6";
     gitUserName = "enocla";
-    gitUserEmail = "tnixxc@gmail.com";
+    gitUserEmail = "4enocla@gmail.com";
     homeStateVersion = "25.11";
   };
 in
