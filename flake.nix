@@ -23,7 +23,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    vscode-server.url = "github:nix-community/nixos-vscode-server";
+    helium-flake = {
+      url = "github:oxcl/nix-flake-helium-browser";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # macOS desktop
     darwin-custom-icons.url = "github:ryanccn/nix-darwin-custom-icons";
