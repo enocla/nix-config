@@ -18,7 +18,7 @@
     }
   );
   elio = inputs.elio.packages.${pkgs.stdenv.hostPlatform.system}.default;
-  helium = inputs.helium-flakepackages.${pkgs.stdenv.hostPlatform.system}.default;
+  helium = inputs.helium-flake.packages.${pkgs.stdenv.hostPlatform.system}.default;
 in {
   environment.systemPackages = with pkgs;
     [

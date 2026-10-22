@@ -3,12 +3,14 @@
   host,
   inputs,
   lib,
+  pkgs,
   theme,
   ...
 }: let
   c = theme.colors;
   configDir = "${host.checkoutPath}/home/config";
   mkLink = config.lib.file.mkOutOfStoreSymlink;
+  customPkgs = import ../../../pkgs {inherit pkgs;};
 in {
   imports = [inputs.noctalia.homeModules.default];
 
@@ -26,6 +28,11 @@ in {
 
   programs.noctalia = {
     enable = true;
+    # Render every Noctalia icon with SF Symbols from SF Pro.
+    package = pkgs.callPackage ../../../pkgs/noctalia-sf-symbols {
+      noctalia = inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default;
+      inherit (customPkgs) sf-pro-text;
+    };
     # This file intentionally lives outside the Nix store so Noctalia can edit it.
     # Build-time validation cannot follow that host checkout from the sandbox.
     checkConfig = false;
