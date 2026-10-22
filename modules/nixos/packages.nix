@@ -122,7 +122,7 @@ in {
       zed-editor
       zig
       zip
-      t3code
+      # t3code
       pkg-config
       fontconfig
       dejavu_fonts

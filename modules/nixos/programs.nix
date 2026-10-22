@@ -1,5 +1,10 @@
 {pkgs, ...}: {
   programs = {
+    appimage = {
+      enable = true;
+      binfmt = true;
+    };
+
     steam.enable = true;
 
     fish.enable = true;
