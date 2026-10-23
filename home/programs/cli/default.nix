@@ -9,6 +9,7 @@
     ./jujutsu.nix
     ./helix.nix
     ./lazygit.nix
+    ./nix-your-shell.nix
     ./ssh.nix
     ./starship.nix
     ./tmux.nix

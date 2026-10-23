@@ -17,7 +17,7 @@ in {
     enableNushellIntegration = true;
 
     settings = {
-      format = "$hostname$shell$directory$git_branch$git_status$character";
+      format = "$hostname$shell$directory$nix_shell$git_branch$git_status$character";
 
       directory = {
         style = "blue";
@@ -59,6 +59,14 @@ in {
         unknown_indicator = "";
         style = "yellow";
         disabled = false;
+      };
+
+      # Shown only when IN_NIX_SHELL is set, i.e. inside nix-shell or
+      # nix develop. `nix shell` does not set that variable.
+      nix_shell = {
+        format = "[ $symbol ]($style)";
+        symbol = "󱄅 ";
+        style = "bg:${d.purple} ${c.mauve}";
       };
 
       line_break = {
