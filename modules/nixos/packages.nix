@@ -134,6 +134,7 @@ in {
       ghidra
       gdb
       valgrind
+      rstudio
     ]
     ++ [elio opencode helium zen-browser];
 }
