@@ -19,6 +19,7 @@
   );
   elio = inputs.elio.packages.${pkgs.stdenv.hostPlatform.system}.default;
   helium = inputs.helium-flake.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  zen-browser = inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default;
 in {
   environment.systemPackages = with pkgs;
     [
@@ -134,5 +135,5 @@ in {
       gdb
       valgrind
     ]
-    ++ [elio opencode helium];
+    ++ [elio opencode helium zen-browser];
 }

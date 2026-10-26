@@ -733,7 +733,8 @@
         "paneru": "paneru",
         "sops-nix": "sops-nix",
         "tether": "tether",
-        "vicinae": "vicinae"
+        "vicinae": "vicinae",
+        "zen-browser": "zen-browser"
       }
     },
     "sops-nix": {
@@ -868,6 +869,29 @@
         "owner": "vicinaehq",
         "ref": "v0.29.0",
         "repo": "vicinae",
+        "type": "github"
+      }
+    },
+    "zen-browser": {
+      "inputs": {
+        "home-manager": [
+          "home-manager"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1792963762,
+        "narHash": "sha256-ThRNX0+T2Gb3ZD0Xf+/R3wJdL93/mW80ubMnLjZelTY=",
+        "owner": "0xc000022070",
+        "repo": "zen-browser-flake",
+        "rev": "ed68d814d6cf2e221ba43d84f1e32429f5e2786f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "0xc000022070",
+        "repo": "zen-browser-flake",
         "type": "github"
       }
     }
