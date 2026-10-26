@@ -67,11 +67,6 @@
     elio.url = "github:elio-fm/elio/main";
     codex-desktop-linux.url = "github:ilysenko/codex-desktop-linux";
     nixcord.url = "github:4evy/nixcord";
-
-    opencode-v2 = {
-      url = "github:anomalyco/opencode/dev";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs = inputs @ {
