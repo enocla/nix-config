@@ -16,7 +16,7 @@
   };
   niriWallpaperEngine = pkgs.writeShellApplication {
     name = "niri-wallpaperengine";
-    runtimeInputs = [pkgs.linux-wallpaperengine pkgs.niri pkgs.jq pkgs.coreutils];
+    runtimeInputs = [pkgs.niri pkgs.jq pkgs.coreutils];
     text = ''
       names=()
       for _ in 1 2 3 4 5; do
@@ -36,7 +36,8 @@
         args+=(--scaling fill --screen-root "$name" --bg "${theme.ui.wallpaperEngineId}")
       done
 
-      exec linux-wallpaperengine --layer background --silent --fps 20 "''${args[@]}"
+      # locally built from ~/Developer/linux-wallpaperengine (nix build -o ~/.local/share/linux-wallpaperengine/result)
+      exec "$HOME/.local/bin/linux-wallpaperengine" --layer background --silent --fps 20 "''${args[@]}"
     '';
   };
 in {

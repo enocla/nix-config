@@ -63,7 +63,6 @@ in {
       labwc
       lima
       lisette
-      linux-wallpaperengine
       lua-language-server
       maven
       meson
