@@ -6,6 +6,7 @@ in {
     pkgs.nerd-fonts.lilex
     customPkgs."berkeley-mono-nerd-font"
     customPkgs."sf-pro-text"
+    customPkgs."nordwand-mono"
     pkgs.nerd-fonts.symbols-only
     pkgs.nerd-fonts.departure-mono
   ];

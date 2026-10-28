@@ -1,4 +1,5 @@
 [bar.default]
+font_family = "Nordwand Mono"
 margin_edge = 0
 margin_ends = 0
 position = "left"
