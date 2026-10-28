@@ -38,7 +38,6 @@ in {
       gnome-themes-extra
       go
       go-tools
-      google-chrome
       gopls
       gotools
       gradle

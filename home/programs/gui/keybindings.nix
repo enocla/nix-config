@@ -82,9 +82,6 @@ in {
     cmd.g = f3
     cmd+shift.g = S-f3
 
-    [google-chrome*]
-    ${browserBindings}
-
     [chromium*]
     ${browserBindings}
 
