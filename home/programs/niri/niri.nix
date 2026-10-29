@@ -194,18 +194,30 @@ in {
       Mod+Shift+Q repeat=false hotkey-overlay-title="Log Out (Confirm)" { quit; }
       Mod+Alt+Escape repeat=false hotkey-overlay-title="Process Manager" { spawn "kitty" "-e" "btop"; }
       Mod+Alt+D repeat=false hotkey-overlay-title="Toggle Dock" { spawn "noctalia" "msg" "dock-toggle"; }
-      Mod+Shift+3 repeat=false hotkey-overlay-title="Screenshot Screen" { screenshot-screen show-pointer=false; }
-      Mod+Shift+4 repeat=false hotkey-overlay-title="Screenshot Selection" { screenshot show-pointer=false; }
-      // Niri's screenshot chooser replaces the macOS screenshot toolbar.
-      Mod+Shift+5 repeat=false hotkey-overlay-title="Screenshot Chooser" { screenshot show-pointer=false; }
+      // Noctalia captures save as WebP (config.toml [shell.screenshot]);
+      // Niri's own screenshot actions can only write PNG.
+      Mod+Shift+3 repeat=false hotkey-overlay-title="Screenshot Screen" { spawn "noctalia" "msg" "screenshot-fullscreen"; }
+      Mod+Shift+4 repeat=false hotkey-overlay-title="Screenshot Selection" { spawn "noctalia" "msg" "screenshot-region"; }
+      // Noctalia's region selector replaces the macOS screenshot toolbar.
+      Mod+Shift+5 repeat=false hotkey-overlay-title="Screenshot Chooser" { spawn "noctalia" "msg" "screenshot-region"; }
       // keyd uses function-key sentinels so these cannot collide with
       // Ctrl+Shift+number, which moves windows between workspaces.
-      Mod+Shift+F3 repeat=false hotkey-overlay-title="Copy Screenshot Screen" { screenshot-screen write-to-disk=false show-pointer=false; }
-      Mod+Shift+F4 repeat=false hotkey-overlay-title="Screenshot Selection (Ctrl+C to Copy)" { screenshot show-pointer=false; }
+      Mod+Shift+F3 repeat=false hotkey-overlay-title="Copy Screenshot Screen" {
+        spawn "noctalia" "msg" "screenshot-fullscreen" "--no-save-to-file" "--copy-to-clipboard";
+      }
+      Mod+Shift+F4 repeat=false hotkey-overlay-title="Copy Screenshot Selection" {
+        spawn "noctalia" "msg" "screenshot-region" "--no-save-to-file" "--copy-to-clipboard";
+      }
 
       // Existing terminal and Paneru-style bindings.
       Mod+Ctrl+Alt+Return hotkey-overlay-title="Kitty" { spawn "kitty"; }
       Mod+Ctrl+Alt+R hotkey-overlay-title="Screenshot" { spawn-sh "noctalia msg screenshot-region"; }
+      // Click a window to screenshot it (Escape cancels). See captures.nix.
+      Mod+Ctrl+Alt+X repeat=false hotkey-overlay-title="Screenshot Window" { spawn "capture-window"; }
+      // First press picks a region with slurp and starts recording; second press stops.
+      Mod+Ctrl+Alt+V repeat=false hotkey-overlay-title="Toggle Region Recording" {
+        spawn "noctalia" "msg" "plugin" "noctalia/screen_recorder:service" "all" "toggle" "region";
+      }
       Mod+Ctrl+Alt+H { focus-column-left; }
       Mod+Ctrl+Alt+Q { focus-column-left; }
       Mod+Ctrl+Alt+J { focus-window-down; }

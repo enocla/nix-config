@@ -20,7 +20,6 @@ in {
 
   imports = [
     sops-nix.homeManagerModules.sops
-    ./icloud.nix
     ./programs
     ./shell.nix
     ./theme-css-server.nix

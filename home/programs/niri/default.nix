@@ -1,5 +1,6 @@
 {
   imports = [
+    ./captures.nix
     ./labwc.nix
     ./matugen.nix
     ./mime.nix

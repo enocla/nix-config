@@ -49,6 +49,11 @@
     # Preserve upstream package sets for binary/cache compatibility; do not
     # add follows here without checking the affected package builds.
     noctalia.url = "github:noctalia-dev/noctalia/cachix";
+    # Source for the patched screen_recorder plugin (pkgs/noctalia-screen-recorder).
+    noctalia-plugins = {
+      url = "github:noctalia-dev/official-plugins";
+      flake = false;
+    };
 
     tether = {
       url = "github:zackb/tether";

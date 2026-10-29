@@ -45,7 +45,6 @@ in {
       herdr
       hunk
       hyperfine
-      customPkgs.icloud-linux
       jq
       just
       kcl
@@ -120,7 +119,6 @@ in {
       ghidra
       gdb
       valgrind
-      rstudio
     ]
     ++ [elio helium zen-browser];
 }

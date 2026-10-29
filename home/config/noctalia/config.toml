@@ -48,6 +48,50 @@ enabled = true
 [shell]
 font_family = "SF Pro Text"
 
+[plugins]
+# gpu-screen-recorder comes from programs.gpu-screen-recorder (NixOS) and
+# slurp from home.packages. Niri binds Hyper+V to a region recording toggle.
+# home/programs/niri/captures.nix installs a copy patched to write .webm.
+enabled = ["noctalia/screen_recorder"]
+
+[plugin_settings."noctalia/screen_recorder"]
+video_source = "region"
+directory = "~/Videos"
+# WebM only holds AV1/VP8/VP9; the RTX 4070 encodes AV1 in hardware.
+video_codec = "av1"
+# The bar widget only appears while recording; click it to stop.
+hide_inactive = true
+
+[shell.screenshot]
+directory = "~/Pictures/Screenshots"
+filename_pattern = "Screenshot from %Y-%m-%d %H-%M-%S"
+format = "webp"
+# Noctalia encodes on its main thread. Lossless WebP (quality = 100) took
+# 3-4 s per 4K fullscreen capture and froze the shell; lossy is ~10x faster.
+quality = 90
+
+[notification]
+filter_order = ["capture_saved", "niri_screenshot"]
+
+# These toasts cannot carry a click action. capture-notify (captures.nix)
+# sends replacements that reveal the file in Nautilus when clicked.
+[notification.filter.capture_saved]
+enabled = true
+match = "noctalia"
+match_content = "^(Screenshot|Recording) saved$"
+show_toast = false
+play_sound = false
+
+# capture-window (Hyper+X) captures through niri, which always posts its own
+# "Screenshot captured" toast alongside capture-notify's.
+[notification.filter.niri_screenshot]
+enabled = true
+match = "niri"
+match_content = "^Screenshot captured$"
+show_toast = false
+save_history = false
+play_sound = false
+
 [theme]
 mode = "dark"
 source = "custom"

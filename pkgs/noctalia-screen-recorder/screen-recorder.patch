@@ -1,0 +1,34 @@
+--- a/recorder_service.luau
++++ b/recorder_service.luau
+@@ -328,7 +328,21 @@
+       return
+     end
+ 
+-    local cmd = [[slurp -f "%wx%h+%x+%y"]]
++    -- Match Noctalia's screenshot region selector: black dim at the configured
++    -- opacity, a clear hole, and a primary-colored border of the configured width.
++    local function setting(path, fallback)
++        local value = noctalia.getSetting(path)
++        return if type(value) == "number" then value else fallback
++    end
++    local function roleHex(role, fallback)
++        local hex = noctalia.getColor(role)
++        return if type(hex) == "string" and hex:match("^#%x%x%x%x%x%x$") then hex else fallback
++    end
++    local dim = math.clamp(setting("shell.screenshot.region_dim_opacity", 0.65), 0, 1)
++    local border = math.max(1, math.floor(setting("shell.screenshot.region_border_width", 2) + 0.5))
++    local cmd = `slurp -d -b '#000000{string.format("%02x", math.floor(dim * 255 + 0.5))}'`
++        .. ` -c '{roleHex("primary", "#ffffff")}ff' -s '#00000000' -w {border}`
++        .. [[ -f "%wx%h+%x+%y"]]
+     log(`region capture: picking area ({cmd})`)
+     local ok = noctalia.runAsync(cmd, function(result)
+       local geo = noctalia.string.trim(result.stdout or "")
+@@ -386,7 +400,7 @@
+     local dir = outputDirectory()
+ 
+     local pattern = cfg("filename_pattern")
+-    local filename = `{noctalia.formatTime(pattern)}.mp4`
++    local filename = `{noctalia.formatTime(pattern)}.webm`
+     outputPath = `{dir}{filename}`
+ 
+     local fm = cfg("frame_rate_mode")
