@@ -26,7 +26,6 @@ return {
         opts = {
             recipe = { "default", { animate = false } },
             fadelevel = 0.2,
-            checkinterval = 0,
             basebg = COLORS.surface0,
             blocklist = {
                 default_block = function(win, current)

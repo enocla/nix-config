@@ -50,7 +50,6 @@ in {
       kcl
       kdePackages.breeze
       kdePackages.breeze-icons
-      kdePackages.dolphin
       kdePackages.kcalc
       kdePackages.kio
       kdePackages.kio-extras
