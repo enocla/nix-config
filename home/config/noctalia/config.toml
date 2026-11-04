@@ -7,6 +7,10 @@ radius = 0
 scale = 1.15
 thickness = 36
 
+[bar.default.dead_zone.actions]
+left = "panel-toggle control-center home"
+right = "panel-toggle session"
+
 [hooks]
 wallpaper_changed = '''
 wal --cols16 -i "$NOCTALIA_WALLPAPER_PATH" & matugen image "$NOCTALIA_WALLPAPER_PATH" --opacity 0.85 --source-color-index 0
@@ -47,6 +51,31 @@ enabled = true
 
 [shell]
 font_family = "SF Pro Text"
+
+# Replace system suspend (which fails to resume on this machine) with DPMS.
+[[shell.session.actions]]
+action = "lock"
+shortcut = "1"
+
+[[shell.session.actions]]
+action = "logout"
+shortcut = "2"
+
+[[shell.session.actions]]
+action = "command"
+label = "Sleep Displays"
+glyph = "device-desktop"
+command = "noctalia msg dpms-off"
+shortcut = "3"
+
+[[shell.session.actions]]
+action = "reboot"
+shortcut = "4"
+
+[[shell.session.actions]]
+action = "shutdown"
+shortcut = "5"
+variant = "destructive"
 
 [plugins]
 # gpu-screen-recorder comes from programs.gpu-screen-recorder (NixOS) and
