@@ -94,6 +94,10 @@ return {
         "nvim-treesitter/nvim-treesitter",
         lazy = false,
         branch = "main",
+        -- Queries are symlinked from the plugin and update with it, but compiled
+        -- parsers don't; rebuild them on every plugin update so the two never
+        -- drift apart (otherwise: "Query error ... Invalid node type").
+        build = ":TSUpdate",
         config = function()
             require("plugins.configs.treesitter")
         end,

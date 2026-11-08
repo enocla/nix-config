@@ -22,7 +22,7 @@ in {
     sops-nix.homeManagerModules.sops
     ./programs
     ./shell.nix
-    ./theme-css-server.nix
+    # ./theme-css-server.nix
   ];
 
   home.file =
