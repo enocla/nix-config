@@ -52,6 +52,10 @@ enabled = true
 [shell]
 font_family = "SF Pro Text"
 
+[shell.panel]
+open_near_click_control_center = true
+open_near_click_session = true
+
 # Replace system suspend (which fails to resume on this machine) with DPMS.
 [[shell.session.actions]]
 action = "lock"
