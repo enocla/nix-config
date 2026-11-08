@@ -1,6 +1,9 @@
 {...}: {
   homebrew = {
     enable = true;
+    taps = [
+      "sanyam-g/switch"
+    ];
 
     brews = [
       "elio"
