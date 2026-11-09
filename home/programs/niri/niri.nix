@@ -1,6 +1,7 @@
 {
   config,
   host,
+  lib,
   pkgs,
   theme,
   ...
@@ -14,6 +15,21 @@
       exec noctalia --daemon
     '';
   };
+  inherit (theme.ui) sunLocation;
+  # 3000562427 compares whole hours (`hour <= daystarttime` is still night), so
+  # -30 minutes makes it switch on the hour closest to sunrise and sunset.
+  sunOffsetMinutes = {
+    day = -30;
+    night = -30;
+  };
+  withOffset = event: minutes:
+    if minutes < 0
+    then "${event}${toString minutes}m"
+    else "${event}+${toString minutes}m";
+  # Keeps Noctalia's colors on ~/Pictures/{day,night}.webp in step with the wallpaper.
+  daynightWallpaper = pkgs.writers.writePython3Bin "daynight-wallpaper" {
+    flakeIgnore = ["E501" "W503"];
+  } (builtins.readFile ./daynight-wallpaper.py);
   niriWallpaperEngine = pkgs.writeShellApplication {
     name = "niri-wallpaperengine";
     runtimeInputs = [pkgs.niri pkgs.jq pkgs.coreutils];
@@ -37,10 +53,52 @@
       done
 
       # locally built from ~/Developer/linux-wallpaperengine (nix build -o ~/.local/share/linux-wallpaperengine/result)
-      exec "$HOME/.local/bin/linux-wallpaperengine" --layer background --silent --fps 20 "''${args[@]}"
+      exec "$HOME/.local/bin/linux-wallpaperengine" --layer background --silent --fps 20 \
+        --location=${toString sunLocation.latitude},${toString sunLocation.longitude} \
+        --set-property daystarttime=${withOffset "sunrise" sunOffsetMinutes.day} \
+        --set-property nightstarttime=${withOffset "sunset" sunOffsetMinutes.night} \
+        "''${args[@]}"
     '';
   };
 in {
+  systemd.user.services.daynight-wallpaper = {
+    Unit = {
+      Description = "Switch Noctalia between day and night wallpapers with linux-wallpaperengine";
+      PartOf = ["graphical-session.target"];
+      After = ["graphical-session.target"];
+    };
+    Service = {
+      Environment = ["PATH=${lib.makeBinPath [config.programs.noctalia.package]}"];
+      ExecStart = lib.escapeShellArgs [
+        (lib.getExe daynightWallpaper)
+        "--latitude=${toString sunLocation.latitude}"
+        "--longitude=${toString sunLocation.longitude}"
+        "--day-offset=${toString sunOffsetMinutes.day}"
+        "--night-offset=${toString sunOffsetMinutes.night}"
+        "--day=${config.home.homeDirectory}/Pictures/day.webp"
+        "--night=${config.home.homeDirectory}/Pictures/night.webp"
+      ];
+      Type = "oneshot";
+      # Noctalia may still be starting at login.
+      Restart = "on-failure";
+      RestartSec = 5;
+    };
+    Install.WantedBy = ["graphical-session.target"];
+  };
+  # The wallpaper compares whole hours, so day/night can only flip on the hour.
+  # Calendar timers also fire right after resuming if an hour passed while suspended.
+  systemd.user.timers.daynight-wallpaper = {
+    Unit = {
+      Description = "Check Noctalia's day/night wallpaper on the hour";
+      PartOf = ["graphical-session.target"];
+    };
+    Timer = {
+      OnCalendar = "*-*-* *:00:00";
+      AccuracySec = "1s";
+    };
+    Install.WantedBy = ["graphical-session.target"];
+  };
+
   xdg.configFile."niri/config-nix.kdl".text = ''
     window-rule {
       geometry-corner-radius ${toString cornerRadius}

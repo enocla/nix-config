@@ -141,5 +141,10 @@ in {
     findHighlight = colorMix colors.base colors.sky 0.5;
 
     wallpaperEngineId = "3000562427";
+    # Drives the wallpaper's day/night cycle and Noctalia's matching day/night.webp (Waterloo, ON).
+    sunLocation = {
+      latitude = 43.474;
+      longitude = -80.554;
+    };
   };
 }
