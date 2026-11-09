@@ -11,8 +11,6 @@
 in {
   environment.systemPackages = with pkgs;
     [
-      astro-language-server
-      bash-language-server
       biome
       bluetui
       brightnessctl
@@ -20,8 +18,6 @@ in {
       cargo
       cargo-binstall
       cifs-utils
-      claude-agent-acp
-      claude-code
       clippy
       cmake
       colima
@@ -60,7 +56,6 @@ in {
       labwc
       lima
       lisette
-      lua-language-server
       maven
       meson
       mpv
@@ -73,7 +68,6 @@ in {
       pkl
       playerctl
       pnpm
-      customPkgs.prism
       protobuf
       pyright
       ripgrep
@@ -85,9 +79,6 @@ in {
       sd
       sfwbar
       stylua
-      svelte-language-server
-      swiftformat
-      tailwindcss-language-server
       tokei
       tree-sitter
       typst
@@ -95,13 +86,9 @@ in {
       usage
       usbutils
       uv
-      vscode-langservers-extracted
-      vtsls
-      vue-language-server
       wiremix
       wl-clipboard
       xwayland-satellite
-      yaml-language-server
       yazi
       yt-dlp
       zed-editor

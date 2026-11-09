@@ -6,7 +6,6 @@
   imports = [
     ./hardware-configuration.nix
     ../../modules/nixos
-    inputs.codex-desktop-linux.nixosModules.default
   ];
 
   networking.hostName = host.hostname;
@@ -18,7 +17,6 @@
     modesetting.enable = true;
   };
 
-  programs.codexDesktopLinux.enable = true;
 
   system.stateVersion = host.systemStateVersion;
 }
