@@ -6,10 +6,37 @@
 }: let
   c = theme.colors;
   isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
+  # keyd swaps Ctrl and Super on Linux: physical Cmd arrives as Ctrl and
+  # physical Ctrl arrives as Super.
   primaryModifier =
     if isDarwin
     then "cmd"
+    else "ctrl";
+  controlModifier =
+    if isDarwin
+    then "ctrl"
     else "super";
+
+  # Undo the swap inside the terminal so programs see the physical modifier:
+  # Super+key becomes a real Ctrl+key (control codes, SIGINT, readline), and
+  # Ctrl+key becomes Super+key. send_key encodes for the program's current
+  # keyboard mode (legacy or kitty protocol). The macOS-style actions below
+  # are mapped afterwards and take precedence over the Ctrl fallbacks.
+  swapKeys =
+    lib.stringToCharacters "abcdefghijklmnopqrstuvwxyz0123456789"
+    ++ ["grave" "minus" "equal" "[" "]" "backslash" "semicolon" "apostrophe" "comma" "period" "slash"]
+    ++ ["space" "enter" "tab" "backspace" "delete" "escape" "insert" "home" "end" "page_up" "page_down" "up" "down" "left" "right"]
+    ++ map (n: "f${toString n}") (lib.range 1 12);
+  # keyd already turns Option/Cmd+arrows into Ctrl+arrows, Home/End and
+  # Ctrl+Home/End. Those Ctrl chords must reach the terminal unchanged.
+  navigationKeys = ["up" "down" "left" "right" "home" "end" "page_up" "page_down"];
+  swapMods = ["" "shift+" "alt+" "alt+shift+"];
+  modifierSwap = lib.concatMapStringsSep "\n" (mods:
+    lib.concatMapStringsSep "\n" (key:
+      "map super+${mods}${key} send_key ctrl+${mods}${key}"
+      + lib.optionalString (!lib.elem key navigationKeys) "\nmap ctrl+${mods}${key} send_key super+${mods}${key}")
+    swapKeys)
+  swapMods;
   shell =
     if isDarwin
     then "${pkgs.fish}/bin/fish"
@@ -126,6 +153,22 @@ in {
     modify_font baseline 0.5
     modify_font cell_height 172%
 
+    ${lib.optionalString (!isDarwin) ''
+      # Start from an empty keymap so kitty's Ctrl+Shift defaults cannot
+      # shadow the swapped modifiers.
+      clear_all_shortcuts yes
+      ${modifierSwap}
+
+      # keyd sends Option+Backspace as Ctrl+Backspace and Cmd+Backspace as
+      # Shift+Home, Backspace. Give the shell the usual terminal codes.
+      map ctrl+backspace send_key alt+backspace
+      map shift+home send_key ctrl+u
+
+      # Cmd+click opens links.
+      mouse_map ctrl+left release grabbed,ungrabbed mouse_handle_click link
+      mouse_map ctrl+left press grabbed discard_event
+    ''}
+
     # Tab management
     map ${primaryModifier}+t new_tab_with_cwd
     map ${primaryModifier}+w close_tab
@@ -156,7 +199,7 @@ in {
     map ${primaryModifier}+alt+left previous_tab
     map ${primaryModifier}+alt+right next_tab
 
-    # The macOS defaults also need explicit Super bindings on Linux.
+    # The macOS defaults also need explicit bindings on Linux.
     map ${primaryModifier}+c copy_to_clipboard
     map ${primaryModifier}+v paste_from_clipboard
     map ${primaryModifier}+equal change_font_size all +2.0
@@ -167,11 +210,11 @@ in {
     map ${primaryModifier}+k clear_terminal to_cursor active
     map ${primaryModifier}+alt+k clear_terminal scrollback active
     map ${primaryModifier}+l clear_terminal last_command active
-    map ${primaryModifier}+ctrl+l clear_terminal to_cursor_scroll active
+    map ${primaryModifier}+${controlModifier}+l clear_terminal to_cursor_scroll active
     map ${primaryModifier}+r start_resizing_window
     map ${primaryModifier}+alt+r clear_terminal reset active
     map ${primaryModifier}+comma edit_config_file
-    map ${primaryModifier}+ctrl+comma load_config_file
+    map ${primaryModifier}+${controlModifier}+comma load_config_file
     map ${primaryModifier}+alt+comma debug_config
     map ${primaryModifier}+shift+i set_tab_title
     map ${primaryModifier}+home scroll_home

@@ -12,7 +12,6 @@
       ./vicinae
     ]
     ++ lib.optionals (lib.hasSuffix "-linux" host.system) [
-      ./keybindings.nix
       ./kde
     ];
 }

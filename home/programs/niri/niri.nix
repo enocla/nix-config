@@ -179,7 +179,10 @@ in {
 
     // Niri built-in switcher, including windows of the current application.
     // Defining binds here disables the Alt+Tab defaults.
-    // Mod = Super (Windows key), i.e. the Linux equivalent of Cmd.
+    // keyd swaps Ctrl and Super: physical Cmd emits Ctrl, physical Ctrl
+    // emits Super (Mod). macOS Cmd shortcuts are therefore bound on Ctrl.
+    // keyd sends physical Cmd+Tab and Cmd+` as Ctrl+F17/F18 so Ctrl+Tab
+    // stays free for application tabs.
     recent-windows {
       highlight {
         active-color "${c.mauve}"
@@ -188,10 +191,10 @@ in {
         corner-radius ${toString cornerRadius}
       }
       binds {
-        Mod+Tab { next-window; }
-        Mod+Shift+Tab { previous-window; }
-        Mod+grave { next-window filter="app-id"; }
-        Mod+Shift+grave { previous-window filter="app-id"; }
+        Ctrl+XF86Launch8 { next-window; }
+        Ctrl+Shift+XF86Launch8 { previous-window; }
+        Ctrl+XF86Launch9 { next-window filter="app-id"; }
+        Ctrl+Shift+XF86Launch9 { previous-window filter="app-id"; }
       }
     }
 
@@ -240,30 +243,28 @@ in {
       Mod+Ctrl+Alt+Comma { spawn "noctalia" "msg" "settings-toggle"; }
 
       // Keep the existing Vicinae integration available alongside Noctalia.
-      Mod+Space hotkey-overlay-title="Application Launcher" { spawn "vicinae" "toggle"; }
-      Ctrl+E hotkey-overlay-title="Clipboard History" {
+      Ctrl+Space hotkey-overlay-title="Application Launcher" { spawn "vicinae" "toggle"; }
+      Mod+E hotkey-overlay-title="Clipboard History" {
         spawn "vicinae" "deeplink" "vicinae://launch/clipboard/history?toggle=true";
       }
 
-      // macOS system shortcuts. keyd preserves these Cmd combinations.
+      // macOS system shortcuts (physical Cmd = Ctrl, physical Ctrl = Mod).
       Mod+Ctrl+Q repeat=false hotkey-overlay-title="Lock Screen" { spawn "noctalia" "msg" "session" "lock"; }
       Mod+Ctrl+Space repeat=false hotkey-overlay-title="Emoji and Symbols" { spawn "noctalia" "msg" "panel-toggle" "launcher" "/emo"; }
       Mod+Ctrl+F repeat=false { fullscreen-window; }
-      Mod+Shift+Q repeat=false hotkey-overlay-title="Log Out (Confirm)" { quit; }
-      Mod+Alt+Escape repeat=false hotkey-overlay-title="Process Manager" { spawn "kitty" "-e" "btop"; }
-      Mod+Alt+D repeat=false hotkey-overlay-title="Toggle Dock" { spawn "noctalia" "msg" "dock-toggle"; }
+      Ctrl+Shift+Q repeat=false hotkey-overlay-title="Log Out (Confirm)" { quit; }
+      Ctrl+Alt+Escape repeat=false hotkey-overlay-title="Process Manager" { spawn "kitty" "-e" "btop"; }
+      Ctrl+Alt+D repeat=false hotkey-overlay-title="Toggle Dock" { spawn "noctalia" "msg" "dock-toggle"; }
       // Noctalia captures save as WebP (config.toml [shell.screenshot]);
       // Niri's own screenshot actions can only write PNG.
-      Mod+Shift+3 repeat=false hotkey-overlay-title="Screenshot Screen" { spawn "noctalia" "msg" "screenshot-fullscreen"; }
-      Mod+Shift+4 repeat=false hotkey-overlay-title="Screenshot Selection" { spawn "noctalia" "msg" "screenshot-region"; }
+      Ctrl+Shift+3 repeat=false hotkey-overlay-title="Screenshot Screen" { spawn "noctalia" "msg" "screenshot-fullscreen"; }
+      Ctrl+Shift+4 repeat=false hotkey-overlay-title="Screenshot Selection" { spawn "noctalia" "msg" "screenshot-region"; }
       // Noctalia's region selector replaces the macOS screenshot toolbar.
-      Mod+Shift+5 repeat=false hotkey-overlay-title="Screenshot Chooser" { spawn "noctalia" "msg" "screenshot-region"; }
-      // keyd uses function-key sentinels so these cannot collide with
-      // Ctrl+Shift+number, which moves windows between workspaces.
-      Mod+Shift+F3 repeat=false hotkey-overlay-title="Copy Screenshot Screen" {
+      Ctrl+Shift+5 repeat=false hotkey-overlay-title="Screenshot Chooser" { spawn "noctalia" "msg" "screenshot-region"; }
+      Mod+Ctrl+Shift+3 repeat=false hotkey-overlay-title="Copy Screenshot Screen" {
         spawn "noctalia" "msg" "screenshot-fullscreen" "--no-save-to-file" "--copy-to-clipboard";
       }
-      Mod+Shift+F4 repeat=false hotkey-overlay-title="Copy Screenshot Selection" {
+      Mod+Ctrl+Shift+4 repeat=false hotkey-overlay-title="Copy Screenshot Selection" {
         spawn "noctalia" "msg" "screenshot-region" "--no-save-to-file" "--copy-to-clipboard";
       }
 
@@ -321,35 +322,33 @@ in {
       Mod+Ctrl+Alt+Shift+K { focus-monitor-up; }
       Mod+Ctrl+Alt+Shift+L { focus-monitor-right; }
 
-      // Physical Ctrl+arrows are distinct from the Ctrl+arrows generated for
-      // Option+arrows in text fields. Niri arranges spaces vertically.
-      Ctrl+Mod+Left { focus-workspace-up; }
-      Ctrl+Mod+Right { focus-workspace-down; }
-      Ctrl+Mod+Shift+Left { move-window-to-workspace-up; }
-      Ctrl+Mod+Shift+Right { move-window-to-workspace-down; }
-      Ctrl+Mod+Up repeat=false hotkey-overlay-title="Mission Control" { toggle-overview; }
+      // Physical Ctrl+arrows switch spaces. Niri arranges spaces vertically.
+      Mod+Left { focus-workspace-up; }
+      Mod+Right { focus-workspace-down; }
+      Mod+Shift+Left { move-window-to-workspace-up; }
+      Mod+Shift+Right { move-window-to-workspace-down; }
+      Mod+Up repeat=false hotkey-overlay-title="Mission Control" { toggle-overview; }
 
-      // Physical Ctrl+1..9 arrives from keyd as Ctrl+Mod+1..9.
-      // Cmd+1..9 remains available to applications for selecting tabs.
-      Ctrl+Mod+1 { focus-workspace 1; }
-      Ctrl+Mod+2 { focus-workspace 2; }
-      Ctrl+Mod+3 { focus-workspace 3; }
-      Ctrl+Mod+4 { focus-workspace 4; }
-      Ctrl+Mod+5 { focus-workspace 5; }
-      Ctrl+Mod+6 { focus-workspace 6; }
-      Ctrl+Mod+7 { focus-workspace 7; }
-      Ctrl+Mod+8 { focus-workspace 8; }
-      Ctrl+Mod+9 { focus-workspace 9; }
+      // Physical Ctrl+1..9 switch spaces; Cmd+1..9 (Ctrl) reach applications.
+      Mod+1 { focus-workspace 1; }
+      Mod+2 { focus-workspace 2; }
+      Mod+3 { focus-workspace 3; }
+      Mod+4 { focus-workspace 4; }
+      Mod+5 { focus-workspace 5; }
+      Mod+6 { focus-workspace 6; }
+      Mod+7 { focus-workspace 7; }
+      Mod+8 { focus-workspace 8; }
+      Mod+9 { focus-workspace 9; }
 
-      Ctrl+Mod+Shift+1 { move-window-to-workspace 1; }
-      Ctrl+Mod+Shift+2 { move-window-to-workspace 2; }
-      Ctrl+Mod+Shift+3 { move-window-to-workspace 3; }
-      Ctrl+Mod+Shift+4 { move-window-to-workspace 4; }
-      Ctrl+Mod+Shift+5 { move-window-to-workspace 5; }
-      Ctrl+Mod+Shift+6 { move-window-to-workspace 6; }
-      Ctrl+Mod+Shift+7 { move-window-to-workspace 7; }
-      Ctrl+Mod+Shift+8 { move-window-to-workspace 8; }
-      Ctrl+Mod+Shift+9 { move-window-to-workspace 9; }
+      Mod+Shift+1 { move-window-to-workspace 1; }
+      Mod+Shift+2 { move-window-to-workspace 2; }
+      Mod+Shift+3 { move-window-to-workspace 3; }
+      Mod+Shift+4 { move-window-to-workspace 4; }
+      Mod+Shift+5 { move-window-to-workspace 5; }
+      Mod+Shift+6 { move-window-to-workspace 6; }
+      Mod+Shift+7 { move-window-to-workspace 7; }
+      Mod+Shift+8 { move-window-to-workspace 8; }
+      Mod+Shift+9 { move-window-to-workspace 9; }
 
       // Hyper+1..9 focus the matching column on the current workspace.
       Mod+Ctrl+Alt+1 { focus-column 1; }
