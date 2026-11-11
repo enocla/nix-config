@@ -30,11 +30,24 @@
   # keyd already turns Option/Cmd+arrows into Ctrl+arrows, Home/End and
   # Ctrl+Home/End. Those Ctrl chords must reach the terminal unchanged.
   navigationKeys = ["up" "down" "left" "right" "home" "end" "page_up" "page_down"];
+  # kitty's default kitty_mod shortcuts (kitty_mod = physical Ctrl+Shift,
+  # as on macOS). These keys keep the kitty action instead of being
+  # forwarded to the program.
+  kittyModKeys =
+    lib.stringToCharacters "abcefghjklnopqrstuvwxz0123456789"
+    ++ ["grave" "minus" "equal" "[" "]" "comma" "period" "slash"]
+    ++ ["escape" "enter" "backspace" "delete" "left" "right" "up" "down" "home" "end" "page_up" "page_down"]
+    ++ ["f1" "f2" "f3" "f5" "f6" "f7" "f8" "f10" "f11"];
+  isKittyModDefault = mods: key:
+    (mods == "shift+" && lib.elem key kittyModKeys)
+    || (mods == "alt+shift+" && key == "t");
   swapMods = ["" "shift+" "alt+" "alt+shift+"];
   modifierSwap = lib.concatMapStringsSep "\n" (mods:
     lib.concatMapStringsSep "\n" (key:
-      "map super+${mods}${key} send_key ctrl+${mods}${key}"
-      + lib.optionalString (!lib.elem key navigationKeys) "\nmap ctrl+${mods}${key} send_key super+${mods}${key}")
+      lib.concatStringsSep "\n" (
+        lib.optional (!isKittyModDefault mods key) "map super+${mods}${key} send_key ctrl+${mods}${key}"
+        ++ lib.optional (!lib.elem key navigationKeys) "map ctrl+${mods}${key} send_key super+${mods}${key}"
+      ))
     swapKeys)
   swapMods;
   shell =
@@ -154,9 +167,7 @@ in {
     modify_font cell_height 172%
 
     ${lib.optionalString (!isDarwin) ''
-      # Start from an empty keymap so kitty's Ctrl+Shift defaults cannot
-      # shadow the swapped modifiers.
-      clear_all_shortcuts yes
+      kitty_mod super+shift
       ${modifierSwap}
 
       # keyd sends Option+Backspace as Ctrl+Backspace and Cmd+Backspace as
