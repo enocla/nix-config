@@ -17,6 +17,5 @@
     modesetting.enable = true;
   };
 
-
   system.stateVersion = host.systemStateVersion;
 }

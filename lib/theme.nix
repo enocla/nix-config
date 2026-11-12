@@ -3,32 +3,32 @@
 
   colors = {
     # === MUI 3 wallpaper generated
-    rosewater = "#ffdad6";
-    flamingo = "#ffc4bb";
-    pink = "#ffb4ab";
-    mauve = "#d9c59a";
-    red = "#ffb4ab";
-    maroon = "#d89e85";
-    peach = "#cbc8a4";
-    yellow = "#ceca75";
-    green = "#a5d0bb";
-    teal = "#b2dcc9";
-    sky = "#b9e1d2";
-    sapphire = "#bedfd4";
-    blue = "#c2ddd0";
-    lavender = "#c6d9cc";
-    text = "#e6e2d5";
-    subtext1 = "#cac7b6";
-    subtext0 = "#b6b4a0";
-    overlay2 = "#939181";
-    overlay1 = "#6e6d5e";
-    overlay0 = "#48473a";
-    surface2 = "#36352c";
-    surface1 = "#2b2a22";
-    surface0 = "#212018";
-    base = "#14140e";
-    mantle = "#1c1c1a";
-    crust = "#0f0e07";
+    # rosewater = "#ffdad6";
+    # flamingo = "#ffc4bb";
+    # pink = "#ffb4ab";
+    # mauve = "#d9c59a";
+    # red = "#ffb4ab";
+    # maroon = "#d89e85";
+    # peach = "#cbc8a4";
+    # yellow = "#ceca75";
+    # green = "#a5d0bb";
+    # teal = "#b2dcc9";
+    # sky = "#b9e1d2";
+    # sapphire = "#bedfd4";
+    # blue = "#c2ddd0";
+    # lavender = "#c6d9cc";
+    # text = "#e6e2d5";
+    # subtext1 = "#cac7b6";
+    # subtext0 = "#b6b4a0";
+    # overlay2 = "#939181";
+    # overlay1 = "#6e6d5e";
+    # overlay0 = "#48473a";
+    # surface2 = "#36352c";
+    # surface1 = "#2b2a22";
+    # surface0 = "#212018";
+    # base = "#14140e";
+    # mantle = "#1c1c1a";
+    # crust = "#0f0e07";
 
     # === Original
     # rosewater = "#f3c0e5";
@@ -113,6 +113,35 @@
     # base = "#151515";
     # mantle = "#191919";
     # crust = "#101010";
+
+    # Flexoki
+    rosewater = "#F4B5AA";
+    flamingo = "#F19F93";
+    pink = "#EC91B5";
+    mauve = "#B5A9D8";
+    red = "#F08575";
+    maroon = "#D88280";
+    peach = "#F39D61";
+    yellow = "#E6C04B";
+    green = "#AFBC69";
+    teal = "#71C8B7";
+    sky = "#96D2CE";
+    sapphire = "#90BBD2";
+    blue = "#7CAFD2";
+    lavender = "#C5BAE1";
+
+    text = "#CECDC3";
+    subtext1 = "#B7B5AC";
+    subtext0 = "#9F9D96";
+    overlay2 = "#878580";
+    overlay1 = "#6F6E69";
+    overlay0 = "#575653";
+    surface2 = "#403E3C";
+    surface1 = "#343331";
+    surface0 = "#282726";
+    base = "#100F0F";
+    mantle = "#1C1B1A";
+    crust = "#0B0A09";
   };
 in {
   # Utility function to strip the # from hex colors
