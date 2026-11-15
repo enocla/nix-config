@@ -123,7 +123,7 @@
       pkgs = import nixpkgs {
         inherit system;
         config.allowUnfreePredicate = package:
-          builtins.elem (lib.getName package) ["berkeley-mono-nerd-font" "macos-tahoe-cursor" "sf-pro-text"];
+          builtins.elem (lib.getName package) ["berkeley-mono-nerd-font" "iowan-old-style" "macos-tahoe-cursor" "sf-pro-text"];
       };
     in
       lib.filterAttrs (_: package: lib.meta.availableOn pkgs.stdenv.hostPlatform package)

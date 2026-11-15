@@ -7,6 +7,7 @@ in {
     customPkgs."berkeley-mono-nerd-font"
     customPkgs."sf-pro-text"
     customPkgs."nordwand-mono"
+    customPkgs."iowan-old-style"
     pkgs.nerd-fonts.symbols-only
     pkgs.nerd-fonts.departure-mono
   ];
