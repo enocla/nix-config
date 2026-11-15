@@ -1,6 +1,7 @@
 {
   imports = [
     ./captures.nix
+    ./keyring.nix
     ./labwc.nix
     ./matugen.nix
     ./mime.nix
