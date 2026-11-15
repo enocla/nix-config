@@ -9,17 +9,6 @@
   elio = inputs.elio.packages.${pkgs.stdenv.hostPlatform.system}.default;
   helium = inputs.helium-flake.packages.${pkgs.stdenv.hostPlatform.system}.default;
   zen-browser = inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default;
-
-  # Chrome's Vulkan backend needs XWayland on Bort: native Wayland falls
-  # back to SwiftShader instead of exposing the NVIDIA WebGPU adapter.
-  google-chrome = pkgs.google-chrome.override {
-    commandLineArgs = lib.concatStringsSep " " [
-      "--enable-unsafe-webgpu"
-      "--ozone-platform=x11"
-      "--use-angle=vulkan"
-      "--enable-features=Vulkan,VulkanFromANGLE"
-    ];
-  };
 in {
   environment.systemPackages = with pkgs;
     [
@@ -118,5 +107,5 @@ in {
       gdb
       valgrind
     ]
-    ++ [elio google-chrome helium zen-browser];
+    ++ [elio helium zen-browser];
 }
