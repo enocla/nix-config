@@ -7,6 +7,61 @@
   c = theme.colors;
   isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
 
+  # LS_COLORS uses decimal RGB channels rather than the theme's hex colors.
+  foreground = color: let
+    hex = theme.rawHexValue color;
+    channels = map (
+      offset: toString (lib.fromTOML "value = 0x${builtins.substring offset 2 hex}").value
+    ) [0 2 4];
+  in "38;2;${lib.concatStringsSep ";" channels}";
+
+  lsColors = lib.concatStringsSep ":" (
+    lib.mapAttrsToList (name: value: "${name}=${value}") {
+      rs = "0";
+      fi = foreground c.text;
+      di = "1;${foreground c.blue}";
+      ln = foreground c.teal;
+      ex = foreground c.green;
+      pi = foreground c.yellow;
+      so = foreground c.pink;
+      bd = foreground c.peach;
+      cd = foreground c.peach;
+      or = "1;${foreground c.red}";
+      mi = foreground c.red;
+      su = "1;${foreground c.red}";
+      sg = "1;${foreground c.peach}";
+      ca = foreground c.peach;
+      mh = foreground c.text;
+      st = "1;${foreground c.blue}";
+      ow = "4;${foreground c.blue}";
+      tw = "1;4;${foreground c.blue}";
+    }
+    ++ lib.concatMap (
+      group: map (extension: "*.${extension}=${foreground group.color}") group.extensions
+    ) [
+      {
+        color = c.peach;
+        extensions = ["7z" "bz2" "gz" "rar" "tar" "tgz" "xz" "zip" "zst"];
+      }
+      {
+        color = c.yellow;
+        extensions = ["pdf" "epub" "md" "rst" "txt" "doc" "docx" "odt"];
+      }
+      {
+        color = c.pink;
+        extensions = ["avif" "gif" "heic" "ico" "jpeg" "jpg" "png" "svg" "webp"];
+      }
+      {
+        color = c.mauve;
+        extensions = ["avi" "m4v" "mkv" "mov" "mp4" "webm"];
+      }
+      {
+        color = c.teal;
+        extensions = ["aac" "flac" "m4a" "mp3" "ogg" "opus" "wav"];
+      }
+    ]
+  );
+
   # `k`: search `ps aux` with fzf and kill the selected process(es).
   killProcess = pkgs.writeShellApplication {
     name = "k";
@@ -49,6 +104,7 @@
 in {
   home.sessionVariables = {
     EDITOR = "nvim";
+    LS_COLORS = lsColors;
     # PAGER = "bat";
     LLVM_PROFILE_FILE = "/dev/null";
     TERM = "xterm-256color";
@@ -67,6 +123,18 @@ in {
     GUM_FILTER_PROMPT_FOREGROUND = c.mauve;
     GUM_SPIN_SPINNER_FOREGROUND = c.rosewater;
   };
+
+  # Refresh in every shell: an existing terminal may inherit Home Manager's
+  # session-variable guard from before the latest theme deployment.
+  programs.fish.shellInit = ''
+    set -gx LS_COLORS ${lib.escapeShellArg lsColors}
+  '';
+  programs.zsh.envExtra = ''
+    export LS_COLORS=${lib.escapeShellArg lsColors}
+  '';
+  programs.bash.initExtra = ''
+    export LS_COLORS=${lib.escapeShellArg lsColors}
+  '';
 
   home.sessionPath =
     lib.optionals (!isDarwin) ["/run/wrappers/bin"]
