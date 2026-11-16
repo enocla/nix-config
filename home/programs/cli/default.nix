@@ -10,6 +10,7 @@
     ./helix.nix
     ./lazygit.nix
     ./nix-your-shell.nix
+    ./rust.nix
     ./ssh.nix
     ./starship.nix
     ./tmux.nix
