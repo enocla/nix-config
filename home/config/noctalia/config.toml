@@ -50,7 +50,7 @@ show_login_button = true
 enabled = true
 
 [shell]
-font_family = "SF Pro Text"
+font_family = "Inter"
 
 [shell.panel]
 open_near_click_control_center = true

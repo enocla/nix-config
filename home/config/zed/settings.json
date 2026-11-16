@@ -158,11 +158,13 @@
   //         },
   "buffer_line_height": "comfortable",
   // The name of a font to use for rendering text in the UI
-  "ui_font_family": "SF Pro Text",
+  "ui_font_family": "Inter",
   // The OpenType features to enable for text in the UI
   "ui_font_features": {
-    // Disable ligatures:
+    "ss02": true,
     "calt": true,
+    "ss01": true,
+    "zero": false,
   },
   // The default font size for text in the UI
   "ui_font_size": 18,

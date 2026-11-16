@@ -2,6 +2,7 @@
   customPkgs = import ../../pkgs {inherit pkgs;};
 in {
   fonts.packages = [
+    customPkgs."inter-theme"
     pkgs.crimson-pro
     pkgs.nerd-fonts.lilex
     customPkgs."berkeley-mono-nerd-font"
